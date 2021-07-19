@@ -1,12 +1,3 @@
----
-name: Issue Task Card
-about: Issue Task Card
-title: ''
-labels: ''
-assignees: ''
-
----
-
 ### ISSUE
 - Group: `client`, `server`, `sr`
 - Type: `bug`, `feature`, `delete`
