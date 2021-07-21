@@ -7,16 +7,15 @@ const port = 80;
 
 app.get('/', (req, res) => {
 
-  db.query('use test', (err, result) => {
-
-    var sql = "CREATE TABLE name (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))";
-
-    result.query(sql, (err) => {
-      if (err) {
-        return res.status(200).send("DB Connect Fail!!");
-      }
-    })
+  let test = db.query('use test', (err, result) => {
+    return result;
   });
+
+  test.query('create table name(id INT, name STRING)', (err2, result) => {
+    if (err2) {
+      return res.status(201).send("DB Connect Fail!");
+    }
+  })
 
   return res.status(201).send("DB Connect Success!");
 
