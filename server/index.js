@@ -4,6 +4,8 @@ const db = require('./db/connection');
 
 const PORT = 4000;
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
