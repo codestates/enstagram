@@ -14,8 +14,8 @@ app.get('/', (req, res) => {
 
     return res.status(201).send('DB Connect Success!');
   });
-}
+});
 
-  app.listen(port, () => {
+app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
 });
