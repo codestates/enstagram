@@ -6,6 +6,11 @@ app.use(express.json());
 const port = 80;
 
 app.get('/', (req, res) => {
+
+  db.query('use test', (err, res) => {
+    console.log("result:", res);
+  });
+
   res.send("Hello, World!");
 });
 
