@@ -8,9 +8,9 @@ const port = 80;
 app.get('/', (req, res) => {
 
   db.query('use test', (err) => {
-    if (err) {
-      return res.status(200).send("DB Connect Fail!");
-    }
+
+    console.log("err:", err);
+
 
     return res.status(201).send("DB Connect Success!");
   });
