@@ -11,10 +11,10 @@ app.get('/', (req, res) => {
 
     if (result) {
       return res.status(201).send("DB Connect Success!");
+    } else {
+      return res.status(201).send("DB Connect Fail!");
     }
   });
-
-  return res.status(201).send("DB Connect Fail!");
 });
 
 app.listen(port, () => {
