@@ -6,15 +6,7 @@ app.use(express.json());
 const port = 80;
 
 app.get('/', (req, res) => {
-
-  db.query('use test', (err, result) => {
-
-    if (result) {
-      return res.status(201).send("DB Connect Success!");
-    } else {
-      return res.status(201).send("DB Connect Fail!");
-    }
-  });
+  res.send("Hello, World!");
 });
 
 app.listen(port, () => {
