@@ -12,8 +12,9 @@ app.get('/', (req, res) => {
       return res.status(200).send("DB Connect Fail!");
     }
 
-    return res.status(201).send('DB Connect Success!');
+    return res.status(201).send("DB Connect Success!");
   });
+
 });
 
 app.listen(port, () => {
