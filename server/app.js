@@ -9,11 +9,16 @@ app.get('/', (req, res) => {
 
   db.query('use test', (err) => {
 
-    console.log("err:", err);
+    var sql = "CREATE TABLE name (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))";
 
-
-    return res.status(201).send("DB Connect Success!");
+    db.query(sql, (err) => {
+      if (err) {
+        return res.status(200).send("DB Connect Fail!");
+      }
+    })
   });
+
+  return res.status(201).send("DB Connect Success!");
 
 });
 
