@@ -9,7 +9,9 @@ app.get('/', (req, res) => {
 
   db.query('use test', (err, result) => {
 
-    return res.status(201).send("DB Connect Success!");
+    if (result) {
+      return res.status(201).send("DB Connect Success!");
+    }
   });
 
   return res.status(201).send("DB Connect Fail!");
