@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     name: DataTypes.STRING,
-    accountName: DataTypes.STRING,
+    username: DataTypes.STRING,
     profilePhoto: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING

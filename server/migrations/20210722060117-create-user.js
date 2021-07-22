@@ -11,7 +11,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      accountName: {
+      username: {
         type: Sequelize.STRING
       },
       profilePhoto: {

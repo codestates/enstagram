@@ -1,4 +1,4 @@
 module.exports = {
-    test: require('./users/test'),
+    SignUp: require('./users/singup'),  //* 회원가입
 
 };
