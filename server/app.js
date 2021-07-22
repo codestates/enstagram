@@ -1,9 +1,17 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const db = require('./db/connection');
 
 app.use(express.json());
 const port = 80;
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true
+  })
+);
 
 app.get('/', (req, res) => {
 
