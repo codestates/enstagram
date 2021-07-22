@@ -48,7 +48,7 @@ function App() {
           />
         </Route>
         <Route path="/mypage">
-          <Mypage />
+          <Mypage setIsLogin={setIsLogin}/>
         </Route>
         <Route path="/mypage/edit">
           <ProfileEdit />

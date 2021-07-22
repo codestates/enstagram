@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import "./Mypage.css";
 import { dummyPosts, placeHolderImage } from '../dummyData';
+import axios from 'axios';
 
 const dummyUserForMyPage = {
     username: 'Kakao-Ryan',
@@ -9,11 +11,16 @@ const dummyUserForMyPage = {
     profilePhoto: placeHolderImage,
     name: 'Ryan Kim'
 }
+
+const handleLogout = ({setIsLogin}) => {
+    axios.post('httpL//localhost:3000/logout').then((res)=> {
+        setIsLogin(false)
+    })
+
+}
 const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage }) => {
     /**
      * TODO:
-     * 1) Logout Handler
-     * 2) Link to profile edit page
      * 3) More CSS fix
      * 4) Add a Modal component to show post detail
      */
@@ -25,12 +32,11 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage }) => {
                         <img alt="my-profile-pic" src={userInfo.profilePhoto} />
                     </div>
 
-                    {/* profile pic 옆에 들어갈 부분 3줄*/}
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
-                            <div className="btn-primary edit-profile">프로필 편집</div>
-                            <div className="btn-primary logout">로그아웃</div>
+                            <Link to="/profile-edit"><div className="btn-primary edit-profile">프로필 편집</div></Link>
+                            <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
                             <div><strong>{posts.length}</strong> posts</div>

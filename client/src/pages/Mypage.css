@@ -1,15 +1,3 @@
-* {
-    box-sizing: border-box;
-}
-
-a:link {
-    text-decoration: none;
-}
-
-a:visited {
-    color: black;
-}
-
 .my-profile-field {
     display: flex;
     border-bottom: solid 1px #dbdbdb;
