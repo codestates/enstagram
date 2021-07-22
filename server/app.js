@@ -15,10 +15,6 @@ app.use(
 
 app.get('/', (req, res) => {
 
-  db.query('create table `test`(`id` int, `name` char(255))', (err, res) => {
-    console.log("result:", res);
-  });
-
   res.send("Hello, World!");
 });
 
