@@ -2,11 +2,13 @@ import logo from "./logo.svg";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
-import Login from "./components/Login.js";
-import Main from "./components/Main.js";
-import Signup from "./pages/Signup.js";
-import Mypage from "./pages/Mypage.js";
-import ProfileEdit from "./pages/ProfileEdit.js";
+
+import Login from './components/Login.js'
+import Main from './components/Main.js'
+import Signup from './pages/Signup.js'
+import Mypage from './pages/Mypage.js'
+import ProfileEdit from './pages/ProfileEdit.js'
+import Header from './components/Header';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -26,6 +28,8 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/* {isLogin && <Header />} */}
+      <Header />
       <Switch>
         <Route exact path="/">
           {isLogin ? (
