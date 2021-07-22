@@ -7,7 +7,7 @@ const port = 80;
 
 app.get('/', (req, res) => {
 
-  db.query('use test', (err, res) => {
+  db.query('create table test(id, name)', (err, res) => {
     console.log("result:", res);
   });
 
