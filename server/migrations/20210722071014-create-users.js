@@ -14,13 +14,13 @@ module.exports = {
       username: {
         type: Sequelize.STRING
       },
-      profilePhoto: {
-        type: Sequelize.STRING
-      },
       email: {
         type: Sequelize.STRING
       },
       password: {
+        type: Sequelize.STRING
+      },
+      profileImage: {
         type: Sequelize.STRING
       },
       createdAt: {
