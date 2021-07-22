@@ -1,18 +1,22 @@
+require("dotenv").config();
 const express = require('express');
 const app = express();
-const db = require('./db/connection');
+const cors = require('cors');
+
+const controllers = require("./controllers");
 
 app.use(express.json());
-const port = 80;
+const port = process.env.PORT || 4000;
 
-app.get('/', (req, res) => {
+app.use(
+  cors({
+    origin: true,
+    credentials: true
+  })
+);
 
-  db.query('use test', (err, res) => {
-    console.log("result:", res);
-  });
-
-  res.send("Hello, World!");
-});
+app.get('/', controllers.test);
+app.post('/signup', controllers.signup);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);

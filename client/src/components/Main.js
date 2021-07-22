@@ -1,6 +1,6 @@
 function Main() {
   return (
-    <div>hello world!</div>
+    <div>This is Main Page</div>
   )
 }
 

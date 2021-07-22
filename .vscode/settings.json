@@ -1,0 +1,6 @@
+{
+  "indentRainbow.includedLanguages": [],
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  }
+}
