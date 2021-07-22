@@ -3,6 +3,7 @@ cd /home/ubuntu/enstagram/server
 sudo npm install
 sudo npm install pm2@latest -g
 sudo npm install mysql
+sudo npm install cors
 sudo apt-get update
 sudo apt-get install authbind
 sudo touch /etc/authbind/byport/80
