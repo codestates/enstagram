@@ -10,16 +10,24 @@ module.exports = async (req, res) => {
 
     if (!userInfo) {
 
+        const { name, username, email, password } = req.body;
+
         Users.create({
-            name: req.body.name,
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password
+            name,
+            username,
+            email,
+            password,
         });
 
-        res.status(201).send("회원가입 성공");
-
+        res.status(201).send({
+            data: {
+                name,
+                username,
+                email,
+            },
+            message: "회원가입 성공"
+        });
     } else {
-        res.status(200).send("회원가입 실패");
+        res.status(200).json({ message: "회원정보 중복으로 인한 가입 실패" });
     }
 };
