@@ -18,15 +18,8 @@ module.exports = async (req, res) => {
             password: req.body.password
         });
 
-        res.send({
-            data: {
-                name: req.body.name,
-                username: req.body.username,
-                email: req.body.email
-            },
-            message: "회원가입 성공"
-        });
+        res.send("회원가입 성공");
     } else {
-        res.send(200).json({ message: "회원가입 실패" });
+        res.send(200).json("회원가입 실패");
     }
 };
