@@ -7,5 +7,5 @@ module.exports = async (req, res) => {
         return el.dataValues;
     });
 
-    res.stauts(200).json(userArr);
+    res.status(200).json(userArr);
 };
