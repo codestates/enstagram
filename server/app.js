@@ -4,7 +4,7 @@ const cors = require('cors');
 const db = require('./db/connection');
 
 app.use(express.json());
-const port = 80;
+const port = process.env.PORT || 4000;
 
 app.use(
   cors({
@@ -15,7 +15,7 @@ app.use(
 
 app.get('/', (req, res) => {
 
-  db.query('create table test(id, name)', (err, res) => {
+  db.query('create table `test`(`id` int, `name` char(255))', (err, res) => {
     console.log("result:", res);
   });
 
