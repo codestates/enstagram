@@ -4,13 +4,13 @@ const { User } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    const userInfo = User.findOne({
+    console.log("User 의 정보:", User);
+
+    const userInfo = await Users.findOne({
         where: { username: req.body.username, email: req.body.email }
     });
 
-    if (userInfo) {
-        res.send(200).json({ message: "회원가입 실패" });
-    } else {
+    if (!userInfo) {
         User.create({
             name: req.body.name,
             username: req.body.username,
@@ -26,5 +26,7 @@ module.exports = async (req, res) => {
             },
             message: "회원가입 성공"
         });
+    } else {
+        res.send(200).json({ message: "회원가입 실패" });
     }
 };

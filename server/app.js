@@ -15,6 +15,9 @@ app.use(
   })
 );
 
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Hello, World' });
+})
 app.post('/signup', controllers.signup);
 
 app.listen(port, () => {
