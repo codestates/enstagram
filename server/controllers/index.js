@@ -1,4 +1,4 @@
 module.exports = {
-    SignUp: require('./users/singup'),  //* 회원가입
+    signup: require('./users/singup'),  //* 회원가입
 
 };
