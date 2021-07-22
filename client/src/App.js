@@ -7,11 +7,14 @@ import Main from './components/Main.js'
 import Signup from './pages/Signup.js'
 import Mypage from './pages/Mypage.js'
 import ProfileEdit from './pages/ProfileEdit.js'
+import Header from './components/Header';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
   return (
     <BrowserRouter>
+      {/* {isLogin && <Header />} */}
+      <Header />
       <Switch>
         <Route exact path="/">
           {isLogin ? <Main /> : <Login setIsLogin={setIsLogin}/>}
