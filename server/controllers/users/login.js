@@ -56,8 +56,6 @@ module.exports = async (req, res) => {
 
             const { dataValues: { id, username, email, createdAt, updatedAt } } = userEmail;
 
-            console.log("유저의 정보==============>>>>>", userEmail.dataValues);
-
             const accessToken = await sign({
                 id: id,
                 username,

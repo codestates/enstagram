@@ -4,14 +4,12 @@ const { verify } = require('jsonwebtoken');
 module.exports = async (req, res) => {
     const { headers: { authorization } } = req;
 
-    console.log("authorization 의 내부 내용!!!!!!!!", authorization);
-
     if (!authorization) {
         res.status(403).json({ message: "액세스 토큰이 존재하지 않습니다" });
     } else {
 
         const token = authorization.split(' ')[1];
-        console.log("token의 내부 내용!!!!!!!!!!!", token);
+        token = token.slice(0, token.length - 1);
         const tokenUserInfo = verify(
             token, process.env.ACCESS_SECRET, (err) => {
                 if (err) {
