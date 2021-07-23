@@ -14,6 +14,12 @@ module.exports = async (req, res) => {
 
             const { id, username, email, createdAt, updatedAt } = token;
 
+            console.log("id 정보 =============>>", id);
+            console.log("id 정보 =============>>", username);
+            console.log("id 정보 =============>>", email);
+            console.log("id 정보 =============>>", createdAt);
+            console.log("id 정보 =============>>", updatedAt);
+
             const payload = {
                 id,
                 username,
