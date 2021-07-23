@@ -9,7 +9,7 @@ const app = express();
 const controllers = require("./controllers");
 
 app.use(express.json());
-const PORT = process.env.PORT || 4000;
+let PORT = process.env.PORT || 4000;
 
 app.use(
   cors({
