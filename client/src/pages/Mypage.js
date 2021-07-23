@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import "./Mypage.css";
+import Post, { Modal } from '../components/Post'
 import { dummyPosts, placeHolderImage } from '../dummyData';
 import axios from 'axios';
 
 const serverUrl = 'ec2-15-165-74-82.ap-northeast-2.compute.amazonaws.com'
-const dummyUserForMyPage = {
+export const dummyUserForMyPage = {
     username: 'Kakao-Ryan',
     followers: 123,
     following: 300,
@@ -15,6 +16,13 @@ const dummyUserForMyPage = {
 
 const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin }) => {
     const history = useHistory();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activePost, setActivePost] = useState(null);
+
+    const clickPostHandler = (post) => {
+        setIsModalOpen(true)
+        setActivePost(post)
+    }
 
     const handleLogout = () => {
         axios.post(`${serverUrl}/logout`).then((res)=> {
@@ -22,11 +30,7 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin })
             history.push('/');
         })
     }
-    /**
-     * TODO:
-     * 3) More CSS fix
-     * 4) Add a Modal component to show post detail
-     */
+    
     return (
         <div>
             <div className="my-profile-field">
@@ -54,12 +58,16 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin })
             <div className="gallery-container">
                 <div className="gallery-list-body">
                     {posts.map((post, idx)=>
-                        <div key={idx} className="gallery-image-wrapper">
+                        <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
                             <img src={post.picture} alt={post.content} /> 
                         </div>
                     )}
                 </div>
             </div>
+
+            {isModalOpen &&
+                <Modal post={activePost} onModalClose={setIsModalOpen}
+            />}
         </div>
     )
   }
