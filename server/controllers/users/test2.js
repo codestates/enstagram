@@ -4,9 +4,5 @@ module.exports = async (req, res) => {
 
     const userInfo = await Users.findAll();
 
-    const userArr = userInfo.map(el => {
-        return el.dataValues;
-    });
-
-    res.status(200).json(userArr);
+    res.status(200).json(userInfo[0]);
 };
