@@ -12,13 +12,14 @@ module.exports = async (req, res) => {
         token = token.slice(0, token.length - 1);
 
         const tokenUserInfo = await verify(
-            token, process.env.ACCESS_SECRET)
-            .catch(res => {
-                res.status(403).json({ message: "토큰이 만료되었습니다" });
-            });
+            token, process.env.ACCESS_SECRET);
 
+        if (!tokenUserInfo) {
+            res.status(403).json({ message: "토큰이 만료되었습니다" });
+        }
 
         res.status(200).json(tokenUserInfo);
+
 
         // const userInfo = await Users.findOne({
         //     where: { id: id, username: username, email: email }
