@@ -13,12 +13,8 @@ module.exports = async (req, res) => {
 
         console.log("토큰의 정보 확인::::::::", token);
 
-        const tokenUserInfo = verify(
-            token, process.env.ACCESS_SECRET, (err) => {
-                if (err) {
-                    res.status(403).json(err);
-                }
-            });
+        const tokenUserInfo = await verify(
+            token, process.env.ACCESS_SECRET);
 
         console.log("verify의 내부 내용!!!!!!!!!!!!!", tokenUserInfo);
 
