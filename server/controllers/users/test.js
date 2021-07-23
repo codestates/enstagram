@@ -2,7 +2,8 @@ const { Users } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    const userInfos = Users.findAll();
+    const userInfos = await Users.findAll();
+
     const userArr = userInfos.map(el => {
         delete userInfos.dataValues.password;
         return el.dataValues;
