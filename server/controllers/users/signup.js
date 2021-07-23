@@ -5,7 +5,8 @@ const { Users } = require('../../models');
 module.exports = async (req, res) => {
 
     const userName = await Users.findOne({
-        where: { username: req.body.username }
+        where: { username: req.body.username },
+        attributes: ['username']
     });
 
     const userEmail = await Users.findOne({
@@ -13,6 +14,9 @@ module.exports = async (req, res) => {
     });
 
     if (userName) {
+
+        console.log("userName==========>>>>>", userName.dataValues);
+
         res.status(200).json({ message: "이미 존재하는 username 입니다" });
     } else if (userEmail) {
         res.status(200).json({ message: "이미 존재하는 email 입니다" });
