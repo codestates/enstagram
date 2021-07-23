@@ -1,6 +1,6 @@
-function Main() {
+function Main( userData ) {
   return (
-    <div>hello world!</div>
+    <div>This is Main Page, {userData}</div>
   )
 }
 
