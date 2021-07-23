@@ -10,7 +10,8 @@ module.exports = async (req, res) => {
     });
 
     const userEmail = await Users.findOne({
-        where: { email: req.body.email }
+        where: { email: req.body.email },
+        attributes: ['email']
     });
 
     if (userName) {
