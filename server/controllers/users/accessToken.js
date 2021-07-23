@@ -10,6 +10,9 @@ module.exports = async (req, res) => {
 
         let token = authorization.split(' ')[1];
         token = token.slice(0, token.length - 1);
+
+        console.log("토큰의 정보 확인::::::::", token);
+
         const tokenUserInfo = verify(
             token, process.env.ACCESS_SECRET, (err) => {
                 if (err) {
