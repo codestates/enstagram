@@ -10,8 +10,8 @@ module.exports = async (req, res) => {
             where: { username: req.body.username }
         });
 
-
         if (userName) {
+
             const userPassword = await Users.findOne({
                 where: { password: req.body.password }
             });
