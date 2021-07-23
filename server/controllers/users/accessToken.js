@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     const { headers: { authorization } } = req;
 
     if (!authorization) {
-        res.status(403).json({ message: "액세스 토큰이 존재하지 않습니다" });
+        res.status(200).json({ message: "액세스 토큰이 존재하지 않습니다" });
     } else {
         try {
             let token = authorization.split(' ')[1];
@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
             });
 
             if (!userInfo) {
-                res.status(403).json({ message: "일치하는 유저 정보가 없습니다" });
+                res.status(200).json({ message: "일치하는 유저 정보가 없습니다" });
             } else {
 
                 const { dataValues: { id, username, email } } = userInfo;
@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
                 });
             }
         } catch {
-            res.status(403).json({ message: "만료된 토큰" });
+            res.status(200).json({ message: "만료된 토큰" });
         }
     }
 };

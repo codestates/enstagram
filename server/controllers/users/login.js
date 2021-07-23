@@ -15,9 +15,9 @@ module.exports = async (req, res) => {
         });
 
         if (userName && !userPassword) {
-            res.status(403).json({ message: "비밀번호 오류" });
+            res.status(200).json({ message: "비밀번호 오류" });
         } else if (!userName && userPassword) {
-            res.status(403).json({ message: "아이디 오류" });
+            res.status(200).json({ message: "아이디 오류" });
         } else {
             const { dataValues: { id, username, email, createdAt, updatedAt } } = userName;
 
@@ -56,9 +56,9 @@ module.exports = async (req, res) => {
         });
 
         if (userEmail && !userPassword) {
-            res.status(403).json({ message: "비밀번호 오류" });
+            res.status(200).json({ message: "비밀번호 오류" });
         } else if (!userEmail && userPassword) {
-            res.status(403).json({ message: "이메일 오류" });
+            res.status(200).json({ message: "이메일 오류" });
         } else {
             const { dataValues: { id, username, email, createdAt, updatedAt } } = userEmail;
 
@@ -94,5 +94,7 @@ module.exports = async (req, res) => {
 
             res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
         }
+    } else {
+        res.status(200).json({ message: "회원정보를 입력해주세요" });
     }
 };
