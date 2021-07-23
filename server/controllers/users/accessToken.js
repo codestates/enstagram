@@ -28,17 +28,15 @@ module.exports = async (req, res) => {
                 const { dataValues: { id, username, email } } = userInfo;
 
                 res.status(200).json({
-                    userInfo: {
-                        id,
-                        username,
-                        email,
-                        createdAt,
-                        updatedAt,
-                    }
+                    id,
+                    username,
+                    email,
+                    createdAt,
+                    updatedAt,
                 });
             }
         } catch {
-            res.status(403).json({ message: "만료된 토큰입니다" });
+            res.status(403).json({ message: "만료된 토큰" });
         }
     }
 };
