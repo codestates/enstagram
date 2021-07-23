@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
                 updatedAt,
             },
                 process.env.ACCESS_SECRET, {
-                expiresIn: '30s',
+                expiresIn: Math.floor(Date.now() / 1000) + 30,
             });
 
             const refreshToken = await sign({
@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
                 updatedAt,
             },
                 process.env.ACCESS_SECRET, {
-                expiresIn: '30s',
+                expiresIn: Math.floor(Date.now() / 1000) + 30,
             });
 
             const refreshToken = await sign({
