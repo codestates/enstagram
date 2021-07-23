@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     if (userInfo.dataValues.username === req.body.username) {
         res.status(200).json({ message: "이미 존재하는 username 입니다" });
     } else if (userInfo.dataValues.email === req.body.email) {
-        res.status(200).json({ message: "이미 존재하는 email 입니다" })
+        res.status(200).json({ message: "이미 존재하는 email 입니다" });
     } else {
         const { name, username, email, password } = req.body;
 
