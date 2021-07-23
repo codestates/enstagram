@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import "./Mypage.css";
 import { dummyPosts, placeHolderImage } from '../dummyData';
+import axios from 'axios';
 
+const serverUrl = 'ec2-15-165-74-82.ap-northeast-2.compute.amazonaws.com'
 const dummyUserForMyPage = {
     username: 'Kakao-Ryan',
     followers: 123,
@@ -9,11 +12,18 @@ const dummyUserForMyPage = {
     profilePhoto: placeHolderImage,
     name: 'Ryan Kim'
 }
-const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage }) => {
+
+const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin }) => {
+    const history = useHistory();
+
+    const handleLogout = () => {
+        axios.post(`${serverUrl}/logout`).then((res)=> {
+            setIsLogin(false);
+            history.push('/');
+        })
+    }
     /**
      * TODO:
-     * 1) Logout Handler
-     * 2) Link to profile edit page
      * 3) More CSS fix
      * 4) Add a Modal component to show post detail
      */
@@ -25,12 +35,11 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage }) => {
                         <img alt="my-profile-pic" src={userInfo.profilePhoto} />
                     </div>
 
-                    {/* profile pic 옆에 들어갈 부분 3줄*/}
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
-                            <div className="btn-primary edit-profile">프로필 편집</div>
-                            <div className="btn-primary logout">로그아웃</div>
+                            <Link className="btn-primary edit-profile" to="/profile-edit"><div>프로필 편집</div></Link>
+                            <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
                             <div><strong>{posts.length}</strong> posts</div>
@@ -45,7 +54,7 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage }) => {
             <div className="gallery-container">
                 <div className="gallery-list-body">
                     {posts.map((post, idx)=>
-                        <div className="gallery-image-wrapper">
+                        <div key={idx} className="gallery-image-wrapper">
                             <img src={post.picture} alt={post.content} /> 
                         </div>
                     )}

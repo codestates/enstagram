@@ -8,8 +8,8 @@ import { placeHolderImage } from '../dummyData';
 const Header = ({ profilePhoto = placeHolderImage }) => {
     return (
         <div id="header-body">
-            <Link to="/">
-                <span id="logo">Enstagram</span>
+            <Link id="logo" to="/">
+                <span>Enstagram</span>
             </Link>
             <input className="search" type="search" placeholder="Search"/>
             <div id="nav">
