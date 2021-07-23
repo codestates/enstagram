@@ -15,34 +15,30 @@ module.exports = async (req, res) => {
                 token, process.env.ACCESS_SECRET
             );
 
-            res.status(200).json(tokenUserInfo);
+            const { id, username, email, createdAt, updatedAt } = tokenUserInfo;
 
+            const userInfo = await Users.findOne({
+                where: { id: id, username: username, email: email }
+            });
+
+            if (!userInfo) {
+                res.status(403).json({ message: "일치하는 유저 정보가 없습니다" });
+            } else {
+
+                const { dataValues: { id, username, email } } = userInfo;
+
+                res.status(200).json({
+                    userInfo: {
+                        id,
+                        username,
+                        email,
+                        createdAt,
+                        updatedAt,
+                    }
+                });
+            }
         } catch {
             res.status(403).json({ message: "만료된 토큰입니다" });
         }
-
-
-        // const userInfo = await Users.findOne({
-        //     where: { id: id, username: username, email: email }
-        // });
-
-        // if (!userInfo) {
-        //     res.status(403).json({ message: "유저 정보를 불러오는데 실패했습니다" });
-        // } else {
-
-        //     const { dataValues: { id, username, email } } = userInfo;
-
-        //     res.status(200).json({
-        //         userInfo: {
-        //             id,
-        //             username,
-        //             email,
-        //             createdAt,
-        //             updatedAt,
-        //         }
-        //     });
-        // }
-
-        res.status(200).json(tokenUserInfo);
     }
 };
