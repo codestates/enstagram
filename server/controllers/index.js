@@ -1,5 +1,6 @@
 module.exports = {
-    signup: require("./users/signup"),  //* 회원가입
-    login: require("./users/login"),    //* 로그인
+    signup: require("./users/signup"),              //* 회원가입
+    login: require("./users/login"),                //* 로그인
+    accessToken: require("./users/accessToken"),    //* 액세스 토큰 요청
     test: require("./users/test"),
 };
