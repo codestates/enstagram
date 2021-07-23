@@ -25,6 +25,7 @@ app.get('/', controllers.test);
 app.post('/', controllers.login);
 app.post('/signup', controllers.signup);
 app.get('/accessToken', controllers.accessToken);
+app.get('/refreshToken', controllers.refreshToken);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
