@@ -18,6 +18,8 @@ module.exports = async (req, res) => {
             res.status(200).json({ message: "비밀번호 오류" });
         } else if (!userName && userPassword) {
             res.status(200).json({ message: "아이디 오류" });
+        } else if (!userName && !userPassword) {
+            res.status(200).json({ message: "비밀번호, 아이디 오류" });
         } else {
             const { dataValues: { id, username, email, createdAt, updatedAt } } = userName;
 
@@ -59,6 +61,8 @@ module.exports = async (req, res) => {
             res.status(200).json({ message: "비밀번호 오류" });
         } else if (!userEmail && userPassword) {
             res.status(200).json({ message: "이메일 오류" });
+        } else if (!userEmail && !userPassword) {
+            res.status(200).json({ message: "비밀번호, 이메일 오류" });
         } else {
             const { dataValues: { id, username, email, createdAt, updatedAt } } = userEmail;
 
@@ -86,6 +90,7 @@ module.exports = async (req, res) => {
 
             res.cookie('refreshToken', refreshToken);
 
+            //TODO: 리프레쉬 토큰 작업 HTTPS 적용 후 바꿔줘야함
             // , {
             //     httpOnly: true,
             //         sameSite: 'None',
