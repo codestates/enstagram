@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
                 iat: Math.floor(Date.now()),
             },
                 process.env.ACCESS_SECRET, {
-                expiresIn: '30s',
+                expiresIn: '60s',
             });
 
             const refreshToken = await sign({
