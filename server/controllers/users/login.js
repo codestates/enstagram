@@ -88,7 +88,7 @@ module.exports = async (req, res) => {
                 secure: true,
             });
 
-            res.status(200).json({ accessToken: accessToken, message: "로그인 성공 " });
+            res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
 
         } else {
             res.status(200).json({ message: "로그인 실패" });
