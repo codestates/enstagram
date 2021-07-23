@@ -6,6 +6,7 @@ sudo npm install mysql
 sudo npm install mysql2
 sudo npm install cors
 sudo npm install sequelize sequelize-cli
+sudo npm install cookie-parser
 sudo apt-get update
 sudo apt-get install authbind
 sudo touch /etc/authbind/byport/80
