@@ -8,17 +8,9 @@ module.exports = async (req, res) => {
         res.status(403).json({ message: "리프레쉬 토큰이 존재하지 않습니다" });
     } else {
         try {
-            const token = verify(refreshToken, process.env.REFRESH_SECRET);
-
-            console.log("token 의 정보==================>>>>>>>>>>>", token);
+            const token = await verify(refreshToken, process.env.REFRESH_SECRET);
 
             const { id, username, email, createdAt, updatedAt } = token;
-
-            console.log("id 정보 =============>>", id);
-            console.log("id 정보 =============>>", username);
-            console.log("id 정보 =============>>", email);
-            console.log("id 정보 =============>>", createdAt);
-            console.log("id 정보 =============>>", updatedAt);
 
             const payload = {
                 id,
@@ -28,7 +20,7 @@ module.exports = async (req, res) => {
                 updatedAt,
             }
 
-            const accessToken = sign({
+            const accessToken = await sign({
                 id,
                 username,
                 email,
@@ -39,9 +31,11 @@ module.exports = async (req, res) => {
                 expiresIn: process.env.ACCESS_TIME,
             });
 
+            console.log("accessToken======>>>", accessToken);
+
             res.status(200).json({
                 accessToken: accessToken,
-                userInfo: payload
+                userInfo: payload,
             });
 
         } catch {

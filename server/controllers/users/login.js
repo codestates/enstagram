@@ -44,7 +44,6 @@ module.exports = async (req, res) => {
             });
 
             res.cookie('refreshToken', refreshToken);
-
             res.status(200).json({ accessToken: accessToken, message: "로그인 성공 " });
         }
     } else if (req.body.email) {
