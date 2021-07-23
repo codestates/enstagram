@@ -5,6 +5,7 @@ const { sign } = require('jsonwebtoken');
 module.exports = async (req, res) => {
 
     if (req.body.username) {
+
         const userName = await Users.findOne({
             where: { username: req.body.username, password: req.body.password },
         });
