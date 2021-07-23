@@ -94,4 +94,13 @@
     margin-right: 30px;
     border: 1px solid gray;
     border-radius: 3px;
+    cursor: pointer;
+}
+
+a.btn-primary:link {
+    text-decoration: none;
+}
+
+a.btn-primary:visited {
+    color: black;
 }
