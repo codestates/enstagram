@@ -10,7 +10,11 @@ module.exports = async (req, res) => {
 
         const token = authorization.split(' ')[1];
         const tokenUserInfo = verify(
-            token, process.env.ACCESS_SECRET);
+            token, process.env.ACCESS_SECRET, (err) => {
+                if (err) {
+                    res.status(403).json("토큰이 만료되었습니다");
+                }
+            });
 
         console.log("verify의 내부 내용!!!!!!!!!!!!!", tokenUserInfo);
 
