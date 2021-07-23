@@ -24,6 +24,7 @@ app.use(
 app.use(cookieParser());
 
 app.get('/', controllers.test);
+app.get('/2', controllers.test2);
 app.post('/', controllers.login);
 app.post('/signup', controllers.signup);
 app.get('/accessToken', controllers.accessToken);
