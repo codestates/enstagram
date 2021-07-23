@@ -16,7 +16,8 @@ app.use(
   })
 );
 
-app.get('/', controllers.login);
+app.get('/', controllers.test);
+app.post('/', controllers.login);
 app.post('/signup', controllers.signup);
 
 app.listen(port, () => {
