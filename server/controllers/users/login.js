@@ -19,7 +19,6 @@ module.exports = async (req, res) => {
                 email,
                 createdAt,
                 updatedAt,
-                iat: Math.floor(Date.now()),
             },
                 process.env.ACCESS_SECRET, {
                 expiresIn: '30s',
@@ -31,7 +30,6 @@ module.exports = async (req, res) => {
                 email,
                 createdAt,
                 updatedAt,
-                iat: Math.floor(Date.now()),
             },
                 process.env.REFRESH_SECRET, {
                 expiresIn: '7d'
@@ -63,10 +61,9 @@ module.exports = async (req, res) => {
                 email,
                 createdAt,
                 updatedAt,
-                iat: Math.floor(Date.now()),
             },
                 process.env.ACCESS_SECRET, {
-                expiresIn: '60s',
+                expiresIn: '30s',
             });
 
             const refreshToken = await sign({
@@ -75,7 +72,6 @@ module.exports = async (req, res) => {
                 email,
                 createdAt,
                 updatedAt,
-                iat: Math.floor(Date.now()),
             },
                 process.env.REFRESH_SECRET, {
                 expiresIn: '7d'

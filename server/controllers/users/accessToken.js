@@ -22,6 +22,8 @@ module.exports = async (req, res) => {
 
         console.log("verify의 내부 내용!!!!!!!!!!!!!", tokenUserInfo);
 
+        res.status(200).json(tokenUserInfo);
+
         // const userInfo = await Users.findOne({
         //     where: { id: id, username: username, email: email }
         // });
