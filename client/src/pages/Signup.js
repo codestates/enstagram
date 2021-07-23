@@ -20,7 +20,10 @@ function Signup({ setIsLogin, requestFacebookLogin, setUserData }) {
 
   const [isDisabled, setIsDisabled] = useState(true);
 
-  function changeButtonState(str) {
+  const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
+  const [isUsernameDuplicate, setIsUsernameDuplicate] = useState(false);
+
+  const changeSingupButtonState = (str) => {
     if (str === "")
       setIsDisabled(true);
     else if (
@@ -34,41 +37,43 @@ function Signup({ setIsLogin, requestFacebookLogin, setUserData }) {
     else setIsDisabled(true);
   }
 
-  function handleChangeEmail(event) {
+  const handleChangeEmail = (event) => {
     const str = event.target.value;
+    setIsEmailDuplicate(false);
     setEmail(str);
     if (str === "") 
       setIsEmailValid("empty");
     else if (!validateEmail(str)) setIsEmailValid("invalid");
     else setIsEmailValid("valid");
-    changeButtonState(str);
+    changeSingupButtonState(str);
   }
 
-  function handleChangeName(event) {
+  const handleChangeName = (event) => {
     const str = event.target.value;
     setName(str);
     if (str === "") {
       setIsNameValid("empty");
     } else setIsNameValid("valid");
-    changeButtonState(str);
+    changeSingupButtonState(str);
   }
 
-  function handleChangeUsername(event) {
+  const handleChangeUsername = (event) => {
     const str = event.target.value;
+    setIsUsernameDuplicate(false);
     setUsername(str);
     if (str === "") {
       setIsUsernameValid("empty");
     } else setIsUsernameValid("valid");
-    changeButtonState(str);
+    changeSingupButtonState(str);
   }
 
-  function handleChangePassword(event) {
+  const handleChangePassword = (event) => {
     const str = event.target.value;
     setPassword(str);
     if (str === "") {
       setIsPasswordValid("empty");
     } else setIsPasswordValid("valid");
-    changeButtonState(str);
+    changeSingupButtonState(str);
   }
 
   async function requestSignup() {
@@ -83,11 +88,20 @@ function Signup({ setIsLogin, requestFacebookLogin, setUserData }) {
     );
     console.log(res);
     if (res.data.message === "회원가입 성공") {
-      const { userData } = res.data;
-      setUserData(userData);
+      console.log("화면 바껴라")
+      setUserData(res.data.data);
       setIsLogin(true);
     } else {
       // 어떤 정보가 중복이었는지 알려주기
+      console.log("signup fail")
+      const msg = res.data.message;
+      console.log(msg);
+      if (msg === "이미 존재하는 email 입니다") {
+        setIsEmailDuplicate(true);
+      }
+      else if (msg === "이미 존재하는 username 입니다") {
+        setIsUsernameDuplicate(true);
+      }
     }
     // 서버에 로그인 요청
     // 로그인 성공할 경우 setIsLogin(true) 호출
@@ -95,8 +109,8 @@ function Signup({ setIsLogin, requestFacebookLogin, setUserData }) {
 
   return (
     <div>
-      <div className="container">
-        <div className="login-box box-1">
+      <div className="login-signup-container">
+        <div className="signup-box box-1">
           <h1 className="logo">Enstagram</h1>
           <span className="signup-text">
             친구들의 사진과 동영상을 보려면 가입하세요.
@@ -112,38 +126,48 @@ function Signup({ setIsLogin, requestFacebookLogin, setUserData }) {
           <div className="line"></div>
           <span className="or-text">또는</span>
           <input
-            className={`input-box signup-input-1 ${
+            className={`signup-input-box signup-input-1 ${
               email ? "placeholder-shrink" : null
             }`}
             type="text"
-            placeholder="email"
+            placeholder="이메일 주소"
             value={email}
             onChange={handleChangeEmail}
           />
           <input
-            className="input-box"
+            className="signup-input-box"
             type="text"
-            placeholder="name"
+            placeholder="성명"
             value={name}
             onChange={handleChangeName}
           />
           <input
-            className="input-box"
+            className="signup-input-box"
             type="text"
-            placeholder="username"
+            placeholder="사용자 이름"
             value={username}
             onChange={handleChangeUsername}
           />
           <input
-            className="input-box"
+            className="signup-input-box"
             type="password"
-            placeholder="password"
+            placeholder="비밀번호"
             value={password}
             onChange={handleChangePassword}
           />
           {isEmailValid === "invalid" ? (
             <span className="invalid-msg">
               잘못된 이메일입니다. 다시 확인하세요.
+            </span>
+          ) : null}
+          {isEmailDuplicate ? (
+            <span className="invalid-msg">
+              이미 존재하는 이메일입니다.
+            </span>
+          ) : null}
+          {isUsernameDuplicate ? (
+            <span className="invalid-msg">
+              이미 존재하는 사용자 이름입니다.
             </span>
           ) : null}
           <button
