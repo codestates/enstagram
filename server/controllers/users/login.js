@@ -27,6 +27,7 @@ module.exports = async (req, res) => {
         });
 
         const refreshToken = sign({
+            id,
             username,
             email,
             createdAt,
@@ -48,6 +49,9 @@ module.exports = async (req, res) => {
     } else if (userEmail) {
 
         const { dataValues: { id, username, email, createdAt, updatedAt } } = userEmail;
+
+        console.log("유저의 정보==============>>>>>", userEmail.dataValues);
+
         const accessToken = sign({
             id: id,
             username,
@@ -61,6 +65,7 @@ module.exports = async (req, res) => {
         });
 
         const refreshToken = sign({
+            id,
             username,
             email,
             createdAt,
