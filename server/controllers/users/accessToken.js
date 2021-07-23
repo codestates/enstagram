@@ -11,12 +11,12 @@ module.exports = async (req, res) => {
         let token = authorization.split(' ')[1];
         token = token.slice(0, token.length - 1);
 
-        console.log("토큰의 정보 확인::::::::", token);
-
         const tokenUserInfo = await verify(
-            token, process.env.ACCESS_SECRET);
+            token, process.env.ACCESS_SECRET)
+            .catch(res => {
+                res.status(403).json({ message: "토큰이 만료되었습니다" });
+            });
 
-        console.log("verify의 내부 내용!!!!!!!!!!!!!", tokenUserInfo);
 
         res.status(200).json(tokenUserInfo);
 
