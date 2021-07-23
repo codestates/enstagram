@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     } else {
 
         const token = authorization.split(' ')[1];
-        const { body: { id, username, email, createdAt, updatedAt } } = nJwt.verify(
+        const { body: { id, username, email, createdAt, updatedAt } } = verify(
             token, process.env.ACCESS_SECRET);
 
         const userInfo = await Users.findOne({
