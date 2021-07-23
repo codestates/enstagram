@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     });
 
     if (userName) {
-        const { dataValues: { id, username, email, createdAt, updatedAt } } = userInfo;
+        const { dataValues: { id, username, email, createdAt, updatedAt } } = userName;
         const accessToken = sign({
             id,
             username,
@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
 
     } else if (userEmail) {
 
-        const { dataValues: { id, username, email, createdAt, updatedAt } } = userInfo;
+        const { dataValues: { id, username, email, createdAt, updatedAt } } = userEmail;
         const accessToken = sign({
             id: id,
             username,
