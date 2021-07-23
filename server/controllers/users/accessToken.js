@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
         const tokenUserInfo = await verify(
             token, process.env.ACCESS_SECRET, (err, res) => {
                 if (err) {
-                    res.status(403).json({ message: "토큰이 만료되었습니다" });
+                    return res.status(403).json({ message: "토큰이 만료되었습니다" });
                 } else {
                     console.log("res의 정보::::::::::::", res);
                     return res;
