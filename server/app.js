@@ -16,9 +16,8 @@ app.use(
   })
 );
 
-app.get('/', controllers.test);
+app.get('/', controllers.login);
 app.post('/signup', controllers.signup);
-app.post('/login', controllers.login);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
