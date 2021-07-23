@@ -1,5 +1,5 @@
 const { Users } = require('../../models');
-const { verify } = require('njwt');
+const { verify } = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
     const { headers: { authorization } } = req;
@@ -9,28 +9,32 @@ module.exports = async (req, res) => {
     } else {
 
         const token = authorization.split(' ')[1];
-        const { body: { id, username, email, createdAt, updatedAt } } = verify(
+        const tokenUserInfo = verify(
             token, process.env.ACCESS_SECRET);
 
-        const userInfo = await Users.findOne({
-            where: { id: id, username: username, email: email }
-        });
+        console.log("verify의 내부 내용!!!!!!!!!!!!!", tokenUserInfo);
 
-        if (!userInfo) {
-            res.status(403).json({ message: "유저 정보를 불러오는데 실패했습니다" });
-        } else {
+        // const userInfo = await Users.findOne({
+        //     where: { id: id, username: username, email: email }
+        // });
 
-            const { dataValues: { id, username, email } } = userInfo;
+        // if (!userInfo) {
+        //     res.status(403).json({ message: "유저 정보를 불러오는데 실패했습니다" });
+        // } else {
 
-            res.status(200).json({
-                userInfo: {
-                    id,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                }
-            });
-        }
+        //     const { dataValues: { id, username, email } } = userInfo;
+
+        //     res.status(200).json({
+        //         userInfo: {
+        //             id,
+        //             username,
+        //             email,
+        //             createdAt,
+        //             updatedAt,
+        //         }
+        //     });
+        // }
+
+        res.status(200).json(tokenUserInfo);
     }
 };
