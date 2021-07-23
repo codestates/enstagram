@@ -101,7 +101,9 @@ module.exports = async (req, res) => {
                 res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
             }
         }
-    } else if ((!req.body.username && !req.body.email) || !req.body.password) {
-        res.status(200).json({ message: "회원정보를 입력해주세요" });
+    } else if ((!req.body.username && req.body.email) || !req.body.password) {
+        res.status(200).json({ message: "회원정보를 입력    해주세요" });
+    } else if ((req.body.username && !req.body.email) || !req.body.password) {
+        res.status(200).json({ message: "회원정보를 입력    해주세요" });
     }
 };
