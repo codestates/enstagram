@@ -5,34 +5,40 @@ module.exports = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) {
-        res.status(400).json({ message: "리프레쉬 토큰이 존재하지 않습니다" });
+        res.status(403).json({ message: "리프레쉬 토큰이 존재하지 않습니다" });
     } else {
-        const token = verify(refreshToken, process.env.REFRESH_SECRET);
+        try {
+            const token = verify(refreshToken, process.env.REFRESH_SECRET);
 
-        const { id, username, email, createdAt, updatedAt } = token.body;
+            console.log("token 의 정보==================>>>>>>>>>>>", token);
 
-        const payload = {
-            id,
-            username,
-            email,
-            createdAt,
-            updatedAt,
+            const { id, username, email, createdAt, updatedAt } = token.body;
+
+            const payload = {
+                id,
+                username,
+                email,
+                createdAt,
+                updatedAt,
+            }
+
+            const accessToken = sign({
+                id,
+                username,
+                email,
+                createdAt,
+                updatedAt,
+            },
+                process.env.ACCESS_SECRET, {
+                expiresIn: process.env.ACCESS_TIME,
+            });
+
+            res.status(200).json({
+                accessToken: accessToken,
+                userInfo: payload
+            });
+        } catch {
+            res.status(403).json({ message: "리프레쉬 토큰 만료됨" });
         }
-
-        const accessToken = sign({
-            id,
-            username,
-            email,
-            createdAt,
-            updatedAt,
-        },
-            process.env.ACCESS_SECRET, {
-            expiresIn: process.env.ACCESS_TIME,
-        });
-
-        res.status(200).json({
-            accessToken: accessToken,
-            userInfo: payload
-        });
     }
 };
