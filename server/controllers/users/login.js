@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
                 updatedAt,
             },
                 process.env.ACCESS_SECRET, {
-                expiresIn: '30s',
+                expiresIn: process.env.ACCESS_TIME,
             });
 
             const refreshToken = await sign({
@@ -43,11 +43,7 @@ module.exports = async (req, res) => {
                 expiresIn: '7d'
             });
 
-            res.cookie('refreshToken', refreshToken, {
-                httpOnly: true,
-                sameSite: 'None',
-                secure: true,
-            });
+            res.cookie('refreshToken', refreshToken);
 
             res.status(200).json({ accessToken: accessToken, message: "로그인 성공 " });
         }
@@ -75,7 +71,7 @@ module.exports = async (req, res) => {
                 updatedAt,
             },
                 process.env.ACCESS_SECRET, {
-                expiresIn: '30s',
+                expiresIn: process.env.ACCESS_TIME,
             });
 
             const refreshToken = await sign({
@@ -89,11 +85,13 @@ module.exports = async (req, res) => {
                 expiresIn: '7d'
             });
 
-            res.cookie('refreshToken', refreshToken, {
-                httpOnly: true,
-                sameSite: 'None',
-                secure: true,
-            });
+            res.cookie('refreshToken', refreshToken);
+
+            // , {
+            //     httpOnly: true,
+            //         sameSite: 'None',
+            //             secure: true,
+            // }
 
             res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
         }

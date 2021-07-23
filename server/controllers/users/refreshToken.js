@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
             updatedAt,
         },
             process.env.ACCESS_SECRET, {
-            expiresIn: '30s',
+            expiresIn: process.env.ACCESS_TIME,
         });
 
         res.status(200).json({
