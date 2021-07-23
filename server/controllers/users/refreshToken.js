@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 
             console.log("token 의 정보==================>>>>>>>>>>>", token);
 
-            const { id, username, email, createdAt, updatedAt } = token.body;
+            const { id, username, email, createdAt, updatedAt } = token;
 
             const payload = {
                 id,
@@ -37,6 +37,7 @@ module.exports = async (req, res) => {
                 accessToken: accessToken,
                 userInfo: payload
             });
+
         } catch {
             res.status(403).json({ message: "리프레쉬 토큰 만료됨" });
         }
