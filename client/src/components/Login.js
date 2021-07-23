@@ -6,11 +6,11 @@ import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import Footer from '../components/Footer'
 const axios = require("axios");
 
-function Login({ setIsLogin, requestFacebookLogin }) {
+function Login({ setIsLogin, requestFacebookLogin, setUserData }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [invalidUsername, setInvalidUsername] = useState(false);
-  const [invalidPassword, setInvalidPassword] = useState(true);
+  const [invalidPassword, setInvalidPassword] = useState(false);
 
   function handleChangeUsername(event) {
     setUsername(event.target.value);
@@ -20,7 +20,8 @@ function Login({ setIsLogin, requestFacebookLogin }) {
     setPassword(event.target.value);
   }
 
-  function requestLogin() {
+  async function requestLogin() {
+    
     // 서버에 로그인 요청
     // 로그인 성공할 경우 setIsLogin(true) 호출
   }
@@ -39,7 +40,7 @@ function Login({ setIsLogin, requestFacebookLogin }) {
           />
           <input
             className="input-box"
-            type="text"
+            type="password"
             placeholder="password"
             value={password}
             onChange={handleChangePassword}
