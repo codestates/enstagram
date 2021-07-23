@@ -1,7 +1,6 @@
 .footer-container {
-  width:800px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 20px;
+  margin-right: 20px;
   font-size: .8em;
   display: flex;
   flex-direction: column;
@@ -11,9 +10,14 @@
 }
 
 .footer-items {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  word-break: keep-all;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .footer-items > span {
   margin-right: 20px;
+  margin-bottom: 10px;
 }

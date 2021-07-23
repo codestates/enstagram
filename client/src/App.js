@@ -12,6 +12,7 @@ import Header from './components/Header';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   function requestFacebookLogin() {
     // fb아이디로 로그인하기 클릭
@@ -33,11 +34,12 @@ function App() {
       <Switch>
         <Route exact path="/">
           {isLogin ? (
-            <Main />
+            <Main userData={userData}/>
           ) : (
             <Login
               setIsLogin={setIsLogin}
               requestFacebookLogin={requestFacebookLogin}
+              setUserData={setUserData}
             />
           )}
         </Route>
@@ -45,6 +47,7 @@ function App() {
           <Signup
             setIsLogin={setIsLogin}
             requestFacebookLogin={requestFacebookLogin}
+            setUserData={setUserData}
           />
         </Route>
         <Route path="/mypage">
