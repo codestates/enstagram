@@ -4,5 +4,5 @@ module.exports = async (req, res) => {
 
     const userInfo = await Users.findAll();
 
-    res.status(200).json(userInfo[0]);
+    res.status(200).json(userInfo[0].dataValues);
 };
