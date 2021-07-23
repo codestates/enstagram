@@ -1,5 +1,5 @@
 const { Users } = require('../../models');
-const { verify } = require('jsonwebtoken');
+const { verify } = require('njwt');
 
 module.exports = async (req, res) => {
     const { headers: { authorization } } = req;
@@ -9,9 +9,8 @@ module.exports = async (req, res) => {
     } else {
 
         const token = authorization.split(' ')[1];
-        const { body: { id, username, email, createdAt, updatedAt } } = await verify(
-            token, process.env.ACCESS_SECRET
-        );
+        const { body: { id, username, email, createdAt, updatedAt } } = nJwt.verify(
+            token, process.env.ACCESS_SECRET);
 
         const userInfo = await Users.findOne({
             where: { id: id, username: username, email: email }
