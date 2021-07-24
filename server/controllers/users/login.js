@@ -45,7 +45,6 @@ module.exports = async (req, res) => {
 
                 res.cookie('refreshToken', refreshToken, {
                     httpOnly: true,
-                    secure: true,
                 });
 
                 res.status(200).json({ accessToken: accessToken, message: "로그인 성공 " });
@@ -95,7 +94,6 @@ module.exports = async (req, res) => {
 
                 res.cookie('refreshToken', refreshToken, {
                     httpOnly: true,
-                    secure: true,
                 });
 
                 res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
