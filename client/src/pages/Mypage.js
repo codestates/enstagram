@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import "./Mypage.css";
-import Post, { Modal } from '../components/Post'
+import { Modal } from '../components/Post'
 import { dummyPosts, placeHolderImage } from '../dummyData';
 import axios from 'axios';
+import { serverUrl } from '../utils/constants'
 
-const serverUrl = 'ec2-15-165-74-82.ap-northeast-2.compute.amazonaws.com'
 export const dummyUserForMyPage = {
     username: 'Kakao-Ryan',
     followers: 123,
@@ -30,7 +30,7 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin })
             history.push('/');
         })
     }
-    
+
     return (
         <div>
             <div className="my-profile-field">
@@ -66,7 +66,7 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin })
             </div>
 
             {isModalOpen &&
-                <Modal post={activePost} onModalClose={setIsModalOpen}
+                <Modal post={activePost} loggedInUserInfo={userInfo} onModalClose={setIsModalOpen}
             />}
         </div>
     )
