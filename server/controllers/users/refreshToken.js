@@ -3,7 +3,7 @@ const { verify, sign } = require('jsonwebtoken');
 module.exports = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
 
-    console.log("refreshToken where??", req);
+    console.log("refreshToken where??", req.cookies);
 
     if (!refreshToken) {
         res.status(200).json({ message: "리프레쉬 토큰이 존재하지 않습니다" });
