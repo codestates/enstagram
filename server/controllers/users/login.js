@@ -43,7 +43,11 @@ module.exports = async (req, res) => {
                     expiresIn: '7d'
                 });
 
-                res.cookie('refreshToken', refreshToken);
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                    sameSite: 'None',
+                    secure: true,
+                });
                 res.status(200).json({ accessToken: accessToken, message: "로그인 성공 " });
             }
 
@@ -89,14 +93,11 @@ module.exports = async (req, res) => {
                     expiresIn: '7d'
                 });
 
-                res.cookie('refreshToken', refreshToken);
-
-                //TODO: 리프레쉬 토큰 작업 HTTPS 적용 후 바꿔줘야함
-                // , {
-                //     httpOnly: true,
-                //         sameSite: 'None',
-                //             secure: true,
-                // }
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                    sameSite: 'None',
+                    secure: true,
+                });
 
                 res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
             }
