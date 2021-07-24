@@ -9,7 +9,5 @@ module.exports = async (req, res) => {
         return el.dataValues;
     });
 
-    // 갑자기 왜 이러는거야??
-
     res.status(200).json(userArr);
 };
