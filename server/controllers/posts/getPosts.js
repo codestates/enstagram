@@ -3,7 +3,7 @@ const { Posts } = require('../../models');
 module.exports = async (req, res) => {
 
     if (req.body.id.length !== 0) {
-        const arr = req.query.id.map(el => {
+        const arr = req.query.id.map(async el => {
             return await Posts.findOne({
                 where: { id: el }
             });
