@@ -10,7 +10,10 @@ module.exports = async (req, res) => {
 
         const followers = userInfo.dataValues.follower_id;
 
-        const followerInfo = followers.map(async el => {
+        console.log("씨발 뭔데에에에에", followers);
+
+        const followerInfo = followers.map(async (el) => {
+
             const postInfo = await Posts.findOne({
                 where: { user_id: el }
             });
