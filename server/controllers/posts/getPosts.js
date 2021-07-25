@@ -10,17 +10,18 @@ module.exports = async (req, res) => {
 
         const followers = userInfo.dataValues.follower_id;
 
-        console.log("씨발 뭔데에에에에", followers);
-
         const followerInfo = followers.map(async (el) => {
 
             const postInfo = await Posts.findOne({
                 where: { user_id: el }
             });
 
-            console.log("postINfooooooooooooooooooo", postInfo);
+            if (postInfo) {
+                return postInfo.dataValues;
+            } else {
+                res.status(200).json({ message: "상대의 포스트 데이터가 없습니다." })
+            }
 
-            return postInfo;
         })
 
         res.status(200).json({
