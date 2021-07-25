@@ -12,6 +12,8 @@ module.exports = async (req, res) => {
             user_id: req.body.user_id,
             content: req.body.content,
             pictures: req.body.pictures,
+            comment_id: [],
+            like_id: [],
         }
 
         await Posts.create(post)
