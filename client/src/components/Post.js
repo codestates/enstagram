@@ -10,7 +10,7 @@ import { timeSince } from '../utils/timeSince';
 
 // postUserInfo should be removed when post (currentPost) has userProfilePicture information so we can just do: { currentPost.userProfilePicture }
 // or we will need to fetch postUserInfo based on currentPost.username
-const Post = ({ currentPost, loggedInUserInfo, postUserInfo = dummyUserForMyPage }) => {
+const Post = ({ currentPost, loggedInUserInfo, commentHandler, postUserInfo = dummyUserForMyPage }) => {
     const [comment, setComment] = useState('');
     const [like, setLike] = useState(null);
 
@@ -18,7 +18,7 @@ const Post = ({ currentPost, loggedInUserInfo, postUserInfo = dummyUserForMyPage
     useEffect(() => {
         // 1) fetch like information: whether user liked the post or not
         // 2) setLike state with the response from 1. (i.e., setLike(res))
-    }, [])
+    }, [currentPost])
 
     const likeClickHandler = () => {
         axios.post(`${serverUrl}/like`, {
@@ -39,25 +39,23 @@ const Post = ({ currentPost, loggedInUserInfo, postUserInfo = dummyUserForMyPage
     }
 
     const commentSubmitHandler = () => {
-        console.log("commentSubmitHandler")
-        axios.post(`${serverUrl}/comment`, {
-            comment: comment,
-            userId: loggedInUserInfo.id,
-            postId: currentPost.id,
-        }).then((res) => {
-            if (res === 'success') {
-                // update comment state
-                const newComment = {
-                    username: loggedInUserInfo.username,
-                    content: comment
-                }
-                const newCurrentPost = {
-                    ...currentPost,
-                    comments: [...currentPost.comments, newComment]
-                }
-                currentPost = newCurrentPost;
-            }
-        })
+        const newComment = {
+            content: comment,
+            username: loggedInUserInfo && loggedInUserInfo.username
+        }
+        // TODO: Uncomment Below when API is ready
+        // axios.post(`${serverUrl}/comment`, {
+        //     comment: newComment,
+        //     userId: loggedInUserInfo && loggedInUserInfo.id,
+        //     postId: currentPost.id,
+        // }).then((res) => {
+        //     if (res === 'success') {
+        //         // update comment state
+        //         commentHandler(newComment)
+        //     }
+        // })
+        commentHandler(newComment)
+        setComment('');
     }
 
     // If Post information can't include post owner's profile picture
@@ -95,10 +93,14 @@ const Post = ({ currentPost, loggedInUserInfo, postUserInfo = dummyUserForMyPage
                 {currentPost.content}</p>
             </div>
             <div className="comments-container">
-                {currentPost.comments && currentPost.comments.map((comment, idx) =>
-                    <p key={idx}><span className="comment-username">{comment.username}</span>
-                    {comment.content}</p>
-                )}
+                {currentPost.comments && currentPost.comments.map((comment, idx) => {
+                    return (
+                        <p key={idx}>
+                            <span className="comment-username">{comment && comment.username}</span>
+                            {comment && comment.content}
+                        </p>
+                    )
+                })}
             </div>
             <div className="time-container">{timeSince(currentPost.updatedAt)}</div>
             <div className="comment-input-container">
@@ -109,13 +111,13 @@ const Post = ({ currentPost, loggedInUserInfo, postUserInfo = dummyUserForMyPage
     )
 }
 
-export const Modal = ({ post, loggedInUserInfo, onModalClose }) => {
+export const Modal = ({ post, loggedInUserInfo, commentHandler, onModalClose }) => {
     return (
         <div id='post' className="modal"
             onClick={(e) => {
                 if(e.target.id === 'post'){onModalClose(false)}
             }}>
-            <Post currentPost={post} loggedInUserInfo={loggedInUserInfo}  />
+            <Post currentPost={post} commentHandler={commentHandler} loggedInUserInfo={loggedInUserInfo}  />
         </div>
     )
 }

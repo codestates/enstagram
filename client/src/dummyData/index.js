@@ -2,6 +2,8 @@ const getRandomNumber = (min, max) => {
   return parseInt(Math.random() * (Number(max) - Number(min)))
 };
 
+export const placeHolderImage = 'https://pbs.twimg.com/profile_images/970625933160857601/R8RSJs1w.jpg';
+
 export const dummyPosts = [
     {
       id: 1,
@@ -126,4 +128,67 @@ export const dummyPosts = [
       },
 ];
 
-export const placeHolderImage = 'https://pbs.twimg.com/profile_images/970625933160857601/R8RSJs1w.jpg';
+// userInfo: {
+//     "id": PK,
+//     "username": "accountName",
+//     "profilephoto": "./image/dafault_profile.jpg", // default image
+//     "posts": "posts[]",
+//     "postCount": "postCount", => this is not needed as we can get it from posts.length;
+//     "followers": "followerCount",
+//     "following": "followingCount",
+// }
+
+export const otherUserPosts = [
+  {
+    id: 1,
+    username: 'John Smith',
+    picture: `https://i.pinimg.com/originals/18/d1/34/18d1343ffdb9089814f640119ee6d0d6.png`, 
+    content:
+      'Hello my friend!',
+    like: `${getRandomNumber(1, 1000)}`,
+    createdAt: '2019-02-25T16:17:47.000Z',
+    updatedAt: '2021-06-23T16:17:47.000Z',
+  },
+  {
+    id: 2,
+    username: 'John Smith',
+    picture: `https://item.kakaocdn.net/do/9ac8ba2dd82efb5cad54d5c7451167a14022de826f725e10df604bf1b9725cfd`,
+    content:
+      'Hello world!',
+    like: `${getRandomNumber(1, 1000)}`,
+    comments: [{
+      username: 'parkcoding',
+      content: 'this is a comment'
+    },
+    {
+      username: 'choicoding',
+      content: 'this is a comment2'
+    }],
+    createdAt: '2019-02-26T16:17:47.000Z',
+    updatedAt: '2021-07-15T16:17:47.000Z',
+  },
+];
+
+export const dummyOtherUserInfo = {
+  id: '124341248912', // PK,
+  username: 'JSmith', // Handle string empty space in param userId: Ryan Park
+  profilePhoto: 'http://image.kyobobook.co.kr/newimages/giftshop_new/goods/400/1459/S1584498253783.jpg',
+  posts: otherUserPosts,
+  postCount: otherUserPosts.length,
+  followers: 1234,
+  following: 23432,
+  name: 'John Smith'
+}
+
+export const dummyMyUserInfo = {
+  id: '231342323', // PK,
+  username: 'Kakao-Ryan',
+  profilePhoto: placeHolderImage,
+  posts: dummyPosts,
+  postCount: dummyPosts.length,
+  followers: 123,
+  following: 300,
+  name: 'Ryan Kim',
+  // introduction: 'Hello world! Nice to meet you'
+}
+

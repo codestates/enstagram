@@ -11,7 +11,8 @@ export const dummyUserForMyPage = {
     followers: 123,
     following: 300,
     profilePhoto: placeHolderImage,
-    name: 'Ryan Kim'
+    name: 'Ryan Kim',
+    // introduction: 'Hello world! Nice to meet you'
 }
 
 const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin }) => {
