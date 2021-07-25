@@ -17,15 +17,15 @@ module.exports = async (req, res) => {
         await Posts.create(post)
             .then(async (value) => {
 
-                const postArr = userInfo.dataValues.post_id;
+                const postArr = userInfo.dataValues.post_id.data;
 
                 if (postArr.length > 0) {
                     Users.create({
-                        post_id: [...postArr, value.dataValues.id]
+                        post_id: { data: [...postArr, value.dataValues.id] }
                     });
                 } else {
                     Users.create({
-                        post_id: [value.dataValues.id]
+                        post_id: { data: [value.dataValues.id] }
                     });
                 }
 
