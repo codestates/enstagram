@@ -2,6 +2,9 @@ const { Users } = require('../../models');
 
 module.exports = async (req, res) => {
 
+
+    console.log("req.params 의 정보 ========>", req.params);
+
     const userInfo = await Users.findOne({
         where: { email: req.params.email }
     });
