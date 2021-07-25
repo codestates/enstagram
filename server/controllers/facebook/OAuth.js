@@ -3,7 +3,7 @@ const { Users } = require('../../models');
 module.exports = async (req, res) => {
 
     const userInfo = await Users.findOne({
-        where: { email: req.body.email }
+        where: { email: req.params.email }
     });
 
     if (!userInfo) {
