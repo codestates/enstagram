@@ -19,29 +19,21 @@ module.exports = async (req, res) => {
             if (!userPassword) {
                 res.status(200).json({ message: "비밀번호 오류" });
             } else {
-                const { dataValues: { id, name, username, email, createdAt, updatedAt } } = userName;
 
-                const accessToken = await sign({
-                    id,
-                    name,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                delete userName.dataValues.password;
+
+                const accessToken = await sign(
+                    userName,
                     process.env.ACCESS_SECRET, {
                     expiresIn: process.env.ACCESS_TIME,
                 });
 
-                const refreshToken = await sign({
-                    id,
-                    name,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                const refreshToken = await sign(
+                    userName,
                     process.env.REFRESH_SECRET, {
+                    expiresIn: '7d'
+                });
+                process.env.REFRESH_SECRET, {
                     expiresIn: '7d'
                 });
 
@@ -70,28 +62,16 @@ module.exports = async (req, res) => {
             if (!userPassword) {
                 res.status(200).json({ message: "비밀번호 오류" });
             } else {
-                const { dataValues: { id, name, username, email, createdAt, updatedAt } } = userEmail;
 
-                const accessToken = await sign({
-                    id,
-                    name,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                delete userEmail.dataValues.password;
+                const accessToken = await sign(
+                    userEmail,
                     process.env.ACCESS_SECRET, {
                     expiresIn: process.env.ACCESS_TIME,
                 });
 
-                const refreshToken = await sign({
-                    id,
-                    name,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                const refreshToken = await sign(
+                    userEmail,
                     process.env.REFRESH_SECRET, {
                     expiresIn: '7d'
                 });
