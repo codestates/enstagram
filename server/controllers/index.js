@@ -18,4 +18,8 @@ module.exports = {
 
     //! Likes
     onLike: require("./Likes/onLike"),                      //* 좋아요 활성
+
+    //! Follow
+    followers: require("./follow/followers"),               //* 팔로우
+    followings: require("./follow/followings"),             //* 팔로잉
 };
