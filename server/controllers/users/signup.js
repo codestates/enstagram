@@ -26,11 +26,11 @@ module.exports = async (req, res) => {
             username,
             email,
             password,
-            post_id: { data: [] },
-            comment_id: { data: [] },
-            like_id: { data: [] },
-            follower_id: { data: [] },
-            following_id: { data: [] }
+            post_id: {},
+            comment_id: {},
+            like_id: {},
+            follower_id: {},
+            following_id: {}
         });
 
         res.status(201).send({
