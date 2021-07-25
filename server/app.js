@@ -32,6 +32,7 @@ app.get('/getpost', controllers.getPosts);
 app.post('/', controllers.login);
 app.post('/signup', controllers.signup);
 app.post('/createpost', controllers.createPosts);
+app.post('/createcomment', controllers.createComments);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
