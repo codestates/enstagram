@@ -9,6 +9,18 @@ module.exports = async (req, res) => {
     if (!userInfo) {
         res.status(200).json({ message: "일치하는 유저정보가 없습니다" });
     } else {
-        res.status(200).json(userInfo);
+
+        const { dataValues: { id, name, username, email, createdAt, updatedAt } } = userInfo;
+
+        res.status(200).json({
+            data: {
+                id,
+                name,
+                username,
+                email,
+                createdAt,
+                updatedAt
+            },
+            message: "로그인 성공");
     }
 };

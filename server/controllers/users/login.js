@@ -19,10 +19,11 @@ module.exports = async (req, res) => {
             if (!userPassword) {
                 res.status(200).json({ message: "비밀번호 오류" });
             } else {
-                const { dataValues: { id, username, email, createdAt, updatedAt } } = userName;
+                const { dataValues: { id, name, username, email, createdAt, updatedAt } } = userName;
 
                 const accessToken = await sign({
                     id,
+                    name,
                     username,
                     email,
                     createdAt,
@@ -34,6 +35,7 @@ module.exports = async (req, res) => {
 
                 const refreshToken = await sign({
                     id,
+                    name,
                     username,
                     email,
                     createdAt,
@@ -68,10 +70,11 @@ module.exports = async (req, res) => {
             if (!userPassword) {
                 res.status(200).json({ message: "비밀번호 오류" });
             } else {
-                const { dataValues: { id, username, email, createdAt, updatedAt } } = userEmail;
+                const { dataValues: { id, name, username, email, createdAt, updatedAt } } = userEmail;
 
                 const accessToken = await sign({
-                    id: id,
+                    id,
+                    name,
                     username,
                     email,
                     createdAt,
@@ -83,6 +86,7 @@ module.exports = async (req, res) => {
 
                 const refreshToken = await sign({
                     id,
+                    name,
                     username,
                     email,
                     createdAt,
