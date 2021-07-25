@@ -18,9 +18,12 @@ module.exports = async (req, res) => {
             .then(async (value) => {
                 if (userInfo.dataValues.post_id.length > 0) {
                     let arr = [...userInfo.dataValues.post_id, value.dataValues.id];
+
                     Users.update({ post_id: arr })
                 } else {
-                    Users.update({ post_id: value.dataValues.id })
+                    Users.update({ post_id: value.dataValues.id }, {
+                        where: { post_id }
+                    })
                 }
 
                 res.status(200).json({
