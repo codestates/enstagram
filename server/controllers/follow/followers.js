@@ -26,13 +26,13 @@ module.exports = async (req, res) => {
         }
 
         if (targetInfo.dataValues.following_id.length !== 0) {
-            await Users.update({ following_id: [...targetInfo.dataValues.following_id, userInfo.dataValues.id] }, {
+            await Users.update({ following_id: [...targetInfo.dataValues.following_id, myInfo.dataValues.id] }, {
                 where: {
                     id: targetInfo.dataValues.id
                 }
             });
         } else {
-            await Users.update({ following_id: [userInfo.dataValues.id] }, {
+            await Users.update({ following_id: [myInfo.dataValues.id] }, {
                 where: {
                     id: targetInfo.dataValues.id
                 }
