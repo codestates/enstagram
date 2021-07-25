@@ -1,4 +1,3 @@
-const { values } = require('sequelize/types/lib/operators');
 const { Users, Posts } = require('../../models');
 
 module.exports = async (req, res) => {
@@ -10,9 +9,9 @@ module.exports = async (req, res) => {
     }
 
     await Posts.create(post)
-        .then((value) => {
+        .then(async (value) => {
 
-            const userInfo = Users.findOne({
+            const userInfo = await Users.findOne({
                 where: { id: user_id }
             });
 
