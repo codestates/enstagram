@@ -14,5 +14,8 @@ module.exports = {
     getPosts: require("./posts/getPosts"),                  //* 포스트 정보 가져오기
 
     //! Comments
-    createComments: require("./comments/createComments")    //* 코멘트 생성
+    createComments: require("./comments/createComments"),   //* 코멘트 생성
+
+    //! Likes
+    onLike: require("./Likes/onLike"),                      //* 좋아요 활성
 };
