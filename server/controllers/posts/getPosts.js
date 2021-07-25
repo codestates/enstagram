@@ -11,6 +11,9 @@ module.exports = async (req, res) => {
         const followers = userInfo.dataValues.follower_id;
 
         const followerInfo = followers.map(async el => {
+
+            console.log("el dataaaaaaaaaaaaaaaaaaaaa", el);
+
             return await Posts.findOne({
                 where: { user_id: el }
             });
