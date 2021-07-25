@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
             .then(async (value) => {
 
                 await Users.update({ post_id: value.dataValues.id }, {
-                    where: { post_id: [] }
+                    where: { id: post.user_id }
                 });
 
                 res.status(200).json({
