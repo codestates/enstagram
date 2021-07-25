@@ -33,12 +33,6 @@ module.exports = async (req, res) => {
             following_id: []
         });
 
-        const arr = [1, 2, 3];
-
-        Test.create({
-            array: arr
-        });
-
         res.status(201).send({
             data: {
                 name,
