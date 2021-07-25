@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
 
         let post_id = req.query.post_id;
 
-        console.log("post_id 의 정보는요~~~~~~~~~", post_id);
+        console.log("post_id 의 정보는요~~~~~~~~~", typeof post_id);
 
         const arr = req.query.post_id.map(async el => {
             return await Posts.findOne({
