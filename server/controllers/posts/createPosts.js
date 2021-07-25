@@ -8,9 +8,10 @@ module.exports = async (req, res) => {
         pictures: req.body.pictures,
     }
 
-    Posts.create(post);
-
-    console.log("post의 아이디에양=======================>>>>>>>>", post);
+    Posts.create(post)
+        .then(res => {
+            console.log("res 의 아이디에양======================>>>> ", res);
+        });
 
     res.status(200).json({
         data: post,
