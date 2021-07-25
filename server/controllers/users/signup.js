@@ -1,4 +1,4 @@
-const { Users } = require('../../models');
+const { Users, Test } = require('../../models');
 
 //! 회원가입 관련 컨트롤러
 
@@ -26,6 +26,12 @@ module.exports = async (req, res) => {
             username,
             email,
             password,
+        });
+
+        const arr = [1, 2, 3];
+
+        Test.create({
+            array: arr
         });
 
         res.status(201).send({
