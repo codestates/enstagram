@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
                 createdAt,
                 updatedAt
             },
-            message: "로그인 성공");
+            message: "로그인 성공"
+        });
     }
 };
