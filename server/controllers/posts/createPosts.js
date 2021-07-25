@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     }
 
     await Posts.create(post)
-        .then(value => {
+        .then(async (value) => {
 
             const userInfo = await Users.findOne({
                 where: { id: user_id }
