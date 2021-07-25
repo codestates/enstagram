@@ -22,8 +22,10 @@ module.exports = async (req, res) => {
                     Users.update({ post_id: arr })
                 } else {
                     Users.update({ post_id: value.dataValues.id }, {
-                        where: { post_id }
-                    })
+                        where: {
+                            post_id: []
+                        }
+                    });
                 }
 
                 res.status(200).json({
