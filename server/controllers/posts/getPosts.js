@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
                 });
 
                 return postInfos.dataValues;
-            });
+            })
         );
 
         console.log("postResultssssssssssssssssss", postResult);
