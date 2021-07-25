@@ -2,17 +2,15 @@ const { Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    console.log("쿼리이이이이잉이이이이이이이이", req.query);
-
     if (req.query.post_id.length !== 0) {
-
-        let post_id = req.query.post_id;
 
         const arr = req.query.post_id.map(async el => {
             return await Posts.findOne({
                 where: { id: el }
             });
         });
+
+        console.log("arr의 정보보옹몽몽몽노옴ㄴ온ㅁ옴", arr);
 
         const result = arr.map(el => {
             return el.dataValues;
