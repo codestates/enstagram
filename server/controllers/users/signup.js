@@ -26,18 +26,8 @@ module.exports = async (req, res) => {
             username,
             email,
             password,
-            post_id,
-            comment_id,
-            like_id,
-            follower_id,
-            following_id
+            post_id: { "data": [] }
         };
-
-        newUser.post_id = [];
-        newUser.comment_id = [];
-        newUser.like_id = [];
-        newUser.follower_id = [];
-        newUser.following_id = [];
 
         Users.create(newUser);
 
