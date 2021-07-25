@@ -10,6 +10,8 @@ module.exports = async (req, res) => {
 
         const followers = userInfo.dataValues.follower_id;
 
+
+
         const followerInfo = await followers.map(async (el) => {
 
             const postInfo = await Posts.findOne({
@@ -23,6 +25,7 @@ module.exports = async (req, res) => {
             }
         });
 
+        console.log("followers idddddddddddddd", followers);
         console.log("followerInfooooooooooooooooo", followerInfo);
 
         res.status(200).json({
