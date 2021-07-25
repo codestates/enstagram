@@ -16,9 +16,8 @@ module.exports = async (req, res) => {
                 where: { user_id: el }
             });
 
-            console.log("postInfooooooooooo", postInfo);
-
             if (postInfo) {
+                console.log("postInfooooooooooo", postInfo);
                 return postInfo.dataValues;
             } else {
                 res.status(200).json({ message: "상대의 포스트 데이터가 없습니다." })
