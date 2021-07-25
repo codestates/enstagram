@@ -2,26 +2,22 @@ const { Users, Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    const post = {
-        user_id: req.body.user_id,
-        content: req.body.content,
-        pictures: req.body.pictures,
-    }
+    const userInfo = await Users.findOne({
+        where: { id: req.body.user_id }
+    });
 
-    await Posts.create(post)
-        .then(async (value) => {
+    if (userInfo) {
 
-            const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
-            });
+        const post = {
+            user_id: req.body.user_id,
+            content: req.body.content,
+            pictures: req.body.pictures,
+        }
 
-            console.log("userInfo:", userInfo);
-
-            if (userInfo) {
+        await Posts.create(post)
+            .then(async (value) => {
 
                 const postArr = userInfo.dataValues.post_id;
-
-                console.log("value.dataValues", value.dataValues);
 
                 if (postArr.length > 0) {
                     Users.create({
@@ -37,9 +33,10 @@ module.exports = async (req, res) => {
                     data: post,
                     message: "포스트 생성 성공"
                 });
+            });
 
-            } else {
-                res.status(200).json({ message: "포스트 생성 도중 일치하는 유저 정보를 찾지못했습니다" });
-            }
-        });
+    } else {
+        res.status(200).json({ message: "일치하는 유저 정보를 찾지 못했습니다" });
+    }
+
 };
