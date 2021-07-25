@@ -1,4 +1,4 @@
-const { Users, Test } = require('../../models');
+const { Users } = require('../../models');
 
 //! 회원가입 관련 컨트롤러
 
