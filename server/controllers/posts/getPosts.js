@@ -18,12 +18,12 @@ module.exports = async (req, res) => {
                 });
 
                 return postInfos.dataValues;
-            })
+            });
         );
 
         console.log("postResultssssssssssssssssss", postResult);
 
-        res.status(200).json(postInfo);
+        res.status(200).json(postResult);
 
     } else {
         res.status(200).json({ message: "유저 데이터 불러오기 실패" });
