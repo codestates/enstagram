@@ -21,15 +21,17 @@ module.exports = async (req, res) => {
     } else {
         const { name, username, email, password } = req.body;
 
-        const newUser = {
+        Users.create({
             name,
             username,
             email,
             password,
-            post_id: { "data": [] }
-        };
-
-        Users.create(newUser);
+            post_id: [],
+            comment_id: [],
+            like_id: [],
+            follower_id: [],
+            following_id: []
+        });
 
         res.status(201).send({
             data: {
