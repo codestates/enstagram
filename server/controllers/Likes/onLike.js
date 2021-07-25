@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
         const like = {
             user_id: req.body.user_id,
             post_id: req.body.post_id,
-            value: true,
+            value: req.body.value,
         }
 
         const postInfo = await Posts.findOne({
