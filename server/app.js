@@ -26,6 +26,7 @@ app.get('/', controllers.test);
 app.get('/accessToken', controllers.accessToken);
 app.get('/refreshToken', controllers.refreshToken);
 app.get('/oauth', controllers.OAuth);
+app.get('/getpost', controllers.getPosts);
 
 //! POST 요청
 app.post('/', controllers.login);

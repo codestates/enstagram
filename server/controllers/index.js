@@ -10,5 +10,6 @@ module.exports = {
     OAuth: require("./facebook/OAuth"),             //* 페이스북 OAuth 유저정보 요청
 
     //! Posts
-    createPosts: require("./posts/createPosts")     //* 포스트 생성
+    createPosts: require("./posts/createPosts"),     //* 포스트 생성
+    getPosts: require("./posts/getPosts"),           //* 포스트 정보 가져오기
 };

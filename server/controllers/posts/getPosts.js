@@ -1,16 +1,10 @@
-const { Users, Posts } = require('../../models');
+const { Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    const postInfo = await Users.findOne({
-        where: {}
+    const postInfo = await Posts.findOne({
+        where: { id: req.body.id }
     });
 
-    const userArr = userInfo.map(el => {
-        delete el.dataValues.password;
-        return el.dataValues;
-    });
-
-
-    res.status(200).json(userArr);
+    res.status(200).json(postInfo);
 };
