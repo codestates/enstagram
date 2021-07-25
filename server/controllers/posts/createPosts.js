@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
         .then(async (value) => {
 
             const userInfo = await Users.findOne({
-                where: { id: user_id }
+                where: { id: req.body.user_id }
             });
 
             console.log("userInfo:", userInfo);
