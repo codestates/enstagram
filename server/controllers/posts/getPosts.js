@@ -2,13 +2,13 @@ const { Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    if (req.headers.post_id.length !== 0) {
+    console.log("쿼리이이이이잉이이이이이이이이", req.query);
 
-        let post_id = req.headers.post_id;
+    if (req.query.post_id.length !== 0) {
 
-        console.log("post_id 의 정보는요~~~~~~~~~", typeof post_id);
+        let post_id = req.query.post_id;
 
-        const arr = req.headers.post_id.map(async el => {
+        const arr = req.query.post_id.map(async el => {
             return await Posts.findOne({
                 where: { id: el }
             });
@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
     } else {
         const postInfo = await Posts.findOne({
-            where: { id: req.headers.post_id }
+            where: { id: req.query.post_id }
         });
 
         res.status(200).json({
