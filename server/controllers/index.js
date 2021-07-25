@@ -21,5 +21,4 @@ module.exports = {
 
     //! Follow
     followers: require("./follow/followers"),               //* 팔로우
-    followings: require("./follow/followings"),             //* 팔로잉
 };

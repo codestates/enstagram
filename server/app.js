@@ -35,7 +35,6 @@ app.post('/createpost', controllers.createPosts);
 app.post('/createcomment', controllers.createComments);
 app.post('/liketrue', controllers.onLike);
 app.post('/follower', controllers.followers);
-app.post('/following', controllers.followings);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);

@@ -12,15 +12,29 @@ module.exports = async (req, res) => {
 
     if (myInfo) {
         if (myInfo.dataValues.followers_id.length !== 0) {
-            await Users.update({ followers_id: [...myInfo.dataValues.followers_id, targetInfo.id] }, {
+            await Users.update({ followers_id: [...myInfo.dataValues.followers_id, targetInfo.dataValues.id] }, {
                 where: {
-                    id: myInfo.id
+                    id: myInfo.dataValues.id
                 }
             });
         } else {
             await Users.update({ followers_id: [targetInfo.id] }, {
                 where: {
-                    id: myInfo.id
+                    id: myInfo.dataValues.id
+                }
+            });
+        }
+
+        if (targetInfo.dataValues.following_id.length !== 0) {
+            await Users.update({ following_id: [...targetInfo.dataValues.following_id, userInfo.dataValues.id] }, {
+                where: {
+                    id: targetInfo.dataValues.id
+                }
+            });
+        } else {
+            await Users.update({ following_id: [userInfo.dataValues.id] }, {
+                where: {
+                    id: targetInfo.dataValues.id
                 }
             });
         }
