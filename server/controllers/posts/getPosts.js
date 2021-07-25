@@ -8,29 +8,20 @@ module.exports = async (req, res) => {
 
     if (userInfo) {
 
-        const followers = userInfo.dataValues.follower_id;
+        const postInfo = userInfo.dataValues.post_id;
 
-        const followerInfo = await followers.map(async (el) => {
+        const postResult = postInfo.map(async el => {
 
-            const postInfo = await Posts.findOne({
-                where: { user_id: el }
+            const postInfos = await Posts.findOne({
+                where: { id: el }
             });
 
-            if (postInfo) {
-                return postInfo.dataValues;
-            } else {
-                res.status(200).json({ message: "상대의 포스트 데이터가 없습니다." })
-            }
+            return postInfos.dataValues;
         });
 
-        console.log("userINfooooooooooooooooooooooo", userInfo);
-        console.log("followers idddddddddddddd", followers);
-        console.log("followerInfooooooooooooooooo", followerInfo);
+        console.log("postResultssssssssssssssssss", postResult);
 
-        res.status(200).json({
-            data: followerInfo,
-            message: "데이터 불러오기 성공"
-        });
+        res.status(200).json(postInfo);
 
     } else {
         res.status(200).json({ message: "유저 데이터 불러오기 실패" });
