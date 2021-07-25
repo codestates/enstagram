@@ -3,6 +3,11 @@ const { Posts } = require('../../models');
 module.exports = async (req, res) => {
 
     if (req.query.post_id.length !== 0) {
+
+        let post_id = req.query.post_id;
+
+        console.log("post_id 의 정보는요~~~~~~~~~", post_id);
+
         const arr = req.query.post_id.map(async el => {
             return await Posts.findOne({
                 where: { id: el }
