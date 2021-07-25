@@ -15,9 +15,9 @@ module.exports = async (req, res) => {
                 where: { user_id: el }
             });
 
-            console.log("postINfooooooooooooooooooo", postInfo.dataValues);
+            console.log("postINfooooooooooooooooooo", postInfo);
 
-            return postInfo.dataValues;
+            return postInfo;
         })
 
         res.status(200).json({
