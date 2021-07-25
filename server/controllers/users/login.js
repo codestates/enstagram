@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
             } else {
 
                 delete userName.dataValues.password;
-
                 const accessToken = await sign(
                     userName,
                     process.env.ACCESS_SECRET, {
@@ -31,9 +30,6 @@ module.exports = async (req, res) => {
                 const refreshToken = await sign(
                     userName,
                     process.env.REFRESH_SECRET, {
-                    expiresIn: '7d'
-                });
-                process.env.REFRESH_SECRET, {
                     expiresIn: '7d'
                 });
 
