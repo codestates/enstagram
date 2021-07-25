@@ -2,7 +2,7 @@ const { Users, Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    const userInfo = Users.findOne({
+    const userInfo = await Users.findOne({
         where: { id: req.query.id }
     });
 
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
         const followers = userInfo.dataValues.follower_id;
 
         const followerInfo = followers.map(async el => {
-            return Posts.findOne({
+            return await Posts.findOne({
                 where: { user_id: el }
             });
         })
