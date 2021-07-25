@@ -13,5 +13,5 @@ module.exports = async (req, res) => {
     });
 
 
-    res.status(200).json(testInfo);
+    res.status(200).json(testInfo[0]);
 };

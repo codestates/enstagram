@@ -21,11 +21,15 @@ app.use(
 //? 쿠키 사용
 app.use(cookieParser());
 
+//! GET 요청
 app.get('/', controllers.test);
-app.post('/', controllers.login);
-app.post('/signup', controllers.signup);
 app.get('/accessToken', controllers.accessToken);
 app.get('/refreshToken', controllers.refreshToken);
+
+//! POST 요청
+app.post('/', controllers.login);
+app.post('/signup', controllers.signup);
+app.post('/oauth', controllers.OAuth);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
