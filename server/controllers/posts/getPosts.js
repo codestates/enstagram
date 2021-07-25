@@ -2,21 +2,25 @@ const { Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    if (req.body.id.length !== 0) {
-        const arr = req.query.id.map(async el => {
+    if (req.query.post_id.length !== 0) {
+        const arr = req.query.post_id.map(async el => {
             return await Posts.findOne({
                 where: { id: el }
             });
         });
 
+        const result = arr.map(el => {
+            return el.dataValues;
+        });
+
         res.status(200).json({
-            data: arr,
+            data: result,
             message: "포스트 데이터 불러오기 성공"
         });
 
     } else {
         const postInfo = await Posts.findOne({
-            where: { id: req.query.id }
+            where: { id: req.query.post_id }
         });
 
         res.status(200).json({
