@@ -11,8 +11,12 @@ module.exports = async (req, res) => {
         const comment = {
             content: req.body.content,
             user_id: req.body.user_id,
-            post_id: req.body.comment_id,
+            post_id: req.body.post_id,
         }
+
+        const postInfo = await Posts.findOne({
+            where: { id: req.body.post_id }
+        });
 
         await Comments.create(comment)
             .then(async (value) => {
@@ -21,9 +25,20 @@ module.exports = async (req, res) => {
                     await Users.update({ comment_id: [...userInfo.dataValues.comment_id, value.dataValues.id] }, {
                         where: { id: comment.user_id }
                     });
+
                 } else {
                     await Users.update({ comment_id: [value.dataValues.id] }, {
                         where: { id: comment.user_id }
+                    });
+                }
+
+                if (postInfo.dataValues.comment_id.length !== 0) {
+                    await Posts.update({ comment_id: [...postInfo.dataValues.comment_id, value.dataValues.id] }, {
+                        where: { id: comment.post_id }
+                    });
+                } else {
+                    await Posts.update({ comment_id: [value.dataValues.id] }, {
+                        where: { id: comment.post_id }
                     });
                 }
 
