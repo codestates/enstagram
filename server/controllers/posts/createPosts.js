@@ -16,8 +16,12 @@ module.exports = async (req, res) => {
 
         await Posts.create(post)
             .then(async (value) => {
-
-                userInfo.dataValues.post_id.push(value.dataValues.id);
+                if (userInfo.dataValues.post_id.length > 0) {
+                    let arr = [...userInfo.dataValues.post_id, value.dataValues.id];
+                    Users.update({ post_id: arr })
+                } else {
+                    Users.update({ post_id: value.dataValues.id })
+                }
 
                 res.status(200).json({
                     data: post,
