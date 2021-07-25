@@ -25,6 +25,7 @@ module.exports = async (req, res) => {
             });
         }
 
+        res.status(200).json({ message: "팔로잉 데이터 저장 성공" });
     } else {
         res.status(200).json({ message: "유저 정보를 불러오지 못했습니다" });
     }
