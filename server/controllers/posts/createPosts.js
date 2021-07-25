@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
         await Posts.create(post)
             .then(async (value) => {
 
-                const postArr = userInfo.dataValues.post_id.data;
+                const postArr = userInfo.dataValues.post_id;
 
                 if (postArr.length > 0) {
                     Users.create({
