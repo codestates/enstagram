@@ -14,14 +14,29 @@ module.exports = {
       username: {
         type: Sequelize.STRING
       },
+      profilePhoto: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING
       },
       password: {
         type: Sequelize.STRING
       },
-      profileImage: {
-        type: Sequelize.STRING
+      post_id: {
+        type: Sequelize.JSON
+      },
+      comment_id: {
+        type: Sequelize.JSON
+      },
+      like_id: {
+        type: Sequelize.JSON
+      },
+      follower_id: {
+        type: Sequelize.JSON
+      },
+      following_id: {
+        type: Sequelize.JSON
       },
       createdAt: {
         allowNull: false,
