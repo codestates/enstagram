@@ -16,6 +16,8 @@ module.exports = async (req, res) => {
                 where: { user_id: el }
             });
 
+            console.log("postInfooooooooooo", postInfo);
+
             if (postInfo) {
                 return postInfo.dataValues;
             } else {
