@@ -2,11 +2,10 @@ const { Users } = require('../../models');
 
 module.exports = async (req, res) => {
 
-
-    console.log("req.params 의 정보 ========>", req.params);
+    console.log("req.params 의 정보 ========>", req.query);
 
     const userInfo = await Users.findOne({
-        where: { email: req.params.email }
+        where: { email: req.query.email }
     });
 
     if (!userInfo) {
