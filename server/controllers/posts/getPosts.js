@@ -21,8 +21,9 @@ module.exports = async (req, res) => {
             } else {
                 res.status(200).json({ message: "상대의 포스트 데이터가 없습니다." })
             }
+        });
 
-        })
+        console.log("followerInfooooooooooooooooo", followerInfo);
 
         res.status(200).json({
             data: followerInfo,
