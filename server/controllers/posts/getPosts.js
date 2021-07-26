@@ -45,11 +45,14 @@ module.exports = async (req, res) => {
                                 where: { id: commentEL }
                             });
 
-                            if (commentInfos) {
-                                infos.comments.push(commentInfos.dataValues.content);
-                            } else {
-                                res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
-                            }
+                            console.log("commentInfosssssssssssssssssss", commentInfos.dataValues);
+
+
+                            // if (commentInfos) {
+                            //     infos.comments.push(commentInfos.dataValues.content);
+                            // } else {
+                            //     res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
+                            // }
                         })
                     }
 
