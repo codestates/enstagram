@@ -27,7 +27,9 @@ module.exports = async (req, res) => {
             })
         );
 
-        await Promise.all(
+        console.log("postArrrrrrrrrrrrrrrrrrrrrr", postArr);
+
+        Promise.all(
             postArr.map(async postEl => {
                 const infos = {
                     id: postEl.id,
