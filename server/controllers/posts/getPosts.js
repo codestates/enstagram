@@ -42,11 +42,11 @@ module.exports = async (req, res) => {
 
                         el.dataValues.comment_id.map(commentEL => {
                             const commentInfos = Comments.findOne({
-                                where: { id: commentEL.id }
+                                where: { id: commentEL }
                             });
 
                             if (commentInfos) {
-                                infos.comments.push(commentInfos.dataValues);
+                                infos.comments.push(commentInfos.dataValues.content);
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
@@ -61,9 +61,6 @@ module.exports = async (req, res) => {
                     message: "포스트 데이터 불러오기 성공"
                 });
             });
-
-
-
     } else {
         res.status(200).json({ message: "유저 데이터 불러오기 실패" });
     }
