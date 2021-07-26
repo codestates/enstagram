@@ -121,5 +121,5 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
             }
         </div>
     )
-  }
+}
 export default OtherUserPage
