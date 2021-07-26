@@ -9,10 +9,10 @@ import { Route, Switch, useRouteMatch } from 'react-router'
 const ProfileEdit = () => {
     let { url, path } = useRouteMatch();
     return (
-        <div>
+        <div className="page-container">
             <main className="profile-edit-container">
                 <EditSidebar url={url}/>
-                <section className="profile-edit-features">
+                <section className="profile-edit-feature">
                     <Switch>
                         <Route exact path={`${path}`}>
                             <BasicProfileEdit/>
