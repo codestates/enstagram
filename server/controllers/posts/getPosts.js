@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
                     };
 
                     if (el.comment_id.length !== 0) {
-                        postEl.comment_id.map(commentEL => {
+                        el.comment_id.map(commentEL => {
                             const commentInfos = Comments.findOne({
                                 where: { id: commentEL.id }
                             });
