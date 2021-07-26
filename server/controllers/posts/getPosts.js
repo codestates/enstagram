@@ -42,14 +42,14 @@ module.exports = async (req, res) => {
 
                     if (el.dataValues.comment_id !== 0) {
 
-                        Promise.all(el.dataValues.comment_id.map(commentEL => {
-                            const commentInfos = Comments.findOne({
+                        Promise.all(el.dataValues.comment_id.map(async commentEL => {
+                            const commentInfos = await Comments.findOne({
                                 where: { id: commentEL }
                             });
 
                             if (commentInfos) {
 
-                                console.log("commentInfossssssssssssssssss", commentInfos);
+                                console.log("commentInfossssssssssssssssss", commentInfos.dataValues);
 
                                 // commentContents.push(commentInfos.dataValues.content);
                             } else {
