@@ -6,8 +6,6 @@ module.exports = async (req, res) => {
         where: { id: req.query.user_id }
     });
 
-    const result = [];
-
     if (userInfo) {
 
         const postInfo = userInfo.dataValues.post_id;
@@ -26,7 +24,7 @@ module.exports = async (req, res) => {
         }))
             .then(result => {
                 res.status(200).json({
-                    data: result,
+                    data: result.dataValues,
                     message: "post 데이터 불러오기 성공"
                 })
             });
