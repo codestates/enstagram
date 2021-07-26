@@ -25,13 +25,14 @@ module.exports = async (req, res) => {
             }
         }))
             .then(value => {
-                Promise.all(value.map(async el => {
+                Promise.all(value.map(el => {
 
                     let infos = {
                         id: el.dataValues.id,
                         user_id: el.dataValues.user_id,
                         content: el.dataValues.content,
                         pictures: el.dataValues.pictures,
+                        comments: el.dataValues.comment_id,
                         likes: el.dataValues.like_id,
                         createdAt: el.dataValues.createdAt,
                         updatedAt: el.dataValues.updatedAt
@@ -41,18 +42,17 @@ module.exports = async (req, res) => {
 
                     if (el.dataValues.comment_id !== 0) {
 
-                        el.dataValues.comment_id.map(async commentEL => {
-                            const commentInfos = await Comments.findOne({
+                        Promise.all(el.dataValues.comment_id.map(commentEL => {
+                            const commentInfos = Comments.findOne({
                                 where: { id: commentEL }
                             });
 
                             if (commentInfos) {
                                 commentContents.push(commentInfos.dataValues.content);
-                                console.log("commentContentssssssssssssssssssssss", commentContents);
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
-                        });
+                        }));
                     }
 
                     infos.comments = commentContents;
@@ -72,7 +72,7 @@ module.exports = async (req, res) => {
                         });
                     }
 
-                    await result.push(infos);
+                    result.push(infos);
                 }))
 
                 res.status(200).json({
