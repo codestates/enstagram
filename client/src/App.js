@@ -4,6 +4,7 @@
 // CSS
 import "./App.css";
 
+
 // REACT ROUTER COMPONENTS
 import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
@@ -17,6 +18,7 @@ import ProfileEdit from "./pages/ProfileEdit.js";
 import Header from "./components/Header";
 import FbSignup from "./pages/FbSignup";
 import FacebookLogin from "./components/FacebookLogin";
+import OtherUserPage from "./pages/OtherUser";
 
 // FACEBOOK OAUTH FUNCTIONS
 import { requestFacebookLogin, requestFacebookEmail, requestFacebookProfilePic } from "./helpers/accountService";
@@ -143,7 +145,7 @@ const App = function({ _isFbLoggedIn }) {
         }
       }
     }
-  }
+
 // ────────────────────────────────────────────────────────────────────────────────
 
 
@@ -213,6 +215,11 @@ const App = function({ _isFbLoggedIn }) {
         </Route>
         <Route path="/mypage">
           <Mypage setIsLogin={setIsLogin} />
+        </Route>
+        <Route path="/:userId">
+          <OtherUserPage />
+          {/* TODO: Uncomment belwo when loggedInUser is ready */}
+          {/* <OtherUserPage loggedInUserInfo={userData} /> */}
         </Route>
         <Route path="/fbsignup">
           <FbSignup 
