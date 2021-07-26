@@ -17,10 +17,18 @@ module.exports = async (req, res) => {
                     where: { id: el }
                 });
 
+                const data = {
+                    id: commentInfos.dataValues.id,
+                    username: postInfo.dataValues.username,
+                    content: commentInfos.dataValues.content,
+                    createdAt: commentInfos.dataValues.createAt,
+                    updatedAt: commentInfos.dataValues.updatedAt
+                }
+
                 if (commentInfos) {
                     return {
-                        data: commentInfos.dataValues,
-                        username: postInfo.dataValues.username
+                        data: data,
+                        message: "코멘트 데이터 불러오기 성공"
                     };
                 } else {
                     res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
@@ -28,8 +36,7 @@ module.exports = async (req, res) => {
             }))
                 .then(result => {
                     res.status(200).json({
-                        data: result,
-                        message: "코멘트 데이터 불러오기 성공"
+                        result,
                     })
                 });
         } else {
