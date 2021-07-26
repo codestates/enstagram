@@ -141,21 +141,23 @@ export const dummyPosts = [
 export const otherUserPosts = [
   {
     id: 1,
+    user_id: 1,
     username: 'John Smith',
     picture: `https://i.pinimg.com/originals/18/d1/34/18d1343ffdb9089814f640119ee6d0d6.png`, 
     content:
       'Hello my friend!',
-    like: `${getRandomNumber(1, 1000)}`,
+    like_id: [1,231342323,3,6,7,9],
     createdAt: '2019-02-25T16:17:47.000Z',
     updatedAt: '2021-06-23T16:17:47.000Z',
   },
   {
     id: 2,
+    user_id: 1,
     username: 'John Smith',
     picture: `https://item.kakaocdn.net/do/9ac8ba2dd82efb5cad54d5c7451167a14022de826f725e10df604bf1b9725cfd`,
     content:
       'Hello world!',
-    like: `${getRandomNumber(1, 1000)}`,
+    like_id: [3,4,5],
     comments: [{
       username: 'parkcoding',
       content: 'this is a comment'
@@ -170,7 +172,7 @@ export const otherUserPosts = [
 ];
 
 export const dummyOtherUserInfo = {
-  id: '124341248912', // PK,
+  id: 124341248912, // PK,
   username: 'JSmith', // Handle string empty space in param userId: Ryan Park
   profilePhoto: 'http://image.kyobobook.co.kr/newimages/giftshop_new/goods/400/1459/S1584498253783.jpg',
   posts: otherUserPosts,
@@ -181,7 +183,7 @@ export const dummyOtherUserInfo = {
 }
 
 export const dummyMyUserInfo = {
-  id: '231342323', // PK,
+  id: 231342323, // PK,
   username: 'Kakao-Ryan',
   profilePhoto: placeHolderImage,
   posts: dummyPosts,
@@ -189,6 +191,7 @@ export const dummyMyUserInfo = {
   followers: 123,
   following: 300,
   name: 'Ryan Kim',
+  // likedPostId: [...] // 이게 있어야 라이크 한 것들을 트랙할 수 있음
   // introduction: 'Hello world! Nice to meet you'
 }
 

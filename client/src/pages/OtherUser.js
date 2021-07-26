@@ -3,29 +3,36 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import "./Mypage.css";
 import { Modal } from '../components/Post'
-import { dummyOtherUserInfo, dummyMyUserInfo } from '../dummyData';
+import { dummyOtherUserInfo, dummyMyUserInfo, otherUserPosts } from '../dummyData';
 import { serverUrl } from '../utils/constants'
 
 const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
     // Initial states
-    const [otherUserInfo, setOtherUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState({});
+    const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
 
     // Get userid from route: in App.js <Route path="/:userId">
     const { userId } = useParams();
 
-    // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#otheruserspage
-    // API Route: users?accountName="accountName"
+    // Initial Setup
     // useEffect(() => {
-    //     axios.get(`${serverUrl}/users`, { params: { accountName: userId } }).then((res) => {
-    //         // Update userInfo state on userId change
-    //         setOtherUserInfo(res);
+    //     // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#otheruserspage
+    //     // API Route: users?username="accountName" 요청으로 유저 정보 뱓기
+    //     axios.get(`${serverUrl}/users`, { params: { username: userId } }).then((res) => {
+    //         setUserInfo(res);
     //     });
+    //     // GET: getPost 요청으로 post information 받기
+    //     axios.get(`${serverUrl}`, { params: { username: userId } }).then((res) => {
+    //         setPosts(res);
+    //     })
     // }, [userId])
 
+    // Initial Setup: before API is ready
     useEffect(() => {
-        setOtherUserInfo(dummyOtherUserInfo)
+        setUserInfo(dummyOtherUserInfo)
+        setPosts(otherUserPosts)
     }, [])
 
     const clickPostHandler = (post) => {
@@ -34,46 +41,67 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
     }
 
     const commentHandler = (comment) => {
-        const newOtherUserInfo = {
-            ...otherUserInfo,
-            posts: [...otherUserInfo.posts].map(post => {
-                if (post === activePost) {
-                   post.comments.push(comment);
+        const newPosts = [...posts].map(post => {
+            if (post === activePost) {
+                if (post.comments) {
+                    post.comments.push(comment);
+                } else {
+                    post.comments = [comment];
                 }
-                return post;
-            })
-        }
-        setOtherUserInfo(newOtherUserInfo);
+            }
+            return post;
+        })
+
+        setPosts(newPosts);
     }
 
+    const likeHandler = (like) => {
+        if (like) { //  add user id to like_id array and return like count for active post using array.length
+            const newPosts = [...posts].map(post => {
+                if(post === activePost){
+                    post.like_id.push(loggedInUserInfo.id)
+                }
+                return post
+            })
+            setPosts(newPosts)
+        } else { // Decrease like count
+            const newPosts = [...posts].map(post => {
+                if(post === activePost){
+                    post.like_id = post.like_id.filter(el => el !== loggedInUserInfo.id )
+                }
+                return post
+            })
+            setPosts(newPosts)
+        }
+    }
     return (
         <div>
             <div className="my-profile-field">
                 <div className="my-profile-container">
                     <div className="my-profile-picture-container">
-                        <img alt="my-profile-pic" src={otherUserInfo.profilePhoto} />
+                        <img alt="my-profile-pic" src={userInfo.profilePhoto} />
                     </div>
 
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
-                            <p id="username">{otherUserInfo.username}</p>
+                            <p id="username">{userInfo.username}</p>
                             <div className="btn-primary">Follow</div>
                             {/* <Link className="btn-primary edit-profile" to="/profile-edit"><div>프로필 편집</div></Link> */}
                             {/* <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div> */}
                         </div>
                         <div className="page-details">
-                            <div><strong>{otherUserInfo.posts && otherUserInfo.posts.length}</strong> posts</div>
-                            <div><strong>{otherUserInfo.followers}</strong> followers</div>
-                            <div><strong>{otherUserInfo.following}</strong> following</div>
+                            <div><strong>{userInfo.posts && userInfo.posts.length}</strong> posts</div>
+                            <div><strong>{userInfo.followers}</strong> followers</div>
+                            <div><strong>{userInfo.following}</strong> following</div>
                         </div>
-                        <div className="name">{otherUserInfo.username}</div>
+                        <div className="name">{userInfo.username}</div>
                     </div>
                 </div>
             </div>
 
             <div className="gallery-container">
                 <div className="gallery-list-body">
-                    {otherUserInfo.posts && otherUserInfo.posts.map((post, idx)=>
+                    {posts && posts.map((post, idx)=>
                         <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
                             <img src={post.picture} alt={post.content} />
                         </div>
@@ -82,8 +110,15 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
             </div>
 
             {isModalOpen &&
-                <Modal post={activePost} commentHandler={commentHandler} loggedInUserInfo={loggedInUserInfo} onModalClose={setIsModalOpen}
-            />}
+                <Modal 
+                    post={activePost}
+                    commentHandler={commentHandler}
+                    likeHandler={likeHandler}
+                    loggedInUserInfo={loggedInUserInfo}
+                    onModalClose={setIsModalOpen}
+                    userInfo={userInfo}
+                />
+            }
         </div>
     )
   }
