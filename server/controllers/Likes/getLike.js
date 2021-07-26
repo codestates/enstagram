@@ -21,11 +21,11 @@ module.exports = async (req, res) => {
         }))
             .then(result => {
 
-                console.log("resultttttttttttttttttttt", result.user_id);
+                const arr = result.map(el => el.user_id);
 
                 res.status(200).json(
                     {
-                        data: result.user_id,
+                        user_id: arr,
                         message: "좋아요 데이터 불러오기 성공"
                     })
             })
