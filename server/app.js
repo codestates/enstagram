@@ -39,6 +39,9 @@ app.post('/createcomment', controllers.createComments);
 app.post('/like', controllers.onLike);
 app.post('/follow', controllers.followers);
 
+//! PUT 요청
+app.post('/edituserinfo', controllers.editUserInfo);
+
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
 });
