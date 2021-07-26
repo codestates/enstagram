@@ -12,17 +12,6 @@ module.exports = async (req, res) => {
 
         const postInfo = userInfo.dataValues.post_id;
 
-        let infos = {
-            id: el.dataValues.id,
-            user_id: el.dataValues.user_id,
-            content: el.dataValues.content,
-            pictures: el.dataValues.pictures,
-            comments: el.dataValues.comment_id,
-            likes: el.dataValues.like_id,
-            createdAt: el.dataValues.createdAt,
-            updatedAt: el.dataValues.updatedAt
-        };
-
         Promise.all(postInfo.map(el => {
 
             const postInfos = Posts.findOne({
@@ -40,6 +29,17 @@ module.exports = async (req, res) => {
 
                     let commentContents = [];
 
+                    let infos = {
+                        id: el.dataValues.id,
+                        user_id: el.dataValues.user_id,
+                        content: el.dataValues.content,
+                        pictures: el.dataValues.pictures,
+                        comments: el.dataValues.comment_id,
+                        likes: el.dataValues.like_id,
+                        createdAt: el.dataValues.createdAt,
+                        updatedAt: el.dataValues.updatedAt
+                    };
+
                     if (el.dataValues.comment_id !== 0) {
 
                         commentContents = el.dataValues.comment_id.map(async commentEL => {
@@ -53,27 +53,11 @@ module.exports = async (req, res) => {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
                         });
-
-                        infos.comments = commentContents;
                     }
-
-                    if (infos.likes.length !== 0) {
-
-                        infos.likes.map(async (likeEL, idx) => {
-                            const likeInfos = await Likes.findOne({
-                                where: { id: likeEL }
-                            });
-
-                            if (likeInfos) {
-                                infos.likes[idx] = likeInfos.dataValues.user_id;
-                            } else {
-                                res.status(200).json({ message: "일치하는 좋아요 정보가 없습니다" })
-                            }
-                        });
-                    }
-
-                    result.push(infos);
                 }))
+                    .then(result => {
+                        console.log("resulttttttttttttttt", result);
+                    })
 
                 res.status(200).json({
                     data: result,
