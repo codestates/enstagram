@@ -29,23 +29,13 @@ module.exports = async (req, res) => {
 
                     if (el.dataValues.comment_id !== 0) {
 
-                        commentContents = el.dataValues.comment_id.map(async commentEL => {
-                            const commentInfos = await Comments.findOne({
+                        commentContents = el.dataValues.comment_id.map(commentEL => {
+                            const commentInfos = Comments.findOne({
                                 where: { id: commentEL }
                             });
 
                             if (commentInfos) {
-                                return {
-                                    id: el.dataValues.id,
-                                    user_id: el.dataValues.user_id,
-                                    content: el.dataValues.content,
-                                    pictures: el.dataValues.pictures,
-                                    comments: commentInfos.dataValues.content,
-                                    likes: el.dataValues.like_id,
-                                    createdAt: el.dataValues.createdAt,
-                                    updatedAt: el.dataValues.updatedAt
-                                };
-                                ;
+                                return commentInfos;
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
