@@ -26,32 +26,35 @@ module.exports = async (req, res) => {
         }))
             .then(value => {
                 Promise.all(value.map(el => {
-                    const infos = {
-                        id: el.id,
-                        user_id: el.user_id,
-                        content: el.content,
-                        pictures: el.pictures,
-                        comments: [],
-                        likes: [],
-                        createdAt: el.createdAt,
-                        updatedAt: el.updatedAt
-                    };
 
-                    if (el.comment_id.length !== 0) {
-                        el.comment_id.map(commentEL => {
-                            const commentInfos = Comments.findOne({
-                                where: { id: commentEL.id }
-                            });
+                    console.log("elllllllllllllllllllllllllllllll", el);
 
-                            if (commentInfos) {
-                                infos.comments.push(commentInfos.dataValues);
-                            } else {
-                                res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
-                            }
-                        })
-                    }
+                    // const infos = {
+                    //     id: el.id,
+                    //     user_id: el.user_id,
+                    //     content: el.content,
+                    //     pictures: el.pictures,
+                    //     comments: [],
+                    //     likes: [],
+                    //     createdAt: el.createdAt,
+                    //     updatedAt: el.updatedAt
+                    // };
 
-                    result.push(infos);
+                    // if (el.comment_id.length !== 0) {
+                    //     el.comment_id.map(commentEL => {
+                    //         const commentInfos = Comments.findOne({
+                    //             where: { id: commentEL.id }
+                    //         });
+
+                    //         if (commentInfos) {
+                    //             infos.comments.push(commentInfos.dataValues);
+                    //         } else {
+                    //             res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
+                    //         }
+                    //     })
+                    // }
+
+                    // result.push(infos);
                 }))
             });
 
