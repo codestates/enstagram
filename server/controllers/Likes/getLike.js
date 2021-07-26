@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
             .then(result => {
                 res.status(200).json(
                     {
-                        data: result,
+                        data: result.user_id,
                         message: "좋아요 데이터 불러오기 성공"
                     })
             })
