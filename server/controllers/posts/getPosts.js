@@ -48,17 +48,12 @@ module.exports = async (req, res) => {
                             });
 
                             if (commentInfos) {
-
-                                console.log("commentInfossssssssssssssssss", commentInfos.dataValues);
-
                                 commentContents.push(commentInfos.dataValues.content);
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
                         }));
                     }
-
-                    infos.comments = commentContents;
 
                     if (infos.likes.length !== 0) {
 
