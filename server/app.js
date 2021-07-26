@@ -29,6 +29,7 @@ app.get('/oauth', controllers.OAuth);
 app.get('/getpost', controllers.getPosts);
 app.get('/getcomment', controllers.getComments);
 app.get('/getlike', controllers.getLike);
+app.get('/getuser', controllers.getUserInfo);
 
 //! POST 요청
 app.post('/', controllers.login);
