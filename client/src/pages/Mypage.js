@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import "./Mypage.css";
 import Post, { Modal } from '../components/Post'
+
 import { dummyPosts, placeHolderImage } from '../dummyData';
 import axios from 'axios';
 
@@ -18,6 +19,7 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin })
     const history = useHistory();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
+    //let { path, url } = useRouteMatch();
 
     const clickPostHandler = (post) => {
         setIsModalOpen(true)
@@ -42,7 +44,13 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin })
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
-                            <Link className="btn-primary edit-profile" to="/profile-edit"><div>프로필 편집</div></Link>
+                            <Link 
+                                className="btn-primary edit-profile" 
+                                to={`/mypage/edit`}
+                            >
+                                <div>프로필 편집</div>
+                            </Link>
+                            
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
@@ -70,5 +78,5 @@ const Mypage = ({ posts = dummyPosts, userInfo=dummyUserForMyPage, setIsLogin })
             />}
         </div>
     )
-  }
+}
 export default Mypage
