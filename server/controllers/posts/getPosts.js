@@ -38,14 +38,14 @@ module.exports = async (req, res) => {
                         updatedAt: el.dataValues.updatedAt
                     };
 
-                    if (el.dataValues.comment_id.length !== 0) {
+                    if (infos.comments.length !== 0) {
 
-                        el.dataValues.comment_id.map(commentEL => {
+                        infos.comments.map(commentEL => {
                             const commentInfos = Comments.findOne({
                                 where: { id: commentEL }
                             });
 
-                            console.log("commentInfosssssssssssssssssss", commentInfos.dataValues);
+                            console.log("commentInfosssssssssssssssssss", commentInfos);
 
 
                             // if (commentInfos) {
