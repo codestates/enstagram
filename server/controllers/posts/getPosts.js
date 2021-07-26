@@ -13,9 +13,9 @@ module.exports = async (req, res) => {
         const postInfo = userInfo.dataValues.post_id;
 
         const postArr = Promise.all(
-            postInfo.map(async el => {
+            postInfo.map(el => {
 
-                const postInfos = await Posts.findOne({
+                const postInfos = Posts.findOne({
                     where: { id: el }
                 });
 
