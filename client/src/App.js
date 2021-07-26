@@ -8,6 +8,7 @@ import Signup from './pages/Signup.js'
 import Mypage from './pages/Mypage.js'
 import ProfileEdit from './pages/ProfileEdit.js'
 import Header from './components/Header';
+import OtherUserPage from "./pages/OtherUser";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -51,6 +52,11 @@ function App() {
         </Route>
         <Route path="/mypage">
           <Mypage setIsLogin={setIsLogin}/>
+        </Route>
+        <Route path="/:userId">
+          <OtherUserPage />
+          {/* TODO: Uncomment belwo when loggedInUser is ready */}
+          {/* <OtherUserPage loggedInUserInfo={userData} /> */}
         </Route>
         <Route path="/mypage/edit">
           <ProfileEdit />
