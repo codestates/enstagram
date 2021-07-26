@@ -42,18 +42,15 @@ module.exports = async (req, res) => {
                         });
                     }
                 }))
-                    .then(result => {
-
-
-
-                        console.log("resulttttttttttttttt", result);
-                    })
+            })
+            .then(value => {
+                console.log("resulttttttttttttttt", value);
 
                 res.status(200).json({
                     data: result,
                     message: "포스트 데이터 불러오기 성공"
                 });
-            });
+            })
     } else {
         res.status(200).json({ message: "유저 데이터 불러오기 실패" });
     }
