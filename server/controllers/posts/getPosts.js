@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
             }
         }))
             .then(value => {
-                Promise.all(value.map(el => {
+                Promise.all(value.map(async el => {
 
                     let infos = {
                         id: el.dataValues.id,
