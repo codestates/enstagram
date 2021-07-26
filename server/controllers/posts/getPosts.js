@@ -12,6 +12,17 @@ module.exports = async (req, res) => {
 
         const postInfo = userInfo.dataValues.post_id;
 
+        let infos = {
+            id: el.dataValues.id,
+            user_id: el.dataValues.user_id,
+            content: el.dataValues.content,
+            pictures: el.dataValues.pictures,
+            comments: el.dataValues.comment_id,
+            likes: el.dataValues.like_id,
+            createdAt: el.dataValues.createdAt,
+            updatedAt: el.dataValues.updatedAt
+        };
+
         Promise.all(postInfo.map(el => {
 
             const postInfos = Posts.findOne({
@@ -26,17 +37,6 @@ module.exports = async (req, res) => {
         }))
             .then(value => {
                 Promise.all(value.map(el => {
-
-                    let infos = {
-                        id: el.dataValues.id,
-                        user_id: el.dataValues.user_id,
-                        content: el.dataValues.content,
-                        pictures: el.dataValues.pictures,
-                        comments: el.dataValues.comment_id,
-                        likes: el.dataValues.like_id,
-                        createdAt: el.dataValues.createdAt,
-                        updatedAt: el.dataValues.updatedAt
-                    };
 
                     let commentContents = [];
 
@@ -56,7 +56,6 @@ module.exports = async (req, res) => {
 
                         infos.comments = commentContents;
                     }
-
 
                     if (infos.likes.length !== 0) {
 
