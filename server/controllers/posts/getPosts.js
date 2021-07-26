@@ -27,8 +27,6 @@ module.exports = async (req, res) => {
             .then(value => {
                 Promise.all(value.map(el => {
 
-                    console.log("ellllllllllllllllllllllllllllllllllll:", el.dataValues);
-
                     let infos = {
                         id: el.dataValues.id,
                         user_id: el.dataValues.user_id,
@@ -40,22 +38,22 @@ module.exports = async (req, res) => {
                         updatedAt: el.dataValues.updatedAt
                     };
 
-                    if (el.dataValues.comment_id.length !== 0) {
+                    // if (el.dataValues.comment_id.length !== 0) {
 
-                        el.dataValues.comment_id.map(async commentEL => {
-                            const commentInfos = await Comments.findOne({
-                                where: { id: commentEL.id }
-                            });
+                    //     el.dataValues.comment_id.map(commentEL => {
+                    //         const commentInfos = Comments.findOne({
+                    //             where: { id: commentEL.id }
+                    //         });
 
-                            console.log("commentInfossssssssssssssssssssssssssssssss:", commentInfos);
+                    //         console.log("commentInfossssssssssssssssssssssssssssssss:", commentInfos);
 
-                            // if (commentInfos) {
-                            //     infos.comments.push(commentInfos.dataValues);
-                            // } else {
-                            //     res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
-                            // }
-                        })
-                    }
+                    //         // if (commentInfos) {
+                    //         //     infos.comments.push(commentInfos.dataValues);
+                    //         // } else {
+                    //         //     res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
+                    //         // }
+                    //     })
+                    // }
 
                     result.push(infos);
                 }))
