@@ -1,10 +1,10 @@
-const { Users, Comments } = require("../../models");
+const { Users, Posts, Comments } = require("../../models");
 
 module.exports = async (req, res) => {
 
     if (req.query.post_id) {
-        const userInfo = await Users.findOne({
-            where: { post_id: [req.query.post_id] }
+        const postInfo = await Posts.findOne({
+            where: { id: req.query.post_id }
         });
 
         if (userInfo) {
