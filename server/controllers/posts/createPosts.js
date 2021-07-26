@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
 
         const post = {
             user_id: req.body.user_id,
+            username: req.body.username,
             content: req.body.content,
             pictures: req.body.pictures,
             comment_id: [],
@@ -29,7 +30,6 @@ module.exports = async (req, res) => {
                     });
                 }
 
-
                 res.status(200).json({
                     data: post,
                     message: "포스트 생성 성공"
@@ -39,5 +39,4 @@ module.exports = async (req, res) => {
     } else {
         res.status(200).json({ message: "일치하는 유저 정보를 찾지 못했습니다" });
     }
-
 };
