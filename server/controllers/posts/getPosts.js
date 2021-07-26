@@ -19,7 +19,11 @@ module.exports = async (req, res) => {
                     where: { id: el }
                 });
 
-                return postInfos.dataValues;
+                if (postInfo) {
+                    return postInfos.dataValues;
+                } else {
+                    res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
+                }
             })
         );
 
