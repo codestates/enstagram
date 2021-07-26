@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
         }
 
         Users.update(result, {
-            where: userInfo.dataValues.id
+            where: { id: userInfo.dataValues.id }
         });
 
         res.status(200).json({
