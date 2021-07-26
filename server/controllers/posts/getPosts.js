@@ -25,7 +25,40 @@ module.exports = async (req, res) => {
             }
         }))
             .then(value => {
-                result.push(value);
+                Promise.all(value.map(el => {
+
+                    let infos = {
+                        id: el.dataValues.id,
+                        user_id: el.dataValues.user_id,
+                        content: el.dataValues.content,
+                        pictures: el.dataValues.pictures,
+                        comments: el.dataValues.comment_id,
+                        likes: el.dataValues.like_id,
+                        createdAt: el.dataValues.createdAt,
+                        updatedAt: el.dataValues.updatedAt
+                    };
+
+                    if (el.dataValues.comment_id.length !== 0) {
+
+                        el.dataValues.comment_id.map(commentEL => {
+                            const commentInfos = Comments.findOne({
+                                where: { id: commentEL.id }
+                            });
+
+                            console.log("commentInfossssssssssssssssssssssssssssssss:", commentInfos);
+
+                            // if (commentInfos) {
+                            //     infos.comments.push(commentInfos.dataValues);
+                            // } else {
+                            //     res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
+                            // }
+                        })
+                    }
+
+                    result.push(infos);
+
+                    console.log("resulttttttttttttttttttttttttttttt:", result);
+                }))
             });
 
         res.status(200).json({
