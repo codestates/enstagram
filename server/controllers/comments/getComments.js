@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
 
                 if (commentInfos) {
                     return {
-                        commentInfos,
+                        data: commentInfos.dataValues,
                         username: postInfo.dataValues.username
                     };
                 } else {
