@@ -19,13 +19,14 @@ module.exports = async (req, res) => {
         }
 
         Users.update(result, {
-            where: userInfo.dataValues.id
+            where: userName.dataValues.id
         });
 
         res.status(200).json({
             data: result,
             message: "유저 데이터 변경 성공"
         });
+
     } else if (userName) {
         res.status(200).json({
             message: "이미 존재하는 username 입니다"
