@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
                                     user_id: el.dataValues.user_id,
                                     content: el.dataValues.content,
                                     pictures: el.dataValues.pictures,
-                                    comments: commentsInfos.dataValues.content,
+                                    comments: commentInfos.dataValues.content,
                                     likes: el.dataValues.like_id,
                                     createdAt: el.dataValues.createdAt,
                                     updatedAt: el.dataValues.updatedAt
