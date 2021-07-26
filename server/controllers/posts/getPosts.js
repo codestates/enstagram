@@ -40,8 +40,8 @@ module.exports = async (req, res) => {
 
                     if (infos.comments.length !== 0) {
 
-                        infos.comments.map(commentEL => {
-                            const commentInfos = Comments.findOne({
+                        infos.comments.map(async commentEL => {
+                            const commentInfos = await Comments.findOne({
                                 where: { id: commentEL }
                             });
 
