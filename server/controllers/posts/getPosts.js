@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
             });
 
             if (postInfos) {
-                return postInfo;
+                return postInfos;
             } else {
                 res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
             }
