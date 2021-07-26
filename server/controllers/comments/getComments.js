@@ -7,9 +7,9 @@ module.exports = async (req, res) => {
             where: { id: req.query.post_id }
         });
 
-        if (userInfo) {
+        if (postInfo) {
 
-            const commentInfo = userInfo.dataValues.comment_id;
+            const commentInfo = postInfo.dataValues.comment_id;
 
             Promise.all(commentInfo.map(el => {
 
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
                 if (commentInfos) {
                     return {
                         commentInfos,
-                        username: userInfo.dataValues.username
+                        username: postInfo.dataValues.username
                     };
                 } else {
                     res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
