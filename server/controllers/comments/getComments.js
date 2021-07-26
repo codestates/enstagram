@@ -11,9 +11,9 @@ module.exports = async (req, res) => {
 
             const commentInfo = postInfo.dataValues.comment_id;
 
-            Promise.all(commentInfo.map(el => {
+            Promise.all(commentInfo.map(async el => {
 
-                const commentInfos = Comments.findOne({
+                const commentInfos = await Comments.findOne({
                     where: { id: el }
                 });
 
@@ -26,19 +26,14 @@ module.exports = async (req, res) => {
                 }
 
                 if (commentInfos) {
-                    return {
-                        data: data,
+                    res.status(200).json({
+                        data,
                         message: "코멘트 데이터 불러오기 성공"
-                    };
+                    })
                 } else {
                     res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
                 }
             }))
-                .then(result => {
-                    res.status(200).json({
-                        result,
-                    })
-                });
         } else {
             res.status(200).json({ message: "존재하지 않는 포스트 아이디 입니다" });
         }
