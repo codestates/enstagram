@@ -45,26 +45,24 @@ module.exports = async (req, res) => {
                                 where: { id: commentEL.id }
                             });
 
-                            console.log("commentInfossssssssssssssssssssssssssssssss:", commentInfos);
-
-                            // if (commentInfos) {
-                            //     infos.comments.push(commentInfos.dataValues);
-                            // } else {
-                            //     res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
-                            // }
+                            if (commentInfos) {
+                                infos.comments.push(commentInfos.dataValues);
+                            } else {
+                                res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
+                            }
                         })
                     }
 
                     result.push(infos);
-
-                    console.log("resulttttttttttttttttttttttttttttt:", result);
                 }))
+
+                res.status(200).json({
+                    data: result,
+                    message: "포스트 데이터 불러오기 성공"
+                });
             });
 
-        res.status(200).json({
-            data: result,
-            message: "포스트 데이터 불러오기 성공"
-        });
+
 
     } else {
         res.status(200).json({ message: "유저 데이터 불러오기 실패" });
