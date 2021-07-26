@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
 
     if (req.query.post_id) {
         const userInfo = await Users.findOne({
-            where: { post_id: req.query.post_id }
+            where: { post_id: { in: req.query.post_id } }
         });
 
         if (userInfo) {
