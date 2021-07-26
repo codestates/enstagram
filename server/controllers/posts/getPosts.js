@@ -23,8 +23,6 @@ module.exports = async (req, res) => {
             })
         );
 
-        console.log("postArrrrrrrrrrrrrrrrrrrrrrrrrrrr:", postArr);
-
         await Promise.all(
             postArr.map(async postEl => {
                 const infos = {
@@ -59,7 +57,7 @@ module.exports = async (req, res) => {
         );
 
         res.status(200).json({
-            data: infos,
+            data: result,
             message: "포스트 데이터 불러오기 성공"
         });
 
