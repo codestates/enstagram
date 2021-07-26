@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
 
         Promise.all(postInfo.map(async el => {
 
-            const postInfos = await Posts.findOne({
+            const postInfos = Posts.findOne({
                 where: { id: el }
             });
 
