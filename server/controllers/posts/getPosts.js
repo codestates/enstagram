@@ -1,4 +1,4 @@
-const { Users, Posts, Comments } = require('../../models');
+const { Users, Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
