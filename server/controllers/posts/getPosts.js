@@ -29,8 +29,8 @@ module.exports = async (req, res) => {
 
                     if (el.dataValues.comment_id !== 0) {
 
-                        commentContents = el.dataValues.comment_id.map(commentEL => {
-                            const commentInfos = Comments.findOne({
+                        commentContents = el.dataValues.comment_id.map(async commentEL => {
+                            const commentInfos = await Comments.findOne({
                                 where: { id: commentEL }
                             });
 
