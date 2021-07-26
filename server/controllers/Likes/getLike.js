@@ -20,9 +20,11 @@ module.exports = async (req, res) => {
             }
         }))
             .then(result => {
-                res.status(200).json(result.user_id, {
-                    message: "좋아요 데이터 불러오기 성공"
-                })
+                res.status(200).json(
+                    {
+                        data: result,
+                        message: "좋아요 데이터 불러오기 성공"
+                    })
             })
 
     } else {
