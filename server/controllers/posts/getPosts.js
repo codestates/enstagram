@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
             }
         }))
             .then(value => {
-                console.log("valueeeeeeeeeeeeeeeeeeee", value.dataValues);
+                console.log("valueeeeeeeeeeeeeeeeeeee", value[0].dataValues);
             })
 
         Promise.all(
