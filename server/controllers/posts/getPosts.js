@@ -25,41 +25,35 @@ module.exports = async (req, res) => {
             }
         }))
             .then(value => {
-                console.log("valueeeeeeeeeeeeeeeeeeee", value[0].dataValues);
-            })
+                Promise.all(value.map(el => {
+                    const infos = {
+                        id: el.id,
+                        user_id: el.user_id,
+                        content: el.content,
+                        pictures: el.pictures,
+                        comments: [],
+                        likes: [],
+                        createdAt: el.createdAt,
+                        updatedAt: el.updatedAt
+                    };
 
-        Promise.all(
-            postArr.map(async postEl => {
-                const infos = {
-                    id: postEl.id,
-                    user_id: postEl.user_id,
-                    content: postEl.content,
-                    pictures: postEl.pictures,
-                    comments: [],
-                    likes: [],
-                    createdAt: postEl.createdAt,
-                    updatedAt: postEl.updatedAt
-                };
+                    if (el.comment_id.length !== 0) {
+                        postEl.comment_id.map(commentEL => {
+                            const commentInfos = Comments.findOne({
+                                where: { id: commentEL.id }
+                            });
 
-                if (postEl.comment_id.length !== 0) {
+                            if (commentInfos) {
+                                infos.comments.push(commentInfos.dataValues);
+                            } else {
+                                res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
+                            }
+                        })
+                    }
 
-                    postEl.comment_id.map(async commentEL => {
-
-                        const commentInfos = await Comments.findOne({
-                            where: { id: commentEL.id }
-                        });
-
-                        if (commentInfos) {
-                            infos.comments.push(commentInfos.dataValues);
-                        } else {
-                            res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
-                        }
-                    });
-                }
-
-                result.push(infos);
-            })
-        );
+                    result.push(infos);
+                }))
+            });
 
         res.status(200).json({
             data: result,
