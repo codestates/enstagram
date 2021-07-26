@@ -3,7 +3,7 @@ const { Users } = require('../../models');
 module.exports = async (req, res) => {
 
     const myInfo = await Users.findOne({
-        where: { id: req.body.my_id }
+        where: { id: req.body.user_id }
     });
 
     const targetInfo = await Users.findOne({
