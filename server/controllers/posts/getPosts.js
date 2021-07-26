@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
                                 where: { id: commentEL }
                             });
 
-                            console.log("commentInfosssssssssssssssssss", commentInfos);
+                            console.log("commentInfosssssssssssssssssss", commentInfos.dataValues.content);
 
 
                             // if (commentInfos) {
