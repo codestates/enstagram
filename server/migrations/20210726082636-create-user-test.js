@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Posts', {
+    await queryInterface.createTable('UserTests', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,11 +11,14 @@ module.exports = {
       user_id: {
         type: Sequelize.JSON
       },
+      username: {
+        type: Sequelize.STRING
+      },
       content: {
         type: Sequelize.STRING
       },
       pictures: {
-        type: Sequelize.JSON
+        type: Sequelize.STRING
       },
       comment_id: {
         type: Sequelize.JSON
@@ -34,6 +37,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Posts');
+    await queryInterface.dropTable('UserTests');
   }
 };
