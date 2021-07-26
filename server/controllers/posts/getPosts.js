@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
 
                                 console.log("commentInfossssssssssssssssss", commentInfos.dataValues);
 
-                                // commentContents.push(commentInfos.dataValues.content);
+                                commentContents.push(commentInfos.dataValues.content);
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
