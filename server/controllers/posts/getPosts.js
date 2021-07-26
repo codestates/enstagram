@@ -19,38 +19,14 @@ module.exports = async (req, res) => {
             });
 
             if (postInfos) {
-                return postInfos;
+                res.status(200).json({
+                    data: postInfos.dataValues,
+                    message: "post 데이터 가져오기 성공"
+                });
             } else {
                 res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
             }
-        }))
-            .then(value => {
-                Promise.all(value.map(el => {
-
-                    if (el.dataValues.comment_id !== 0) {
-
-                        commentContents = el.dataValues.comment_id.map(commentEL => {
-                            const commentInfos = Comments.findOne({
-                                where: { id: commentEL }
-                            });
-
-                            if (commentInfos) {
-                                return commentInfos;
-                            } else {
-                                res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
-                            }
-                        });
-                    }
-                }))
-            })
-            .then(value => {
-                console.log("resulttttttttttttttt", value);
-
-                res.status(200).json({
-                    data: result,
-                    message: "포스트 데이터 불러오기 성공"
-                });
-            })
+        }));
     } else {
         res.status(200).json({ message: "유저 데이터 불러오기 실패" });
     }
