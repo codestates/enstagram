@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 
         const postInfo = userInfo.dataValues.post_id;
 
-        const postArr = postInfo.map(async el => {
+        const postArr = await postInfo.map(async el => {
 
             const postInfos = await Posts.findOne({
                 where: { id: el }
