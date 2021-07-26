@@ -47,6 +47,7 @@ module.exports = async (req, res) => {
 
                             if (commentInfos) {
                                 infos.comments[idx] = commentInfos.dataValues.content;
+                                console.log("infos.commentssssssssssssssssssssss", infos.comments);
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
