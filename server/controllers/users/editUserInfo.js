@@ -2,11 +2,15 @@ const { Users } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    const userInfo = await Users.findOne({
-        where: { id: req.body.user_id }
+    const userName = await Users.findOne({
+        where: { username: req.body.username }
     });
 
-    if (userInfo) {
+    const userEmail = await Users.findOne({
+        where: { email: req.body.email }
+    });
+
+    if (!userName && !userEmail) {
 
         const result = {
             name: req.body.name,
@@ -21,10 +25,18 @@ module.exports = async (req, res) => {
         res.status(200).json({
             data: result,
             message: "유저 데이터 변경 성공"
-        })
+        });
+    } else if (userName) {
+        res.status(200).json({
+            message: "이미 존재하는 username 입니다"
+        });
+    } else if (userEmail) {
+        res.status(200).json({
+            message: "이미 존재하는 email 입니다"
+        });
     } else {
         res.status(200).json({
-            message: "일치하는 유저 ID 가 없습니다"
-        })
+            message: "일치하는 user 정보를 찾을 수 없습니다"
+        });
     }
 };
