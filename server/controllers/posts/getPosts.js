@@ -72,7 +72,7 @@ module.exports = async (req, res) => {
                         });
                     }
 
-                    result.push(infos);
+                    await result.push(infos);
                 }))
 
                 res.status(200).json({
