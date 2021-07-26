@@ -10,12 +10,14 @@ module.exports = async (req, res) => {
 
         const postInfo = userInfo.dataValues.post_id;
 
-        const postResult = Promise.all(
-            postInfo.map(el => {
+        Promise.all(
+            postInfo.map(async el => {
 
-                const postInfos = Posts.findOne({
+                const postInfos = await Posts.findOne({
                     where: { id: el }
                 });
+
+                console.log("postInfosssssssssssssssss", postInfos.dataValues);
 
                 return postInfos.dataValues;
             })
