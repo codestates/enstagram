@@ -26,6 +26,11 @@ module.exports = async (req, res) => {
             username,
             email,
             password,
+            post_id: [],
+            comment_id: [],
+            like_id: [],
+            follower_id: [],
+            following_id: []
         });
 
         res.status(201).send({

@@ -9,5 +9,6 @@ module.exports = async (req, res) => {
         return el.dataValues;
     });
 
+
     res.status(200).json(userArr);
 };

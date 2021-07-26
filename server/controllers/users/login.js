@@ -10,8 +10,8 @@ module.exports = async (req, res) => {
             where: { username: req.body.username }
         });
 
-
         if (userName) {
+
             const userPassword = await Users.findOne({
                 where: { password: req.body.password }
             });
@@ -19,31 +19,24 @@ module.exports = async (req, res) => {
             if (!userPassword) {
                 res.status(200).json({ message: "비밀번호 오류" });
             } else {
-                const { dataValues: { id, username, email, createdAt, updatedAt } } = userName;
 
-                const accessToken = await sign({
-                    id,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                delete userName.dataValues.password;
+                const accessToken = await sign(
+                    userName,
                     process.env.ACCESS_SECRET, {
                     expiresIn: process.env.ACCESS_TIME,
                 });
 
-                const refreshToken = await sign({
-                    id,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                const refreshToken = await sign(
+                    userName,
                     process.env.REFRESH_SECRET, {
                     expiresIn: '7d'
                 });
 
-                res.cookie('refreshToken', refreshToken);
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                });
+
                 res.status(200).json({ accessToken: accessToken, message: "로그인 성공 " });
             }
 
@@ -65,38 +58,23 @@ module.exports = async (req, res) => {
             if (!userPassword) {
                 res.status(200).json({ message: "비밀번호 오류" });
             } else {
-                const { dataValues: { id, username, email, createdAt, updatedAt } } = userEmail;
 
-                const accessToken = await sign({
-                    id: id,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                delete userEmail.dataValues.password;
+                const accessToken = await sign(
+                    userEmail,
                     process.env.ACCESS_SECRET, {
                     expiresIn: process.env.ACCESS_TIME,
                 });
 
-                const refreshToken = await sign({
-                    id,
-                    username,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
+                const refreshToken = await sign(
+                    userEmail,
                     process.env.REFRESH_SECRET, {
                     expiresIn: '7d'
                 });
 
-                res.cookie('refreshToken', refreshToken);
-
-                //TODO: 리프레쉬 토큰 작업 HTTPS 적용 후 바꿔줘야함
-                // , {
-                //     httpOnly: true,
-                //         sameSite: 'None',
-                //             secure: true,
-                // }
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                });
 
                 res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
             }
