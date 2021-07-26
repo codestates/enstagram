@@ -20,6 +20,9 @@ module.exports = async (req, res) => {
             }
         }))
             .then(result => {
+
+                console.log("resultttttttttttttttttttt", result.user_id);
+
                 res.status(200).json(
                     {
                         data: result.user_id,
