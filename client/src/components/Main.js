@@ -1,6 +1,6 @@
-function Main({userData}) {
+const Main = function({userData}) {
   return (
-    <div>This is Main Page, {userData}</div>
+    <div>This is Main Page. You are logged in!</div>
   )
 }
 
