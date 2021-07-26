@@ -12,14 +12,14 @@ module.exports = async (req, res) => {
 
         const postInfo = userInfo.dataValues.post_id;
 
-        const postArr = await Promise.all(
+        const postArr = Promise.all(
             postInfo.map(async el => {
 
                 const postInfos = await Posts.findOne({
                     where: { id: el }
                 });
 
-                if (postInfo) {
+                if (postInfos) {
                     return postInfos.dataValues;
                 } else {
                     res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
