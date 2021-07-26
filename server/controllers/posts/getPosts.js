@@ -38,9 +38,11 @@ module.exports = async (req, res) => {
                         updatedAt: el.dataValues.updatedAt
                     };
 
+                    let commentContents = [];
+
                     if (el.dataValues.comment_id !== 0) {
 
-                        infos.comments = Promise.all(el.dataValues.comment_id.map(async commentEL => {
+                        commentContents = el.dataValues.comment_id.map(async commentEL => {
                             const commentInfos = await Comments.findOne({
                                 where: { id: commentEL }
                             });
@@ -50,8 +52,11 @@ module.exports = async (req, res) => {
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
-                        }));
+                        });
+
+                        infos.comments = commentContents;
                     }
+
 
                     if (infos.likes.length !== 0) {
 
