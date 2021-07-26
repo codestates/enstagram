@@ -12,6 +12,10 @@ module.exports = async (req, res) => {
 
     if (!userName && !userEmail) {
 
+        const userInfo = await Users.findOne({
+            where: { id: req.body.user_id }
+        });
+
         const result = {
             name: req.body.name,
             username: req.body.username,
@@ -19,7 +23,7 @@ module.exports = async (req, res) => {
         }
 
         Users.update(result, {
-            where: userName.dataValues.id
+            where: userInfo.dataValues.id
         });
 
         res.status(200).json({
