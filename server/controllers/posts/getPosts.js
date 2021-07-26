@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 
         const postInfo = userInfo.dataValues.post_id;
 
-        const postArr = await postInfo.map(async el => {
+        Promise.all(postInfo.map(async el => {
 
             const postInfos = await Posts.findOne({
                 where: { id: el }
@@ -23,9 +23,10 @@ module.exports = async (req, res) => {
             } else {
                 res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
             }
-        });
-
-        console.log("postArrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:", postArr[0].id);
+        }))
+            .then(value => {
+                console.log("valueeeeeeeeeeeeeeeeeeee", value);
+            })
 
         Promise.all(
             postArr.map(async postEl => {
