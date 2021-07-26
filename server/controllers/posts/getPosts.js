@@ -40,13 +40,13 @@ module.exports = async (req, res) => {
 
                     if (infos.comments.length !== 0) {
 
-                        infos.comments.map(async (commentEL, idx) => {
+                        infos.comments = infos.comments.map(async (commentEL, idx) => {
                             const commentInfos = await Comments.findOne({
                                 where: { id: commentEL }
                             });
 
                             if (commentInfos) {
-                                infos.comments[idx] = commentInfos.dataValues.content;
+                                return commentInfos.dataValues.content;
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }

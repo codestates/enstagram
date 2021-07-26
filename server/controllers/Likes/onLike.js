@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
 
                 if (userInfo.dataValues.like_id.length !== 0) {
                     await Users.update({ like_id: [...userInfo.dataValues.like_id, value.dataValues.id] }, {
-                        where: { id: like.like_id }
+                        where: { id: like.user_id }
                     });
                 } else {
                     await Users.update({ like_id: [value.dataValues.id] }, {
@@ -43,7 +43,7 @@ module.exports = async (req, res) => {
 
                 res.status(200).json({
                     data: like,
-                    message: "좋아요 완료"
+                    message: "좋아요 정보 설정 완료"
                 });
             });
 
