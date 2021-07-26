@@ -28,13 +28,14 @@ app.get('/refreshToken', controllers.refreshToken);
 app.get('/oauth', controllers.OAuth);
 app.get('/getpost', controllers.getPosts);
 app.get('/getcomment', controllers.getComments);
+app.get('/getlike', controllers.getLike);
 
 //! POST 요청
 app.post('/', controllers.login);
 app.post('/signup', controllers.signup);
 app.post('/createpost', controllers.createPosts);
 app.post('/createcomment', controllers.createComments);
-app.post('/liketrue', controllers.onLike);
+app.post('/like', controllers.onLike);
 app.post('/follow', controllers.followers);
 
 app.listen(port, () => {
