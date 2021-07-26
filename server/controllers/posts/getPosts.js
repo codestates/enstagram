@@ -19,14 +19,17 @@ module.exports = async (req, res) => {
             });
 
             if (postInfos) {
-                res.status(200).json({
-                    data: postInfos.dataValues,
-                    message: "post 데이터 가져오기 성공"
-                });
+                return postInfo;
             } else {
                 res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
             }
-        }));
+        }))
+            .then(result => {
+                res.status(200).json({
+                    data: result,
+                    message: "post 데이터 불러오기 성공"
+                })
+            });
     } else {
         res.status(200).json({ message: "유저 데이터 불러오기 실패" });
     }
