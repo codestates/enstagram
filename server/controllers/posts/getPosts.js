@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
 
                     if (infos.comments.length !== 0) {
 
-                        infos.comments = infos.comments.map(async commentEL => {
+                        infos.comments.map(async commentEL => {
                             const commentInfos = await Comments.findOne({
                                 where: { id: commentEL }
                             });
@@ -56,6 +56,7 @@ module.exports = async (req, res) => {
                     }
 
                     console.log("commentContentsssssssssssssssssssss", commentContents);
+                    infos.comments = commentContents;
 
                     if (infos.likes.length !== 0) {
 
