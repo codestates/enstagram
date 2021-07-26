@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import "./Mypage.css";
-import { Modal } from '../components/Post'
-import { dummyMyUserInfo, dummyPosts } from '../dummyData';
+import Post, { Modal } from '../components/Post'
+import { dummyMyUserInfo, dummyPosts, placeHolderImage } from '../dummyData';
 import { serverUrl } from '../utils/constants'
 
 const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
@@ -12,6 +12,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
+    //let { path, url } = useRouteMatch();
 
     const userId = loggedInUserInfo.id;
 
@@ -92,7 +93,13 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
-                            <Link className="btn-primary edit-profile" to="/profile-edit"><div>프로필 편집</div></Link>
+                            <Link 
+                                className="btn-primary edit-profile" 
+                                to={`/mypage/edit`}
+                            >
+                                <div>프로필 편집</div>
+                            </Link>
+                            
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
@@ -128,4 +135,5 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
         </div>
     )
 }
-export default MyPage
+export default Mypage
+
