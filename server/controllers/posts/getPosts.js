@@ -40,20 +40,21 @@ module.exports = async (req, res) => {
 
                     if (infos.comments.length !== 0) {
 
-                        infos.comments.map(async commentEL => {
+                        infos.comments.map(async (commentEL, idx) => {
                             const commentInfos = await Comments.findOne({
                                 where: { id: commentEL }
                             });
 
-                            console.log("commentInfosssssssssssssssssss", commentInfos.dataValues.content);
-
-
                             if (commentInfos) {
-                                infos.comments.push(commentInfos.dataValues.content);
+                                infos.comments[idx] = commentInfos.dataValues.content;
                             } else {
                                 res.status(200).json({ message: "일치하는 코멘트 정보가 없습니다" });
                             }
                         })
+                    }
+
+                    if (infos.likes.length !== 0) {
+
                     }
 
                     result.push(infos);
