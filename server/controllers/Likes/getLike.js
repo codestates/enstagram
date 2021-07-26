@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
 
     if (postInfos) {
 
-        Promise.all(postInfos.map(async el => {
+        Promise.all(postInfos.like_id.map(async el => {
             const likeInfos = await Likes.findOne({
                 where: { id: el.dataValues.like_id }
             });
