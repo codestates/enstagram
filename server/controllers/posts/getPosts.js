@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 
         const postInfo = userInfo.dataValues.post_id;
 
-        const postArr = Promise.all(
+        const postArr = await Promise.all(
             postInfo.map(async el => {
 
                 const postInfos = await Posts.findOne({
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
             })
         );
 
-        Promise.all(
+        await Promise.all(
             postArr.map(async postEl => {
                 const infos = {
                     id: postEl.id,
