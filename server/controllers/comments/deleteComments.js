@@ -2,7 +2,7 @@ const { Users, Posts, Likes, Comments } = require("../../models");
 
 module.exports = async (req, res) => {
 
-    const commentInfo = Comments.findOne({
+    const commentInfo = await Comments.findOne({
         where: { id: req.body.comment_id }
     });
 
@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
 
         let result = [];
 
-        const userInfo = Users.findOne({
+        const userInfo = await Users.findOne({
             where: { id: commentInfo.dataValues.user_id }
         });
 
