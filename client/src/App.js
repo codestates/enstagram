@@ -7,7 +7,7 @@ import Login from "./components/login/Login.js";
 import Main from "./components/Main.js";
 import Signup from "./pages/Signup.js";
 import Mypage from "./pages/Mypage.js";
-import ProfileEdit from "./pages/ProfileEdit.js";
+import BasicProfileEdit from './components/ProfileEdit/BasicProfileEdit'
 import Header from "./components/Header";
 import FacebookSignup from "./pages/FacebookSignup";
 import FacebookLogin from "./components/login/FacebookLogin";
@@ -122,7 +122,7 @@ const App = function () {
           />
         </Route>
         <Route path="/mypage/edit">
-          <ProfileEdit />
+          <BasicProfileEdit />
         </Route>
         <Route path="/mypage">
           <Mypage setIsLogin={setIsLogin} />
