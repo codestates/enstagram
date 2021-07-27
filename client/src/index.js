@@ -5,10 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import initFacebookSdk from "./helpers/initFacebookSdk.js";
 
-initFacebookSdk().then((isFbLoggedIn) => {
+initFacebookSdk().then(() => {
   ReactDOM.render(
     <React.StrictMode>
-      <App _isFbLoggedIn={isFbLoggedIn}/>
+      <App />
     </React.StrictMode>,
     document.getElementById("root")
   );

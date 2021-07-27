@@ -14,13 +14,12 @@
   display:flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding:30px 40px;
   background-color: #fff;
 }
 
 .login-signup-input-box {
-  width: 80%;
+  width: 100%;
   height: 2.8em;
   margin-bottom: 6px;
   padding: 10px;
@@ -30,7 +29,7 @@
 }
 
 .login-signup-button {
-  width: 80%;
+  width: 100%;
   height: 2.2em;
   color: #fff;
   background-color: rgb(64,173,248);
@@ -60,6 +59,8 @@
 .invalid-msg {
   margin-top: 20px;
   color: rgb(237, 73, 86);
+  word-break: keep-all;
+  text-align: center;
 }
 
 .facebook-icon {
@@ -82,4 +83,11 @@
   border-radius: 50%;
   width: 120px;
   margin-bottom: 30px;
+}
+
+.valid-msg {
+  margin-top: 20px;
+  color: LimeGreen;
+  word-break: keep-all;
+  text-align: center;
 }

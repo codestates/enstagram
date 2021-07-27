@@ -11,18 +11,19 @@ export default function initFacebookSdk() {
         xfbml: true,
         version: "v11.0",
       });
-
+      resolve();
+      // 일단 자동로그인은 보류
       // facebook 에 로그인 되어있는지 체크
-      window.FB.getLoginStatus((response) => {
-        console.log(response);
-        if (response.status === "connected") { // 로그인 되어있는 경우
-          requestFacebookBasicProfile()
-          .then(res => resolve(true))
-        } 
-        else { // 로그인 되어있지 않은 경우
-          resolve(false);
-        }
-      });
+      // window.FB.getLoginStatus((response) => {
+      //   console.log(response);
+      //   if (response.status === "connected") { // 로그인 되어있는 경우
+      //     requestFacebookBasicProfile()
+      //     .then(res => resolve(true))
+      //   } 
+      //   else { // 로그인 되어있지 않은 경우
+      //     resolve(false);
+      //   }
+      // });
     };
 
     // load facebook sdk script

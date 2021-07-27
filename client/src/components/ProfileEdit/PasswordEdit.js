@@ -36,7 +36,7 @@ const PasswordEdit = () => {
   }
 
   return (
-    <div clssName="basic-profile-container">
+    <div className="basic-profile-container">
       <div className="profile-element">
         <label className="profile-edit-label">
           <img
