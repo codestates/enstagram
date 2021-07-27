@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
         };
 
         Users.update(newPassword, {
-            where: { password: req.body.oldpw }
+            where: { username: req.body.username, password: req.body.oldpw }
         });
 
         res.status(200).json({ message: "비밀번호 변경 성공" });
