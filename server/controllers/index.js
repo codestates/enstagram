@@ -26,5 +26,5 @@ module.exports = {
     getLike: require("./Likes/getLike"),                    //* 좋아요 정보 가져오기
 
     //! Follow
-    followers: require("./follow/follow"),               //* 팔로우
+    follow: require("./follow/follow"),               //* 팔로우
 };
