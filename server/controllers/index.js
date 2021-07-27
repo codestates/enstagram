@@ -20,6 +20,7 @@ module.exports = {
     //! Comments
     createComments: require("./comments/createComments"),   //* 코멘트 생성
     getComments: require("./comments/getComments"),         //* 코멘트 정보 가져오기
+    deleteComments: require("./comments/deleteComments"),   //* 코멘트 삭제
 
     //! Likes
     like: require("./Likes/like"),                          //* 좋아요 활성
