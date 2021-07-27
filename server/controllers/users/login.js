@@ -22,13 +22,13 @@ module.exports = async (req, res) => {
 
                 delete userName.dataValues.password;
                 const accessToken = await sign(
-                    userName,
+                    userName.dataValues,
                     process.env.ACCESS_SECRET, {
                     expiresIn: process.env.ACCESS_TIME,
                 });
 
                 const refreshToken = await sign(
-                    userName,
+                    userName.dataValues,
                     process.env.REFRESH_SECRET, {
                     expiresIn: '7d'
                 });
@@ -61,13 +61,13 @@ module.exports = async (req, res) => {
 
                 delete userEmail.dataValues.password;
                 const accessToken = await sign(
-                    userEmail,
+                    userEmail.dataValues,
                     process.env.ACCESS_SECRET, {
                     expiresIn: process.env.ACCESS_TIME,
                 });
 
                 const refreshToken = await sign(
-                    userEmail,
+                    userEmail.dataValues,
                     process.env.REFRESH_SECRET, {
                     expiresIn: '7d'
                 });
