@@ -143,30 +143,24 @@ module.exports = async (req, res) => {
             });
         }
     } else if (req.body.newname && !req.body.newusername && !req.body.newemail) {
-        const userName = await Users.findOne({
-            where: { name: req.body.newname }
+
+        const userInfo = await Users.findOne({
+            where: { username: req.body.username }
         });
 
-        if (!userName) {
-
-            const userInfo = await Users.findOne({
-                where: { username: req.body.username }
-            });
-
-            const result = {
-                name: req.body.newname
-            }
-
-            Users.update(result, {
-                where: { id: userInfo.dataValues.id }
-            });
-
-            res.status(200).json({
-                data: result,
-                message: "유저 데이터 변경 성공"
-            });
-
+        const result = {
+            name: req.body.newname
         }
+
+        Users.update(result, {
+            where: { id: userInfo.dataValues.id }
+        });
+
+        res.status(200).json({
+            data: result,
+            message: "유저 데이터 변경 성공"
+        });
+
     } else if (!req.body.newname && req.body.newusername && !req.body.newemail) {
         const userName = await Users.findOne({
             where: { username: req.body.newusername }
