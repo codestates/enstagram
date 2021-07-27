@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
 
     if (myInfo) {
 
-        if (myInfo.dataValues.follower_id !== 0) {
+        if (myInfo.dataValues.follower_id.length !== 0) {
 
             let result = [];
 
