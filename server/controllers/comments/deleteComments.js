@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
             where: { id: commentInfo.dataValues.post_id }
         });
 
-        res.status(200).json({ message: "코멘트 정상 삭제 완료" });
+        res.status(200).json({ message: "코멘트 삭제 완료" });
 
     } else {
         res.status(200).json({ message: "해당하는 정보의 comment 가 없습니다" });

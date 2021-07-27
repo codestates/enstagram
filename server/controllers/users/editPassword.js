@@ -6,13 +6,17 @@ module.exports = async (req, res) => {
         where: { username: req.body.username }
     });
 
+    const passInfo = await Users.findOne({
+        where: { password: req.body.oldpw }
+    });
+
     if (userInfo) {
 
         const newPassword = {
             password: req.body.newpw
         };
 
-        Users.update(newPassword, {
+        await Users.update(newPassword, {
             where: { username: req.body.username, password: req.body.oldpw }
         });
 
