@@ -32,7 +32,7 @@ app.get('/getlike', controllers.getLike);
 app.get('/getuser', controllers.getUserInfo);
 
 //! POST 요청
-app.post('/', controllers.login);
+app.post('/login', controllers.login);
 app.post('/signup', controllers.signup);
 app.post('/createpost', controllers.createPosts);
 app.post('/createcomment', controllers.createComments);
