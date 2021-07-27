@@ -17,6 +17,7 @@ export function requestFacebookLogin() {
 export function requestFacebookBasicProfile() {
   return new Promise((resolve)=>{
     window.FB.api("/me", function (response) {
+      console.log(response)
       console.log("Welcome, ", response.name, "!");
       resolve(response.id);
     });
