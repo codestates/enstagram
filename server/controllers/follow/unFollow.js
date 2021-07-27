@@ -24,6 +24,10 @@ module.exports = async (req, res) => {
                 where: { id: myInfo.dataValues.id }
             });
 
+            await Users.update({ following_id: result }, {
+                where: { id: targetInfo.dataValues.id }
+            });
+
             res.status(200).json({ message: "언팔로우 성공" });
         } else {
             res.status(200).json({ message: "현재 팔로우 중인 사람이 없습니다" });
