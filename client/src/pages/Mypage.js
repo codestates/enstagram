@@ -137,4 +137,4 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
     );
 }
 
-export default Mypage;
+export default MyPage;

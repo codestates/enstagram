@@ -1,24 +1,46 @@
+.basic-profile-container {
+  
+}
+
 .profile-element{
   display: flex;
   margin-bottom: 16px;
-}
-
-.profile-edit-label-box {
-  /* width: 100%; */
-  margin: 6px 0 0;
-  padding : 0 32px;
-  text-align: right;
-  flex-grow:2;
+  /* border: 3px solid yellow; */
 }
 
 .profile-edit-label {
+  text-align: right;
   font-weight: 500;
+  /* border: 1px solid red; */
+  width: 200px;
+  padding-right: 30px;
 }
 
-.profile-edit-input-box{
+.profile-edit-label > span {
+  font-weight: 600;
+  vertical-align: -5px;
+}
+
+.profile-edit-input-wrapper{
   /* width: 100%; */
   padding: 0 60px 0 0;
   flex-grow:3;
+  /* border: 1px solid blue; */
+}
+
+.edit-profile-pic {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly
+}
+
+.edit-profile-pic-button {
+  width: fit-content;
+  font-size: 14px;
+}
+
+.profile-edit-input-wrapper > span {
+  font-size:1.5em;
 }
 
 .profile-edit-input {
@@ -32,33 +54,6 @@
 .profile-edit-pic{
   width: 45px;
   border-radius: 50%;
-  
-}
-
-.profile-element-pic{
-  margin-top: 32px;
-}
-
-.pic-edit-box{
-  display: flex;
-  flex-direction: column;
-  justify-content:center;
-  flex-grow:8;
-}
-
-.pic-edit-box > span{
-  font-size: 20px;
-  margin-bottom:2px
-}
-
-.profile-pic-element{
-  flex-grow:1;
-}
-
-.profile-change-button {
-  width: fit-content;
-  font-size: 13px;
-  text-align:left;
 }
 
 .profile-edit-submit {
@@ -66,11 +61,14 @@
   background-color: rgb(0, 149, 246);
   border-radius: 5px;
   font-weight: 800;
-  font-size: 1em;
+  font-size: .9em;
   border: none;
   cursor: pointer;
   padding:7px 12px;
-  position:relative;
-  left: 140px;
+  margin-top: 10px;
 }
-/* *{box-sizing:border-box} */
+
+.button-disabled {
+  background-color: rgb(187,224,252);
+  cursor: default;
+}
