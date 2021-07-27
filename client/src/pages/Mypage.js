@@ -18,14 +18,14 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
 
     // Initial Setup
     // useEffect(() => {
-    //     // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#otheruserspage
-    //     // API Route: users?username="accountName" 요청으로 유저 정보 뱓기
-    //     axios.get(`${serverUrl}/users`, { params: { username: userId } }).then((res) => {
-    //         setUserInfo(res);
+    //     // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#getuserinfo
+    //     axios.get(`${serverUrl}/getuser`, { params: { user_id: userId } }).then((res) => {
+    //         const userData = res.data.data
+    //         setUserInfo(userData);
     //     });
     //     // GET: getPost 요청으로 post information 받기
-    //     axios.get(`${serverUrl}`, { params: { username: userId } }).then((res) => {
-    //         setPosts(res);
+    //     axios.get(`${serverUrl}/getpost`, { params: { user_id: userId } }).then((res) => {
+    //         setPosts(res.data.data);
     //     })
     // }, [userId])
 
@@ -110,7 +110,6 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                             >
                                 <div>프로필 편집</div>
                             </Link>
-                            
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
@@ -127,6 +126,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                 <div className="gallery-list-body">
                     {posts && posts.map((post, idx)=>
                         <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
+                            {/* 로그인 구현되고 나면 post.picture를 post.pictures로 바꾸기*/}
                             <img src={post.picture} alt={post.content} />
                         </div>
                     )}

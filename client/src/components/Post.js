@@ -8,10 +8,21 @@ import axios from 'axios';
 import { timeSince } from '../utils/timeSince';
 
 const Post = ({ activePost, loggedInUserInfo, commentHandler, commentDeleteHandler, likeHandler, userInfo }) => {
+    //Comment created by typing on the input
     const [comment, setComment] = useState('');
+    //Below is the actual list of comments
+    const [comments, setComments] = useState([]);
     const [like, setLike] = useState(false);
 
     useEffect(() => {
+        axios.get(`${serverUrl}/getcomment`, {
+            params: {
+                post_id: activePost.id,
+            }
+        }).then(res=> {
+            // console.log(res.data)
+            setComments(res.data.data)
+        })
         //로그인 한 유저가 포스트를 좋아했는지 activePost.liked_id에 포함 되어있는지 확인
         //포함 되어있으면 이미 좋아요 누른 상태
         //없으면 좋아요 안 한 상태
@@ -50,15 +61,16 @@ const Post = ({ activePost, loggedInUserInfo, commentHandler, commentDeleteHandl
             content: comment,
             username: loggedInUserInfo && loggedInUserInfo.username
         }
-        // TODO: Uncomment Below when API is ready
-        // axios.post(`${serverUrl}/comment`, {
-        //     comment: newComment,
-        //     userId: loggedInUserInfo && loggedInUserInfo.id,
-        //     postId: activePost.id,
+        // TODO: Uncomment Below when API is ready & when login feature is complete
+        // axios.post(`${serverUrl}/createcomment`, {
+        //     user_id: loggedInUserInfo && loggedInUserInfo.id,
+        //     post_id: activePost.id,
+        //     content: comment,
         // }).then((res) => {
+        //     console.log("comment", res)
         //     if (res === 'success') {
         //         // update comment state
-        //         commentHandler(newComment)
+        //         commentHandler(comment)
         //         setComment('');
         //     }
         // })
@@ -68,15 +80,13 @@ const Post = ({ activePost, loggedInUserInfo, commentHandler, commentDeleteHandl
 
     const commentDelete = (comment) => {
         // For database update:
-        // axios.delete(`${serverUrl}/commentdelete`, {
-        //     postId: activePost.id,
-        //     commentId: comment.id,
-        //     userId: loggedInUserInfo.id
-        // }).then((res) => {
-        //     if(res === 'success') {
-        //         commentDeleteHandler(comment);
-        //     }
-        // })
+        axios.delete(`${serverUrl}/commentdelete`, {
+            comment_id: comment.id,
+        }).then((res) => {
+            if(res === 'success') {
+                commentDeleteHandler(comment);
+            }
+        })
         // For local state update, we need to call commentDeleteHandler
         commentDeleteHandler(comment);
     }
@@ -90,7 +100,7 @@ const Post = ({ activePost, loggedInUserInfo, commentHandler, commentDeleteHandl
                 <div className="post-username">{activePost.username}</div>
             </div>
             <div className="post-image-container">
-                <img src={activePost.picture} alt={activePost.content} />
+                <img src={activePost.pictures} alt={activePost.content} />
             </div>
             <div className="like-btn-container" onClick={likeClickHandler}>
                 {like
@@ -105,7 +115,7 @@ const Post = ({ activePost, loggedInUserInfo, commentHandler, commentDeleteHandl
                 {activePost.content}</p>
             </div>
             <div className="comments-container">
-                {activePost.comments && activePost.comments.map((comment, idx) => {
+                {comments && comments.map((comment, idx) => {
                     return (
                         <p key={idx} className="comment-content">
                             <span className="comment-username">{comment && comment.username}</span>

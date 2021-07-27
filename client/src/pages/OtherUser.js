@@ -17,23 +17,24 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
     const { userId } = useParams();
 
     // Initial Setup
-    // useEffect(() => {
-    //     // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#otheruserspage
-    //     // API Route: users?username="accountName" 요청으로 유저 정보 뱓기
-    //     axios.get(`${serverUrl}/users`, { params: { username: userId } }).then((res) => {
-    //         setUserInfo(res);
-    //     });
-    //     // GET: getPost 요청으로 post information 받기
-    //     axios.get(`${serverUrl}`, { params: { username: userId } }).then((res) => {
-    //         setPosts(res);
-    //     })
-    // }, [userId])
+    useEffect(() => {
+        // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#getuserinfo
+        axios.get(`${serverUrl}/getuser`, { params: { user_id: userId } }).then((res) => {
+            const userData = res.data.data
+            // TODO: Handle error when user doesn't exist.
+            setUserInfo(userData);
+        });
+        // GET: getPost 요청으로 post information 받기
+        axios.get(`${serverUrl}/getpost`, { params: { user_id: userId } }).then((res) => {
+            setPosts(res.data.data);
+        })
+    }, [userId])
 
     // Initial Setup: before API is ready
-    useEffect(() => {
-        setUserInfo(dummyOtherUserInfo)
-        setPosts(otherUserPosts)
-    }, [])
+    // useEffect(() => {
+    //     setUserInfo(dummyOtherUserInfo)
+    //     setPosts(otherUserPosts)
+    // }, [])
 
     const clickPostHandler = (post) => {
         setIsModalOpen(true)
@@ -55,11 +56,12 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
         setPosts(newPosts);
     }
 
+    console.log("POSTs",posts)
     //TODO: when API is updated, change username to id
     const commentDeleteHandler = (comment) => {
         const newPosts = [...posts].map(post => {
             if(post === activePost){
-                post.comments = post.comments.filter(el => el.username !== comment.username)
+                post.comments = post.comments.filter(el => el.id !== comment.id)
             }
             return post
         })
@@ -97,11 +99,9 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
                             <div className="btn-primary">Follow</div>
-                            {/* <Link className="btn-primary edit-profile" to="/profile-edit"><div>프로필 편집</div></Link> */}
-                            {/* <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div> */}
                         </div>
                         <div className="page-details">
-                            <div><strong>{userInfo.posts && userInfo.posts.length}</strong> posts</div>
+                            <div><strong>{posts && posts.length}</strong> posts</div>
                             <div><strong>{userInfo.followers}</strong> followers</div>
                             <div><strong>{userInfo.following}</strong> following</div>
                         </div>
@@ -114,14 +114,14 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
                 <div className="gallery-list-body">
                     {posts && posts.map((post, idx)=>
                         <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
-                            <img src={post.picture} alt={post.content} />
+                            <img src={post.pictures} alt={post.content} />
                         </div>
                     )}
                 </div>
             </div>
 
             {isModalOpen &&
-                <Modal 
+                <Modal
                     post={activePost}
                     commentHandler={commentHandler}
                     commentDeleteHandler={commentDeleteHandler}

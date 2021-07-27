@@ -182,12 +182,28 @@ export const dummyOtherUserInfo = {
   name: 'John Smith'
 }
 
+// export const dummyMyUserInfo = {
+//   id: 231342323, // PK,
+//   username: 'Kakao-Ryan',
+//   profilePhoto: placeHolderImage,
+//   followers: 123, // [userId1, userId2, ...]
+//   following: 300,
+//   name: 'Ryan Kim',
+//   // introduction: 'Hello world! Nice to meet you'
+// }
+
+// export const dummyMyUserInfo = {
+//   id: 6, // PK,
+//   username: 'Kakao-Ryan',
+//   profilePhoto: placeHolderImage,
+//   email: 'kryan@gmail.com',
+//   name: 'Ryan Kim',
+// }
+
 export const dummyMyUserInfo = {
-  id: 231342323, // PK,
-  username: 'Kakao-Ryan',
+  id: 7, // PK,
+  username: 'Kakao-Apeach',
   profilePhoto: placeHolderImage,
-  followers: 123, // [userId1, userId2, ...]
-  following: 300,
-  name: 'Ryan Kim',
-  // introduction: 'Hello world! Nice to meet you'
+  email: 'apeach@gmail.com',
+  name: 'Peach Lee',
 }
