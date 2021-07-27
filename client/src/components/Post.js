@@ -7,7 +7,7 @@ import { serverUrl } from '../utils/constants'
 import axios from 'axios';
 import { timeSince } from '../utils/timeSince';
 
-const Post = ({ activePost, loggedInUserInfo, commentHandler, likeHandler, userInfo }) => {
+const Post = ({ activePost, loggedInUserInfo, commentHandler, commentDeleteHandler, likeHandler, userInfo }) => {
     const [comment, setComment] = useState('');
     const [like, setLike] = useState(false);
 
@@ -66,6 +66,21 @@ const Post = ({ activePost, loggedInUserInfo, commentHandler, likeHandler, userI
         setComment('');
     }
 
+    const commentDelete = (comment) => {
+        // For database update:
+        // axios.delete(`${serverUrl}/commentdelete`, {
+        //     postId: activePost.id,
+        //     commentId: comment.id,
+        //     userId: loggedInUserInfo.id
+        // }).then((res) => {
+        //     if(res === 'success') {
+        //         commentDeleteHandler(comment);
+        //     }
+        // })
+        // For local state update, we need to call commentDeleteHandler
+        commentDeleteHandler(comment);
+    }
+
     return (
         <div className="post-wrapper">
             <div className="post-user-container">
@@ -92,9 +107,12 @@ const Post = ({ activePost, loggedInUserInfo, commentHandler, likeHandler, userI
             <div className="comments-container">
                 {activePost.comments && activePost.comments.map((comment, idx) => {
                     return (
-                        <p key={idx}>
+                        <p key={idx} className="comment-content">
                             <span className="comment-username">{comment && comment.username}</span>
                             {comment && comment.content}
+                            {comment.username === loggedInUserInfo.username &&
+                                <span onClick={() => commentDelete(comment)} className="comment-delete">X</span>
+                            }
                         </p>
                     )
                 })}
@@ -108,7 +126,7 @@ const Post = ({ activePost, loggedInUserInfo, commentHandler, likeHandler, userI
     )
 }
 
-export const Modal = ({ post, userInfo, loggedInUserInfo, likeHandler, commentHandler, onModalClose }) => {
+export const Modal = ({ post, userInfo, loggedInUserInfo, likeHandler, commentHandler, commentDeleteHandler, onModalClose }) => {
     return (
         <div id='post' className="modal"
             onClick={(e) => {
@@ -120,6 +138,7 @@ export const Modal = ({ post, userInfo, loggedInUserInfo, likeHandler, commentHa
                 userInfo={userInfo}
                 likeHandler={likeHandler}
                 loggedInUserInfo={loggedInUserInfo}
+                commentDeleteHandler={commentDeleteHandler}
             />
         </div>
     )

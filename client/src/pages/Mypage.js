@@ -63,6 +63,17 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
         setPosts(newPosts);
     }
 
+    //TODO: when API is updated, change username to id
+    const commentDeleteHandler = (comment) => {
+        const newPosts = [...posts].map(post => {
+            if(post === activePost){
+                post.comments = post.comments.filter(el => el.username !== comment.username)
+            }
+            return post
+        })
+        setPosts(newPosts)
+    }
+
     const likeHandler = (like) => {
         if (like) { //  add user id to like_id array and return like count for active post using array.length
             const newPosts = [...posts].map(post => {
@@ -126,6 +137,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                 <Modal 
                     post={activePost}
                     commentHandler={commentHandler}
+                    commentDeleteHandler={commentDeleteHandler}
                     likeHandler={likeHandler}
                     loggedInUserInfo={loggedInUserInfo}
                     onModalClose={setIsModalOpen}
