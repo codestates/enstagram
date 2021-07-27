@@ -8,8 +8,26 @@ module.exports = async (req, res) => {
 
     if (commentInfo) {
 
+        let result = [];
+
+        const userInfo = Users.findOne({
+            where: { id: req.body.user_id }
+        });
+
+        result = userInfo.dataValues.comment_id.filter(el => {
+            return el !== req.body.comment_id
+        });
+
         await Comments.destroy({
-            where: { id: commentInfo }
+            where: { id: commentInfo.dataValues.id }
+        });
+
+        await Users.update({ comment_id: result }, {
+            where: { id: req.body.user_id }
+        });
+
+        await Posts.update({ comment_id: result }, {
+            where: { id: req.body.post_id }
         });
 
         res.status(200).json({ message: "코멘트 정상 삭제 완료" });
