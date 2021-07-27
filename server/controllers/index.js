@@ -20,9 +20,9 @@ module.exports = {
     getComments: require("./comments/getComments"),         //* 코멘트 정보 가져오기
 
     //! Likes
-    onLike: require("./Likes/onLike"),                      //* 좋아요 활성
+    like: require("./Likes/like"),                      //* 좋아요 활성
     getLike: require("./Likes/getLike"),                    //* 좋아요 정보 가져오기
 
     //! Follow
-    followers: require("./follow/followers"),               //* 팔로우
+    followers: require("./follow/follow"),               //* 팔로우
 };

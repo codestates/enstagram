@@ -2,26 +2,26 @@ const { Users } = require('../../models');
 
 module.exports = async (req, res) => {
 
-    if (req.body.username && req.body.email && req.body.name) {
+    if (req.body.newusername && req.body.newemail && req.body.newname) {
 
         const userName = await Users.findOne({
-            where: { username: req.body.username }
+            where: { username: req.body.newusername }
         });
 
         const userEmail = await Users.findOne({
-            where: { email: req.body.email }
+            where: { email: req.body.newemail }
         });
 
         if (!userName && !userEmail) {
 
             const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
+                where: { username: req.body.username }
             });
 
             const result = {
-                name: req.body.name,
-                username: req.body.username,
-                email: req.body.email
+                name: req.body.newname,
+                username: req.body.newusername,
+                email: req.body.newemail
             }
 
             Users.update(result, {
@@ -43,21 +43,21 @@ module.exports = async (req, res) => {
             });
         }
 
-    } else if (req.body.name && req.body.username && !req.body.email) {
+    } else if (req.body.newname && req.body.newusername && !req.body.newemail) {
 
         const userName = await Users.findOne({
-            where: { username: req.body.username }
+            where: { username: req.body.newusername }
         });
 
         if (!userName) {
 
             const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
+                where: { username: req.body.username }
             });
 
             const result = {
-                name: req.body.name,
-                username: req.body.username,
+                name: req.body.newname,
+                username: req.body.newusername,
             }
 
             Users.update(result, {
@@ -74,20 +74,20 @@ module.exports = async (req, res) => {
                 message: "이미 존재하는 username 입니다"
             });
         }
-    } else if (req.body.name && !req.body.username && req.body.email) {
+    } else if (req.body.newname && !req.body.newusername && req.body.newemail) {
         const userEmail = await Users.findOne({
-            where: { email: req.body.email }
+            where: { email: req.body.newemail }
         });
 
         if (!userEmail) {
 
             const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
+                where: { username: req.body.username }
             });
 
             const result = {
-                name: req.body.name,
-                email: req.body.email,
+                name: req.body.newname,
+                email: req.body.newemail,
             }
 
             Users.update(result, {
@@ -104,24 +104,24 @@ module.exports = async (req, res) => {
                 message: "이미 존재하는 email 입니다"
             });
         }
-    } else if (!req.body.name && req.body.username && req.body.email) {
+    } else if (!req.body.newname && req.body.newusername && req.body.newemail) {
         const userName = await Users.findOne({
-            where: { username: req.body.username }
+            where: { username: req.body.newusername }
         });
 
         const userEmail = await Users.findOne({
-            where: { email: req.body.email }
+            where: { email: req.body.newemail }
         });
 
         if (!userName && !userEmail) {
 
             const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
+                where: { username: req.body.username }
             });
 
             const result = {
-                username: req.body.username,
-                email: req.body.email
+                username: req.body.newusername,
+                email: req.body.newemail
             }
 
             Users.update(result, {
@@ -142,19 +142,19 @@ module.exports = async (req, res) => {
                 message: "이미 존재하는 email 입니다"
             });
         }
-    } else if (req.body.name && !req.body.username && !req.body.email) {
+    } else if (req.body.newname && !req.body.newusername && !req.body.newemail) {
         const userName = await Users.findOne({
-            where: { name: req.body.name }
+            where: { name: req.body.newname }
         });
 
         if (!userName) {
 
             const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
+                where: { username: req.body.username }
             });
 
             const result = {
-                name: req.body.name
+                name: req.body.newname
             }
 
             Users.update(result, {
@@ -167,19 +167,19 @@ module.exports = async (req, res) => {
             });
 
         }
-    } else if (!req.body.name && req.body.username && !req.body.email) {
+    } else if (!req.body.newname && req.body.newusername && !req.body.newemail) {
         const userName = await Users.findOne({
-            where: { username: req.body.username }
+            where: { username: req.body.newusername }
         });
 
         if (!userName) {
 
             const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
+                where: { username: req.body.username }
             });
 
             const result = {
-                username: req.body.username
+                username: req.body.newusername
             }
 
             Users.update(result, {
@@ -196,19 +196,19 @@ module.exports = async (req, res) => {
                 message: "이미 존재하는 username 입니다"
             });
         }
-    } else if (!req.body.name && !req.body.username && req.body.email) {
+    } else if (!req.body.newname && !req.body.newusername && req.body.newemail) {
         const userEmail = await Users.findOne({
-            where: { email: req.body.email }
+            where: { email: req.body.newemail }
         });
 
         if (!userEmail) {
 
             const userInfo = await Users.findOne({
-                where: { id: req.body.user_id }
+                where: { username: req.body.username }
             });
 
             const result = {
-                email: req.body.email
+                email: req.body.newemail
             }
 
             Users.update(result, {

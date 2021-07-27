@@ -36,8 +36,8 @@ app.post('/login', controllers.login);
 app.post('/signup', controllers.signup);
 app.post('/createpost', controllers.createPosts);
 app.post('/createcomment', controllers.createComments);
-app.post('/like', controllers.onLike);
-app.post('/follow', controllers.followers);
+app.post('/like', controllers.like);
+app.post('/follow', controllers.follow);
 
 //! PUT 요청
 app.put('/edituserinfo', controllers.editUserInfo);
