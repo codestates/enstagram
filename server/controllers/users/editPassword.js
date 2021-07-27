@@ -26,6 +26,6 @@ module.exports = async (req, res) => {
             res.status(200).json({ message: "일치하는 유저 정보가 없습니다" });
         }
     } else {
-        res.status(403).json({ message: "기존 비밀번호와 다릅니다" });
+        res.status(403).json({ message: "비밀번호가 다릅니다" });
     }
 };
