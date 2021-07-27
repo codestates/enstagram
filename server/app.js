@@ -44,6 +44,9 @@ app.put('/edituserinfo', controllers.editUserInfo);
 app.put('/editpassword', controllers.editPassword);
 app.put('/editprofilephoto', controllers.editProfilephoto);
 
+//! DELETE 요청
+app.delete('/unfollow', controllers.unFollow);
+
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
 });
