@@ -16,11 +16,9 @@ module.exports = async (req, res) => {
 
             const result = [];
 
-            result.push(myInfo.dataValues.follower_id.filter(el => {
+            result = myInfo.dataValues.follower_id.filter(el => {
                 return el !== req.body.target_id
-            }));
-
-            console.log("resultttttttttttttttt", result);
+            });
 
             await Users.update({ follower_id: result }, {
                 where: { id: myInfo.dataValues.id }
