@@ -41,6 +41,7 @@ app.post('/follow', controllers.follow);
 
 //! PUT 요청
 app.put('/edituserinfo', controllers.editUserInfo);
+app.put('/editpassword', controllers.editPassword);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);

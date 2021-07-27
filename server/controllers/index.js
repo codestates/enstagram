@@ -7,6 +7,7 @@ module.exports = {
     test: require("./users/test"),                          //* 테스트 데이터 출력
     getUserInfo: require("./users/getUserInfo"),            //* 유저 데이터 가져오기
     editUserInfo: require("./users/editUserInfo"),          //* 유저 기본 정보 변경
+    editPassword: require("./users/editPassword"),          //* 유저 비밀번호 변경
 
     //! Facebook
     OAuth: require("./facebook/OAuth"),                     //* 페이스북 OAuth 유저정보 요청
