@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import FacebookSignup from "./pages/FacebookSignup";
 import FacebookLogin from "./components/login/FacebookLogin";
 import OtherUserPage from "./pages/OtherUser";
+import Upload from "./pages/UploadPage";
 
 import * as accountService from "./helpers/accountService";
 import axios from "axios";
@@ -126,6 +127,9 @@ const App = function () {
         </Route>
         <Route path="/mypage">
           <Mypage setIsLogin={setIsLogin} />
+        </Route>
+        <Route exact path="/upload">
+          <Upload />
         </Route>
         <Route path="/:userId">
           <OtherUserPage />

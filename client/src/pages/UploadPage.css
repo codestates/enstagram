@@ -1,0 +1,21 @@
+.upload-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+.upload-inner-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid skyblue;
+    border-radius: 8px;
+}
+
+.upload-preview-picture {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+}
