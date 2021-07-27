@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
 
         if (myInfo.dataValues.follower_id !== 0) {
 
-            const result = [];
+            let result = [];
 
             result = myInfo.dataValues.follower_id.filter(el => {
                 return el !== req.body.target_id
