@@ -29,11 +29,11 @@ import axios from 'axios'
 // ────────────────────────────────────────────────────────────────────────────────
 
 
-const App = function({ _isFbLoggedIn }) {
+const App = function ({ _isFbLoggedIn }) {
 
-  const [isLogin, setIsLogin]                 = useState(false);
-  const [isFbLogin, setIsFbLogin]             = useState(_isFbLoggedIn);
-  const [userData, setUserData]               = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+  const [isFbLogin, setIsFbLogin] = useState(_isFbLoggedIn);
+  const [userData, setUserData] = useState(null);
   const [facebookProfile, setFacebookProfile] = useState({}); // {email: email, profilePicture: pictureUrl}
   //let history = useHistory();
 
@@ -46,7 +46,7 @@ const App = function({ _isFbLoggedIn }) {
         console.log("Here is your information: ", facebookUserInfo)
 
         if (facebookUserInfo) {
-          const {email, id} = facebookUserInfo;
+          const { email, id } = facebookUserInfo;
           const _userData = await handleCheckEmailFromServer(email);
 
           // 이미 회원가입이 되어있을 경우
@@ -58,7 +58,7 @@ const App = function({ _isFbLoggedIn }) {
             // facebook profile pic 요청
             const profilePicData = await requestFacebookProfilePic(id);
             const { url } = profilePicData.data;
-            setFacebookProfile({email: email, profilePicture: url});
+            setFacebookProfile({ email: email, profilePicture: url });
           }
         }
       }
@@ -70,12 +70,12 @@ const App = function({ _isFbLoggedIn }) {
 
   async function handleRequestEmailFromFacebook() {
     const res = await requestFacebookEmail();
-    if (res){
-      return {email: res.email, id: res.id};
+    if (res) {
+      return { email: res.email, id: res.id };
     }
   }
 
-  async function handleCheckEmailFromServer(email){
+  async function handleCheckEmailFromServer(email) {
     console.log("Checking the Facebook email from database...")
 
     // db 에 회원가입된 email 이 있는지 체크
@@ -85,7 +85,7 @@ const App = function({ _isFbLoggedIn }) {
     console.log('Result from the database: ', res)
 
     // 유저가 이미 회원가입 했을 시
-    if (res.data.message === "로그인 성공"){
+    if (res.data.message === "로그인 성공") {
       console.log("You already signed up on Enstagram.")
       return res.data.data; // profile pic, username
     }
@@ -97,8 +97,8 @@ const App = function({ _isFbLoggedIn }) {
   }
 
 
-// ─── FACEBOOK LOGIN BUTTON ──────────────────────────────────────────────────────
-//
+  // ─── FACEBOOK LOGIN BUTTON ──────────────────────────────────────────────────────
+  //
   async function handleFacebookLogin(history) {
     console.log("You pressed Facebook login button. Starting Facebook OAuth login...");
 
@@ -118,7 +118,7 @@ const App = function({ _isFbLoggedIn }) {
     }
 
     // 페이스북에 로그인하지 않았을 경우 --> state update 없이 진행한다.
-    else { 
+    else {
       // 1. 로그인 팝업창을 띄워 페이스북에 로그인을 유도한다.
       const isFacebookLogin = await requestFacebookLogin();
       if (isFacebookLogin) {
@@ -128,7 +128,7 @@ const App = function({ _isFbLoggedIn }) {
         console.log("Here is your information: ", facebookUserInfo)
 
         if (facebookUserInfo) {
-          const {email, id} = facebookUserInfo;
+          const { email, id } = facebookUserInfo;
           const _userData = await handleCheckEmailFromServer(email);
 
           // 이미 회원가입이 되어있을 경우
@@ -140,33 +140,50 @@ const App = function({ _isFbLoggedIn }) {
             // facebook profile pic 요청
             const profilePicData = await requestFacebookProfilePic(id);
             const { pictureUrl } = profilePicData;
-            setFacebookProfile({email: email, profilePicture: pictureUrl});
+            setFacebookProfile({ email: email, profilePicture: pictureUrl });
           }
         }
       }
     }
 
-// ────────────────────────────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────────────────────────────
 
 
-  function renderDefaultPage() {
-    if (isFbLogin) { // 페이스북에 로그인한 상태라면
-      // 이미 앱에 로그인을 한 상태라면
-      if (isLogin) { 
-        return <Main userData={userData} />;
+    function renderDefaultPage() {
+      if (isFbLogin) { // 페이스북에 로그인한 상태라면
+        // 이미 앱에 로그인을 한 상태라면
+        if (isLogin) {
+          return <Main userData={userData} />;
+        }
+        // 앱에 로그인을 안했다면
+        else {
+          // 앱에 회원가입이 되어있다면 continue as 페이지
+          if (userData) {
+            return (
+              <FacebookLogin
+                userData={userData}
+                setIsLogin={setIsLogin}
+                setIsFbLogin={setIsFbLogin}
+              />);
+          }
+          else { // 안되어있다면 login 페이지
+            return (
+              <Login
+                setIsLogin={setIsLogin}
+                handleFacebookLogin={handleFacebookLogin}
+                setUserData={setUserData}
+              />
+            );
+          }
+        }
       }
-      // 앱에 로그인을 안했다면
-      else { 
-        // 앱에 회원가입이 되어있다면 continue as 페이지
-        if (userData) {
-          return (
-            <FacebookLogin 
-              userData={userData} 
-              setIsLogin={setIsLogin}
-              setIsFbLogin={setIsFbLogin}
-            />);
-        } 
-        else { // 안되어있다면 login 페이지
+      else { // 페이스북에 로그인한 상태가 아니라면
+        // 이미 앱에 로그인을 한 상태라면
+        if (isLogin) {
+          return <Main userData={userData} />;
+        }
+        // 앱에 로그인한 상태가 아니라면
+        else {
           return (
             <Login
               setIsLogin={setIsLogin}
@@ -176,60 +193,43 @@ const App = function({ _isFbLoggedIn }) {
           );
         }
       }
-    } 
-    else { // 페이스북에 로그인한 상태가 아니라면
-      // 이미 앱에 로그인을 한 상태라면
-      if (isLogin) {
-        return <Main userData={userData} />;
-      }
-      // 앱에 로그인한 상태가 아니라면
-      else {
-        return (
-          <Login
-            setIsLogin={setIsLogin}
-            handleFacebookLogin={handleFacebookLogin}
-            setUserData={setUserData}
-          />
-        );
-      }
     }
+
+
+    return (
+      <BrowserRouter>
+        {/* {isLogin && <Header />} */}
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            {renderDefaultPage()}
+          </Route>
+          <Route path="/signup">
+            <Signup
+              handleFacebookLogin={handleFacebookLogin}
+              setUserData={setUserData}
+            />
+          </Route>
+          <Route path="/mypage/edit">
+            <ProfileEdit />
+          </Route>
+          <Route path="/mypage">
+            <Mypage setIsLogin={setIsLogin} />
+          </Route>
+          <Route path="/:userId">
+            <OtherUserPage />
+            {/* TODO: Uncomment belwo when loggedInUser is ready */}
+            {/* <OtherUserPage loggedInUserInfo={userData} /> */}
+          </Route>
+          <Route path="/fbsignup">
+            <FbSignup
+              facebookProfile={facebookProfile}
+              setUserData={setUserData}
+            />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    );
   }
 
-
-  return (
-    <BrowserRouter>
-      {/* {isLogin && <Header />} */}
-      <Header />
-      <Switch>
-        <Route exact path="/">
-          {renderDefaultPage()}
-        </Route>
-        <Route path="/signup">
-          <Signup
-            handleFacebookLogin={handleFacebookLogin}
-            setUserData={setUserData}
-          />
-        </Route>
-        <Route path="/mypage/edit">
-          <ProfileEdit />
-        </Route>
-        <Route path="/mypage">
-          <Mypage setIsLogin={setIsLogin} />
-        </Route>
-        <Route path="/:userId">
-          <OtherUserPage />
-          {/* TODO: Uncomment belwo when loggedInUser is ready */}
-          {/* <OtherUserPage loggedInUserInfo={userData} /> */}
-        </Route>
-        <Route path="/fbsignup">
-          <FbSignup 
-            facebookProfile={facebookProfile} 
-            setUserData={setUserData}
-          />
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  );
-}
-
-export default App;
+  export default App;

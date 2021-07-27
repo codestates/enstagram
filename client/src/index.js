@@ -8,7 +8,7 @@ import initFacebookSdk from "./helpers/initFacebookSdk.js";
 initFacebookSdk().then((isFbLoggedIn) => {
   ReactDOM.render(
     <React.StrictMode>
-      <App _isFbLoggedIn={isFbLoggedIn}/>
+      <App _isFbLoggedIn={isFbLoggedIn} />
     </React.StrictMode>,
     document.getElementById("root")
   );

@@ -37,7 +37,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
 
     const history = useHistory();
     const handleLogout = () => {
-        axios.post(`${serverUrl}/logout`).then((res)=> {
+        axios.post(`${serverUrl}/logout`).then((res) => {
             setIsLogin(false);
             history.push('/');
         })
@@ -66,7 +66,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
     const likeHandler = (like) => {
         if (like) { //  add user id to like_id array and return like count for active post using array.length
             const newPosts = [...posts].map(post => {
-                if(post === activePost){
+                if (post === activePost) {
                     post.like_id.push(loggedInUserInfo.id)
                 }
                 return post
@@ -74,14 +74,15 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
             setPosts(newPosts)
         } else { // Decrease like count
             const newPosts = [...posts].map(post => {
-                if(post === activePost){
-                    post.like_id = post.like_id.filter(el => el !== loggedInUserInfo.id )
+                if (post === activePost) {
+                    post.like_id = post.like_id.filter(el => el !== loggedInUserInfo.id)
                 }
                 return post
             })
             setPosts(newPosts)
         }
     }
+
     return (
         <div>
             <div className="my-profile-field">
@@ -93,13 +94,13 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
-                            <Link 
-                                className="btn-primary edit-profile" 
+                            <Link
+                                className="btn-primary edit-profile"
                                 to={`/mypage/edit`}
                             >
                                 <div>프로필 편집</div>
                             </Link>
-                            
+
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
@@ -114,8 +115,8 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
 
             <div className="gallery-container">
                 <div className="gallery-list-body">
-                    {posts && posts.map((post, idx)=>
-                        <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
+                    {posts && posts.map((post, idx) =>
+                        <div key={idx} className="gallery-image-wrapper" onClick={() => { clickPostHandler(post) }}>
                             <img src={post.picture} alt={post.content} />
                         </div>
                     )}
@@ -123,7 +124,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
             </div>
 
             {isModalOpen &&
-                <Modal 
+                <Modal
                     post={activePost}
                     commentHandler={commentHandler}
                     likeHandler={likeHandler}
@@ -133,7 +134,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                 />
             }
         </div>
-    )
+    );
 }
-export default Mypage
 
+export default Mypage;
