@@ -1,6 +1,6 @@
-import '../commonCss/login-signup.css'
+import '../../commonCss/login-signup.css'
 import './FacebookLogin.css'
-import Footer from './Footer'
+import Footer from '../Footer'
 
 function FacebookLogin({ userData, setIsLogin, setIsFbLogin }) {
   const username = userData.username;

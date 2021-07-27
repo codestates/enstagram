@@ -1,11 +1,11 @@
 import '../commonCss/login-signup.css'
-import './FbSignup.css'
+import './FacebookSignup.css'
 
 import { useState } from "react";
 //import { withRouter } from "react-router-dom";
 import axios from 'axios'
 
-const FbSignup = function({ setIsLogin, facebookProfile, setUserData }) {
+const FacebookSignup = function({ setIsLogin, facebookProfile, setUserData }) {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -143,4 +143,4 @@ const FbSignup = function({ setIsLogin, facebookProfile, setUserData }) {
   );
 }
 
-export default FbSignup
+export default FacebookSignup
