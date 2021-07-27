@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     } else {
         const { name, username, email, password } = req.body;
 
-        Users.create({
+        await Users.create({
             name,
             username,
             email,
@@ -33,8 +33,13 @@ module.exports = async (req, res) => {
             following_id: []
         });
 
+        const userInfo = await Users.findOne({
+            where: { username: req.body.username }
+        });
+
         res.status(201).send({
             data: {
+                id: userInfo.dataValues.id,
                 name,
                 username,
                 email,
