@@ -17,14 +17,20 @@ module.exports = async (req, res) => {
                 token, process.env.ACCESS_SECRET
             );
 
-            const userArr = Users.findAll();
+            console.log("tokenInfooooooooooooooooooooooooo", tokenUserInfo);
+
+            const userArr = await Users.findAll();
+
+            console.log("userArrrrrrrrrrrrrrrrrrrrrrr", userArr);
 
             const otherUsers = userArr.filter(el => {
                 return el.id !== tokenUserInfo.id;
             });
 
-            Promise.all(otherUsers.map(el => {
-                const postInfos = Posts.findOne({
+            console.log("otherUserssssssssssssssssssssss", otherUsers);
+
+            Promise.all(otherUsers.map(async el => {
+                const postInfos = await Posts.findOne({
                     where: { user_id: el.id }
                 });
 
