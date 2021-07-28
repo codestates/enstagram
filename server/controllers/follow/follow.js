@@ -10,6 +10,10 @@ module.exports = async (req, res) => {
         where: { id: req.body.target_id }
     });
 
+    if (req.body.user_id === req.body.target_id) {
+        res.status(400).json({ message: "user 와 target 의 ID 가 같습니다. 확인 후 재요청 하십시오" });
+    }
+
     if (myInfo) {
 
         if (myInfo.dataValues.follower_id.indexOf(target_id) > -1) {
