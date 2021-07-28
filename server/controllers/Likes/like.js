@@ -38,6 +38,9 @@ module.exports = async (req, res) => {
                 where: { id: likeInfos.dataValues.id }
             })
                 .then(value => {
+
+                    console.log("valueeeeeeeeeeeeeeeee", value);
+
                     res.status(200).json({
                         data: {
                             user_id: userInfo.dataValues.id,
