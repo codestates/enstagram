@@ -86,13 +86,13 @@ const App = () => {
 
   return (
     <>
-      {/* {isLogin && <Header />} */}
-      <Header />
+      {isLogin && <Header profilePhoto={userData.profilePhoto} />}
+      {/* <Header profilePhoto={userData.profilePhoto} /> */}
       <Switch>
         {/* TODO: delete before pushing the code. Below route is for UI testing. */}
-        <Route exact path="/main">
+        {/* <Route exact path="/main">
           <Main />
-        </Route>
+        </Route> */}
         <Route exact path="/">
           {renderDefaultPage()}
         </Route>
@@ -106,15 +106,15 @@ const App = () => {
           <ProfileEdit userData={userData} />
         </Route>
         <Route path="/mypage">
-          <Mypage setIsLogin={setIsLogin} />
+          <Mypage loggedInUserInfo={userData} setIsLogin={setIsLogin} />
         </Route>
         <Route exact path="/upload">
           <Upload />
         </Route>
         <Route path="/:userId">
-          <OtherUserPage />
+          {/* <OtherUserPage /> */}
           {/* TODO: Uncomment belwo when loggedInUser is ready */}
-          {/* <OtherUserPage loggedInUserInfo={userData} /> */}
+          <OtherUserPage loggedInUserInfo={userData} />
         </Route>
       </Switch>
     </>
