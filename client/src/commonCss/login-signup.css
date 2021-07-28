@@ -1,0 +1,93 @@
+
+.login-signup-container {  
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo {
+  margin-bottom: 30px;
+}
+
+.login-signup-box {
+  border: #dbdbdb solid 1px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  padding:30px 40px;
+  background-color: #fff;
+}
+
+.login-signup-input-box {
+  width: 100%;
+  height: 2.8em;
+  margin-bottom: 6px;
+  padding: 10px;
+  background-color: rgb(250, 250, 250);
+  border: 1px rgb(219, 219, 219) solid;
+  border-radius: 3px;
+}
+
+.login-signup-button {
+  width: 100%;
+  height: 2.2em;
+  color: #fff;
+  background-color: rgb(64,173,248);
+  border-radius: 5px;
+  font-weight: 800;
+  font-size: 1em;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.login-signup-button-disabled {
+  background-color: rgb(187,224,252);
+  cursor: default;
+}
+
+.login-signup-link {
+  color: rgb(51, 164, 247);
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  background-color: #fff;
+  font-size: inherit;
+  text-decoration: none;
+}
+
+.invalid-msg {
+  margin-top: 20px;
+  color: rgb(237, 73, 86);
+  word-break: keep-all;
+  text-align: center;
+}
+
+.facebook-icon {
+  font-size: 1.3em;
+  margin-right: 7px;
+  vertical-align:-15%
+}
+
+.or-text {
+  background-color: #fff;
+  position: relative;
+  bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 600;
+  color: rgb(144, 144, 144);
+}
+
+.fblogin-profile-pic{
+  border-radius: 50%;
+  width: 120px;
+  margin-bottom: 30px;
+}
+
+.valid-msg {
+  margin-top: 20px;
+  color: LimeGreen;
+  word-break: keep-all;
+  text-align: center;
+}

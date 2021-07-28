@@ -1,0 +1,31 @@
+.edit-sidebar-container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  border-right: 1px solid var(--input-border-color);
+}
+
+.profile-edit-button {
+  display:flex;
+  align-items: center;
+  height: 60px;
+  padding-left:40px;
+  text-decoration: none;
+  color: black;
+}
+
+.profile-edit-button-focused{
+  border-left: 3px solid black;
+  font-weight: 600;
+  padding-left:37px;
+}
+
+.profile-edit-button:hover {
+  border-left: 3px solid rgb(169, 169, 169);
+  padding-left:37px;
+  background-color:rgb(244, 244, 244);
+}
+
+.profile-menu-1:active {
+  font-weight: 900;
+}
