@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
                 return el !== req.body.target_id;
             });
 
-            const followingArray = targetInfo.dataValues.follower_id.filter(el => {
+            const followingArray = targetInfo.dataValues.following_id.filter(el => {
                 return el !== req.body.user_id;
             });
 
@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
                 where: { id: myInfo.dataValues.id }
             });
 
-            await Users.update({ follower_id: followingArray }, {
+            await Users.update({ following_id: followingArray }, {
                 where: { id: targetInfo.dataValues.id }
             });
 
