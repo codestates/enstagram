@@ -22,18 +22,22 @@ module.exports = async (req, res) => {
                 return el.dataValues.id !== tokenUserInfo.id;
             });
 
-            Promise.all(otherUsers.map(async el => {
+            const getPostInfos = otherUsers.filter(el => {
+                return el.dataValues.post_id.length > 0;
+            })
+
+            Promise.all(getPostInfos.map(async el => {
                 const postInfos = await Posts.findOne({
                     where: { user_id: el.dataValues.id }
                 });
 
                 if (postInfos) {
                     return postInfos.dataValues;
+                } else {
+                    res.status(200).json(message: "일치하는 포스트 데이터가 없습니다");
                 }
             }))
                 .then(result => {
-
-                    console.log("resulttttttttttttttttttttttt", result);
 
                     res.status(200).json({
                         data: result,
