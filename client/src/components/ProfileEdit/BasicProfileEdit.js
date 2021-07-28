@@ -1,15 +1,23 @@
-import "./BasicProfileEdit.css";
 import "../../App.css";
-import dummyUser from "../../dummyData/dummyUser";
-import React from 'react'
-import { useState, useEffect } from "react";
+import "./BasicProfileEdit.css";
 
-const BasicProfileEdit = () => {
+import dummyUser from "../../dummyData/dummyUser";
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+const BasicProfileEdit = (userInfo) => {
   const [name, setName] = useState(dummyUser.name);
   const [username, setUsername] = useState(dummyUser.username);
   const [email, setEmail] = useState(dummyUser.email);
-  const [picture, setPicture] = useState(dummyUser.profilepicture)
+  const [picture, setPicture] = useState(dummyUser.profilepicture);
   const [disabled, setDisabled] = useState(true);
+
+  const [invalidUsername, setInvalidUsername] = useState(false);
+  const [invalidEmail, setInvalidEmail] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [picSuccess, setPicSuccess] = useState(false);
+  const localupload = true;
 
   const hiddenFileInput = React.useRef(null);
 
@@ -29,18 +37,44 @@ const BasicProfileEdit = () => {
 
   function enable() {
     if (
-      name && username && email && (
-      name !== dummyUser.name ||
-      username !== dummyUser.username ||
-      email !== dummyUser.email)
+      name &&
+      username &&
+      email &&
+      (name !== dummyUser.name ||
+        username !== dummyUser.username ||
+        email !== dummyUser.email)
     ) {
       setDisabled(false);
-    }
-    else setDisabled(true);
+    } else setDisabled(true);
   }
 
   function submit() {
-
+    axios.put("https://fpserver.click/edituserinfo", {
+      username: "",
+      newname: name,
+      newusername: username,
+      newemail: email,
+    })
+    .then((res) => {
+      if (res.data.message === "유저 데이터 변경 성공"){
+        setInvalidUsername(false)
+        setPicSuccess(false);
+        setInvalidEmail(false)
+        setSuccess(true);
+      }
+      else if (res.data.message === '이미 존재하는 email 입니다'){
+        setInvalidUsername(false)
+        setSuccess(false);
+        setPicSuccess(false);
+        setInvalidEmail(true)
+      }
+      else if (res.data.message === '이미 존재하는 username 입니다'){
+        setInvalidEmail(false)
+        setSuccess(false);
+        setPicSuccess(false);
+        setInvalidUsername(true)
+      }
+    })
   }
 
   function inputClick(e) {
@@ -49,47 +83,64 @@ const BasicProfileEdit = () => {
 
   async function fileChange(e) {
     const fileUploaded = e.target.files[0];
+    if (!fileUploaded) return;
     const result = await encodeBase64ImageFile(fileUploaded);
-    if (result) setPicture(result);
+    if (localupload) {
+        setPicture(result);
+      return;
+    }
+    axios
+      .put("https://fpserver.click/editprofilephoto", {
+        username: "",
+        picture: result,
+      })
+      .then((res) => {
+        if (res.data.message === "프로필 사진 변경 성공") {
+          setInvalidEmail(false)
+          setInvalidUsername(false)
+          setSuccess(false);
+          setPicSuccess(true);
+          setPicture(res.data.data);
+        }
+      });
   }
 
   function encodeBase64ImageFile(image) {
     return new Promise((resolve, reject) => {
-      let reader = new FileReader()
+      let reader = new FileReader();
       // convert the file to base64 text
-      reader.readAsDataURL(image)
+      reader.readAsDataURL(image);
       // on reader load somthing...
       reader.onload = (event) => {
-        console.log(event.target.result)
-        resolve(event.target.result)
-      }
+        console.log(event.target.result);
+        resolve(event.target.result);
+      };
       reader.onerror = (error) => {
-        reject(error)
-      }
-    })
+        reject(error);
+      };
+    });
   }
 
   return (
     <div className="basic-profile-container">
       <div className="profile-element">
         <label className="profile-edit-label">
-          <img
-            src={picture}
-            className="profile-edit-pic"
-            alt="profile"
-          />
+          <img src={picture} className="profile-edit-pic" alt="profile" />
         </label>
         <div className="profile-edit-input-wrapper edit-profile-pic">
           <span>{dummyUser.username}</span>
-          <button className="login-signup-link edit-profile-pic-button" onClick={inputClick}>
+          <button
+            className="login-signup-link edit-profile-pic-button"
+            onClick={inputClick}
+          >
             프로필 사진 바꾸기
           </button>
-           {/* Make the file input element invisible */}
+          {/* Make the file input element invisible */}
           <input
             type="file"
             ref={hiddenFileInput}
             onChange={fileChange}
-            style={{display: 'none'}}
+            style={{ display: "none" }}
           />
         </div>
       </div>
@@ -132,6 +183,54 @@ const BasicProfileEdit = () => {
           />
         </div>
       </div>
+      {success ? (
+        <div className="profile-element">
+          <label className="profile-edit-label">
+            <span></span>
+          </label>
+          <div className="profile-edit-input-wrapper">
+            <span className="profile-edit-valid-msg">
+              정보가 변경되었습니다.
+            </span>
+          </div>
+        </div>
+      ) : null}
+      {invalidUsername ? (
+        <div className="profile-element">
+          <label className="profile-edit-label">
+            <span></span>
+          </label>
+          <div className="profile-edit-input-wrapper">
+            <span className="profile-edit-invalid-msg">
+              이미 존재하는 사용자 이름입니다
+            </span>
+          </div>
+        </div>
+      ) : null}
+      {invalidEmail ? (
+        <div className="profile-element">
+          <label className="profile-edit-label">
+            <span></span>
+          </label>
+          <div className="profile-edit-input-wrapper">
+            <span className="profile-edit-invalid-msg">
+              이미 존재하는 이메일입니다
+            </span>
+          </div>
+        </div>
+      ) : null}
+      {picSuccess ? (
+        <div className="profile-element">
+          <label className="profile-edit-label">
+            <span></span>
+          </label>
+          <div className="profile-edit-input-wrapper">
+            <span className="profile-edit-valid-msg">
+              프로필 사진이 변경되었습니다.
+            </span>
+          </div>
+        </div>
+      ) : null}
       <div className="profile-element">
         <label className="profile-edit-label">
           <span></span>

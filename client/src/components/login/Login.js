@@ -7,7 +7,7 @@ import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import Footer from "../Footer";
 import axios from 'axios'
 
-const Login = ({ setIsLogin, facebookLogin, setUserData }) => {
+const Login = ({ setIsLogin, facebookLogin, setUserData, setAccessToken }) => {
   
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -36,26 +36,25 @@ const Login = ({ setIsLogin, facebookLogin, setUserData }) => {
 
   async function requestLogin() {
     console.log("Login button clicked. Requesting login...")
-    const res = await axios.post(
-      "https://www.fpserver.click/",
+    const res = await axios.post("https://www.fpserver.click/login",
       {
         username: username,
         password: password,
       }
     );
 
-    console.log(res);
+    console.log("response: ", res);
     if (res.data.message === "로그인 성공 ") {
       console.log("Login succesful")
-      // setUsername('')
-      // setPassword('')
       setIsLogin(true)
+      setUserData(res.data.userData)
+      setAccessToken(res.data.accessToken)
     }
-    else if (res.data.message="아이디 오류"){
+    else if (res.data.message === "아이디 오류"){
       setInvalidPw(false);
       setInvalidId(true);
     }
-    else if (res.data.message="비밀번호 오류"){
+    else if (res.data.message === "비밀번호 오류"){
       setInvalidId(false);
       setInvalidPw(true)
     }
@@ -63,7 +62,7 @@ const Login = ({ setIsLogin, facebookLogin, setUserData }) => {
 
   return (
     <div className="login-page-container">
-      <div className="login-signup-container">
+      <div className="login-signup-container login">
         <div className="login-signup-box box-1">
           <h1 className="logo">Enstagram</h1>
           <input
@@ -96,8 +95,7 @@ const Login = ({ setIsLogin, facebookLogin, setUserData }) => {
           {/* ---FACEBOOK LOGIN BUTTON--- */}
           <button
             className="login-facebook-login-button"
-            onClick={facebookLogin}
-          >
+            onClick={facebookLogin}>
             <FontAwesomeIcon
               className="facebook-icon"
               icon={faFacebookSquare}
@@ -126,7 +124,9 @@ const Login = ({ setIsLogin, facebookLogin, setUserData }) => {
           </span>
         </div>
       </div>
-      <Footer />
+      <div className="login-footer-container">
+        <Footer />
+      </div>
     </div>
   );
 }

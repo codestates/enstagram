@@ -39,7 +39,7 @@
   font-size: 14px;
 }
 
-.profile-edit-input-wrapper > span {
+.edit-profile-pic > span {
   font-size:1.5em;
 }
 
@@ -71,4 +71,12 @@
 .button-disabled {
   background-color: rgb(187,224,252);
   cursor: default;
+}
+
+.profile-edit-valid-msg {
+  color: LimeGreen;
+}
+
+.profile-edit-invalid-msg {
+  color: rgb(237, 73, 86);
 }

@@ -11,8 +11,8 @@ export default function initFacebookSdk() {
           xfbml: true,
           version: "v11.0",
         });
-        window.FB.getLoginStatus((res) => {
-          console.log(res)
+      window.FB.getLoginStatus((res) => {
+        console.log(res)
         if (res.authResponse) {
           accountService.requestFacebookBasicProfile()
           .then(()=>resolve())

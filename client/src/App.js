@@ -1,13 +1,20 @@
 import "./App.css";
 
 import { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  useHistory,
+  withRouter,
+  Redirect,
+} from "react-router-dom";
 
 import Login from "./components/login/Login.js";
 import Main from "./components/Main.js";
 import Signup from "./pages/Signup.js";
 import Mypage from "./pages/Mypage.js";
-import BasicProfileEdit from './components/ProfileEdit/BasicProfileEdit'
+import ProfileEdit from "./pages/ProfileEdit";
 import Header from "./components/Header";
 import FacebookSignup from "./pages/FacebookSignup";
 import FacebookLogin from "./components/login/FacebookLogin";
@@ -16,88 +23,60 @@ import OtherUserPage from "./pages/OtherUser";
 import * as accountService from "./helpers/accountService";
 import axios from "axios";
 
-const App = function () {
+const App = () => {
   const [isLogin, setIsLogin] = useState(false);
-  const [_facebookLogin, setFacebookLogin] = useState(false);
-  const [fbUserSignedup, setFbUserSignedup] = useState(false);
-  const [facebookData, setFacebookData] = useState(null); // {email, url}
-  const [accessToken, setAccessToken] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [welcomeFB, setWelcomeFB] = useState(false);
+  const [facebookData, setFacebookData] = useState({}); // {email, url}
+  const [accessToken, setAccessToken] = useState('');
+  const [userData, setUserData] = useState({});
 
+  console.log(localStorage);
   let history = useHistory();
 
   useEffect(() => {
-    if (!fbUserSignedup && facebookData) {
-      history.push("/facebooksignup");
-    }
-  });
+    localStorage.userdata = JSON.stringify(userData);
+    localStorage.accessToken = accessToken;
+  }, [userData, accessToken]);
 
-  async function facebookLogin(history) {
+  async function facebookLogin() {
     console.log(
       "You pressed Facebook login button. Starting Facebook OAuth login..."
     );
-    const id = await accountService.requestFacebookLogin();
-    if (id) {
-      setFacebookLogin(true);
-      const email = accountService.requestFacebookEmail();
-      if (email) {
-        const url = await accountService.requestFacebookProfilePic(id);
-        if (url) {
-          setFacebookData({ email, url });
-        }
-        const signedup = await checkEmail();
-        if (signedup) {
-          setFbUserSignedup(true);
-        } else {
-          setFbUserSignedup(false);
-        }
-        if (history) {
-          history.push('/')
-        }
-      }
+    const { name } = await accountService.requestFacebookBasicProfile();
+    const { email, id } = await accountService.requestFacebookEmail();
+    const userdata = await accountService.checkEmail(email);
+    const url = await accountService.requestFacebookProfilePic(id);
+    setFacebookData({ email, url, name });
+    if (userdata) {
+      setWelcomeFB(true)
+      setUserData(userdata)
+      //setAccessToken()
     }
-    else setFacebookLogin(false);
-  }
-
-  async function checkEmail(email) {
-    console.log("Checking the Facebook email from database...");
-    const res = await axios.get(
-      `https://www.fpserver.click/oauth?email=${email}`
-    );
-    console.log("Result from the database: ", res);
-    if (res.data.message === "로그인 성공") {
-      // 이미 회원가입 했음을 확인
-      console.log("You already signed up on Enstagram.");
-      return true;
-    } else return false;
+    else {
+      setWelcomeFB(false);
+      setUserData(null)
+      history.push("/facebooksignup");
+    }
   }
 
   function renderDefaultPage() {
-    if (isLogin) 
-      return <Main />;
+    if (isLogin) return <Main />;
     else {
-      if (_facebookLogin) {
-        if (fbUserSignedup) {
-          return (
-            <FacebookLogin setIsLogin={setIsLogin} facebookData={facebookData} />
-          );
-        } 
-        else {
-          return (
-            <Login
-              setIsLogin={setIsLogin}
-              facebookLogin={facebookLogin}
-              setUserData={setUserData}
-            />
-          );
-        }
-      }
-      else {
+      if (welcomeFB) {
+        return (
+          <FacebookLogin 
+            setIsLogin={setIsLogin}
+            facebookData={facebookData}
+            setWelcomeFB={setWelcomeFB}
+          />
+        );
+      } else {
         return (
           <Login
             setIsLogin={setIsLogin}
             facebookLogin={facebookLogin}
             setUserData={setUserData}
+            setAccessToken={setAccessToken}
           />
         );
       }
@@ -105,7 +84,7 @@ const App = function () {
   }
 
   return (
-    <BrowserRouter>
+    <>
       {/* {isLogin && <Header />} */}
       <Header />
       <Switch>
@@ -113,16 +92,13 @@ const App = function () {
           {renderDefaultPage()}
         </Route>
         <Route path="/signup">
-          <Signup facebookLogin={facebookLogin} />
+          <Signup />
         </Route>
         <Route path="/facebooksignup">
-          <FacebookSignup
-            facebookData={facebookData}
-            setUserData={setUserData}
-          />
+          <FacebookSignup />
         </Route>
         <Route path="/mypage/edit">
-          <BasicProfileEdit />
+          <ProfileEdit userData={userData}/>
         </Route>
         <Route path="/mypage">
           <Mypage setIsLogin={setIsLogin} />
@@ -133,8 +109,8 @@ const App = function () {
           {/* <OtherUserPage loggedInUserInfo={userData} /> */}
         </Route>
       </Switch>
-    </BrowserRouter>
+    </>
   );
 };
 
-export default App;
+export default withRouter(App);
