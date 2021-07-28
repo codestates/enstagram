@@ -9,6 +9,7 @@ import { serverUrl } from '../utils/constants'
 const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
     // Initial states
     const [userInfo, setUserInfo] = useState({});
+    // const [userInfo, setUserInfo] = useState(loggedInUserInfo);
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);

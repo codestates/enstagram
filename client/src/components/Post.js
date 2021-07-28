@@ -22,7 +22,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
                 post_id: activePost.id,
             }
         }).then( res => {
-            console.log(res.data)
             setCommentList(res.data.data)
         })
     }, [activePost.id, loggedInUserInfo.id])
@@ -79,20 +78,22 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             post_id: activePost.id,
             content: comment,
         }).then((res) => {
-            // console.log("comment", res)
-            if (res.message === '코멘트 생성 성공') {
-                const comment = res.data.content
-                commentHandler(comment)
+            if (res.data.message === '코멘트 생성 성공') {
+                const commentId = res.data.id;
+                const commentForStateUpdate = {
+                    content: comment,
+                    id: commentId,
+                    username: loggedInUserInfo.username
+                }
+                commentHandler(commentForStateUpdate)
                 setComment('');
             }
         })
-        //Use when API and login feature are incomplete
-        // const newComment = {
-        //     content: comment,
-        //     username: loggedInUserInfo && loggedInUserInfo.username
-        // }
-        // commentHandler(newComment)
-        // setComment('');
+    }
+
+    const commentHandler = (comment) => {
+        const newCommentList = [...commentList, comment]
+        setCommentList(newCommentList);
     }
 
     const commentDeleteHandler = (comment) => {
@@ -102,23 +103,21 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const commentDelete = (comment) => {
         // For database update:
+        console.log("comment Delete")
         axios.delete(`${serverUrl}/deletecomment`, {
-            // CORS error
-            comment_id: comment.id,
+            params: {
+                // CORS error
+                comment_id: comment.id,
+            }
         }).then((res) => {
-            if(res.message === '코멘트 삭제 완료') {
+            console.log("Res delete : ", res)
+            if(res.data.message === '코멘트 삭제 완료') {
                 console.log("COMMENT", res)
                 commentDeleteHandler(comment);
             }
         })
         // For local state update, we need to call commentDeleteHandler
         // commentDeleteHandler(comment);
-    }
-
-
-    const commentHandler = (comment) => {
-        const newCommentList = [...commentList, comment]
-        setCommentList(newCommentList);
     }
 
     const likeHandler = (like) => {
