@@ -9,9 +9,10 @@ module.exports = async (req, res) => {
     if (userInfo) {
 
         const comment = {
-            content: req.body.content,
+            id: null,
             user_id: req.body.user_id,
             post_id: req.body.post_id,
+            content: req.body.content,
         }
 
         const postInfo = await Posts.findOne({
@@ -41,6 +42,8 @@ module.exports = async (req, res) => {
                         where: { id: comment.post_id }
                     });
                 }
+
+                comment.id = value.dataValues.id;
 
                 res.status(200).json({
                     data: comment,

@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        type: Sequelize.JSON
+        type: Sequelize.INTEGER
       },
       post_id: {
-        type: Sequelize.JSON
+        type: Sequelize.INTEGER
       },
       value: {
         type: Sequelize.BOOLEAN

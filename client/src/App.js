@@ -65,7 +65,7 @@ const App = () => {
     else {
       if (welcomeFB) {
         return (
-          <FacebookLogin 
+          <FacebookLogin
             setIsLogin={setIsLogin}
             facebookData={facebookData}
             setWelcomeFB={setWelcomeFB}
@@ -99,7 +99,7 @@ const App = () => {
           <FacebookSignup />
         </Route>
         <Route path="/mypage/edit">
-          <ProfileEdit userData={userData}/>
+          <ProfileEdit userData={userData} />
         </Route>
         <Route path="/mypage">
           <Mypage setIsLogin={setIsLogin} />
