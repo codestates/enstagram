@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
 
         }
 
-    } else {
+    } else if (!likeInfos) {
 
         const like = {
             user_id: req.body.user_id,
