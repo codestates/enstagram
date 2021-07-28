@@ -23,21 +23,20 @@ module.exports = async (req, res) => {
             });
 
             const getPostInfos = otherUsers.filter(el => {
-
-                console.log("el.dataValues.post_id.lengthhhhhhhh", el.dataValues.post_id.length);
-
                 return el.dataValues.post_id.length > 0;
-            })
-
-            console.log("getPostInfossssssssssssssss", getPostInfos.dataValues.post_id);
+            });
 
             Promise.all(getPostInfos.map(async el => {
+
+
+                console.log("getPostInfossssssssss", el.dataValues.post_id);
+
                 const postInfos = await Posts.findOne({
                     where: { user_id: el.dataValues.id }
                 });
 
                 if (postInfos) {
-                    return postInfos.dataValues;
+                    return postInfos;
                 } else {
                     res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
                 }
@@ -45,7 +44,7 @@ module.exports = async (req, res) => {
                 .then(result => {
 
                     res.status(200).json({
-                        data: result,
+                        data: result.dataValues,
                         message: "포스트 데이터 요청 성공"
                     });
                 });
