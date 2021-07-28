@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
 
     if (myInfo) {
 
-        if (myInfo.dataValues.follower_id.indexOf(target_id) > -1) {
+        if (myInfo.dataValues.follower_id.indexOf(req.body.target_id) > -1) {
 
             const followArray = myInfo.dataValues.follower_id.filter(el => {
                 return el !== req.body.target_id;
