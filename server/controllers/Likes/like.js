@@ -22,6 +22,9 @@ module.exports = async (req, res) => {
                 where: { id: likeInfos.dataValues.id }
             })
                 .then(value => {
+
+                    console.log("valueeeeeeeeeeeeeeeee가 true 일 때:", value);
+
                     res.status(200).json({
                         data: {
                             user_id: userInfo.dataValues.id,
@@ -39,7 +42,7 @@ module.exports = async (req, res) => {
             })
                 .then(value => {
 
-                    console.log("valueeeeeeeeeeeeeeeee", value);
+                    console.log("valueeeeeeeeeeeeeeeee가 false 일 때:", value);
 
                     res.status(200).json({
                         data: {
