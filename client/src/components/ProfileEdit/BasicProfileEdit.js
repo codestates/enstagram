@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
-  console.log("profileEdit: userData", userData)
+  console.log("You are in Profile Edit page. Here is your userdata", userData)
 
   const [name, setName] = useState(userData.name);
   const [username, setUsername] = useState(userData.username);
@@ -18,8 +18,7 @@ const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
   const [invalidUsername, setInvalidUsername] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [picSuccess, setPicSuccess] = useState(false);
-  const localupload = true;
+  const localupload = false;
 
   const hiddenFileInput = React.useRef(null);
 
@@ -60,20 +59,17 @@ const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
       .then((res) => {
         if (res.data.message === "유저 데이터 변경 성공") {
           setInvalidUsername(false)
-          setPicSuccess(false);
           setInvalidEmail(false)
           setSuccess(true);
         }
         else if (res.data.message === '이미 존재하는 email 입니다') {
           setInvalidUsername(false)
           setSuccess(false);
-          setPicSuccess(false);
           setInvalidEmail(true)
         }
         else if (res.data.message === '이미 존재하는 username 입니다') {
           setInvalidEmail(false)
           setSuccess(false);
-          setPicSuccess(false);
           setInvalidUsername(true)
         }
       })
@@ -85,26 +81,46 @@ const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
 
   async function fileChange(e) {
     const fileUploaded = e.target.files[0];
-    if (!fileUploaded) return;
-    const result = await encodeBase64ImageFile(fileUploaded);
-    if (localupload) {
-      setPicture(result);
-      return;
-    }
-    axios
-      .put("https://fpserver.click/editprofilephoto", {
-        username: "",
-        picture: result,
-      })
-      .then((res) => {
-        if (res.data.message === "프로필 사진 변경 성공") {
-          setInvalidEmail(false)
-          setInvalidUsername(false)
-          setSuccess(false);
-          setPicSuccess(true);
-          setPicture(res.data.data);
-        }
-      });
+    console.log(fileUploaded)
+    if (!fileUploaded) {console.log("no file selected"); return;}
+    const blob = URL.createObjectURL(fileUploaded)
+    console.log(blob);
+    // const result = await encodeBase64ImageFile(fileUploaded);
+    // console.log(result)
+    // if (localupload) {
+    //   setPicture(result);
+    // }
+    // fetch(fileUploaded)
+    // .then(function(response) {
+    //   return response.blob()
+    // })
+    // .then(function(blob) {
+    //   console.log("blob: ", blob)
+    //   const url = URL.createObjectURL(blob)
+    //   console.log("url", url)
+    //   setPicture(blob);
+    // });
+    
+    // const res = await axios.put('https://localhost:4000/profile', {
+    //   username: userData.username,
+    //   picture: result
+    // })
+    // console.log("localhost", res.data);
+    // setPicture(res.data)
+
+    // const res = await axios.put('https://fpserver.click/editprofilephoto', {
+    //   username: userData.username,
+    //   picture: result
+    // })
+    // console.log("response", res.data.data.profilePhoto);
+    // if (res.data.message === "프로필 사진 변경 성공") {
+    //   setInvalidEmail(false)
+    //   setInvalidUsername(false)
+    //   setSuccess(false);
+    //   console.log(res.data.data.profilePhoto)
+    //   setPicture(res.data.data.profilePhoto);
+    //   setUserData(res.data.data)
+    // }
   }
 
   function encodeBase64ImageFile(image) {
@@ -114,7 +130,8 @@ const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
       reader.readAsDataURL(image);
       // on reader load somthing...
       reader.onload = (event) => {
-        console.log(event.target.result);
+        console.log("Conversion to base64 success")
+        //console.log(event.target.result);
         resolve(event.target.result);
       };
       reader.onerror = (error) => {
@@ -221,18 +238,7 @@ const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
           </div>
         </div>
       ) : null}
-      {picSuccess ? (
-        <div className="profile-element">
-          <label className="profile-edit-label">
-            <span></span>
-          </label>
-          <div className="profile-edit-input-wrapper">
-            <span className="profile-edit-valid-msg">
-              프로필 사진이 변경되었습니다.
-            </span>
-          </div>
-        </div>
-      ) : null}
+
       <div className="profile-element">
         <label className="profile-edit-label">
           <span></span>

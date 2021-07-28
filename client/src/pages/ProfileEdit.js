@@ -8,11 +8,11 @@ import { useState } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router'
 
 
-const _userdata = localStorage.userdata || null;
-if (_userdata) {
-    console.log("Successfully fetched userdata from localStorage")
-    console.log(JSON.parse(localStorage.userdata));
-}
+// const _userdata = localStorage.userdata || null;
+// if (_userdata) {
+//     console.log("Successfully fetched userdata from localStorage")
+//     console.log(JSON.parse(localStorage.userdata));
+// }
 
 
 
@@ -25,12 +25,10 @@ const ProfileEdit = ({userData, setUserData}) => {
                 <section className="profile-edit-feature">
                     <Switch>
                         <Route exact path={`${path}`}>
-
                             <BasicProfileEdit userData={userData} setUserData={setUserData}/>
                         </Route>
                         <Route path={`${path}/password`}>
                             <PasswordEdit userData={userData}/>
-
                         </Route>
                     </Switch>
                 </section>

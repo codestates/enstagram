@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
 
 .login-signup-container {  
   width: 400px;
@@ -6,7 +7,9 @@
 }
 
 .logo {
-  margin-bottom: 30px;
+  font-family: 'Style Script', cursive;
+  font-size: 60px;
+  color: rgb(82, 82, 82);
 }
 
 .login-signup-box {
