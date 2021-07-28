@@ -61,7 +61,7 @@ const App = () => {
   }
 
   function renderDefaultPage() {
-    if (isLogin) return <Main />;
+    if (isLogin) return <Main userData={userData} accessToken={accessToken} />;
     else {
       if (welcomeFB) {
         return (
@@ -89,6 +89,10 @@ const App = () => {
       {/* {isLogin && <Header />} */}
       <Header />
       <Switch>
+        {/* TODO: delete before pushing the code. Below route is for UI testing. */}
+        <Route exact path="/main">
+          <Main />
+        </Route>
         <Route exact path="/">
           {renderDefaultPage()}
         </Route>
