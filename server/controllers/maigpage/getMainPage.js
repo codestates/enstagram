@@ -3,8 +3,6 @@ const { verify, sign } = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
 
-    //push 용 데이터 추가
-
     const { headers: { authorization } } = req;
 
     if (!authorization) {
@@ -31,7 +29,7 @@ module.exports = async (req, res) => {
                     where: { user_id: el.dataValues.id }
                 });
 
-                console.log("postInfossssssssssssssssss", postInfos);
+                console.log("el.dataValues.idddddddddddddddd", el.dataValues.id);
 
                 if (postInfos) {
                     return postInfos.dataValues;
