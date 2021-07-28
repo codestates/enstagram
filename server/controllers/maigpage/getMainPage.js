@@ -26,28 +26,30 @@ module.exports = async (req, res) => {
                 return el.dataValues.post_id.length > 0;
             });
 
-            Promise.all(getPostInfos.map(async el => {
+            let postNum = [];
+            let result = [];
 
+            getPostInfos.map(el => {
+                el.dataValues.post_id.map(ell => {
+                    postNum.push(ell);
+                })
+            });
 
-                console.log("getPostInfossssssssss", el.dataValues.post_id);
-
+            for (let i = 0; i < postNum.length; i++) {
                 const postInfos = await Posts.findOne({
-                    where: { user_id: el.dataValues.id }
+                    where: { id: postNum[i] }
                 });
 
                 if (postInfos) {
-                    return postInfos;
-                } else {
-                    res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
+                    result.push(postInfos);
                 }
-            }))
-                .then(result => {
+            }
 
-                    res.status(200).json({
-                        data: result.dataValues,
-                        message: "포스트 데이터 요청 성공"
-                    });
-                });
+            res.status(200).json({
+                data: result,
+                message: "테스트"
+            });
+
         } catch {
             res.status(200).json({ message: "만료된 토큰" });
         }
