@@ -23,10 +23,13 @@ module.exports = async (req, res) => {
             });
 
             const getPostInfos = otherUsers.filter(el => {
+
+                console.log("el.dataValues.post_id.lengthhhhhhhh", el.dataValues.post_id.length);
+
                 return el.dataValues.post_id.length > 0;
             })
 
-            console.log("getPostInfossssssssssssssss", getPostInfos);
+            console.log("getPostInfossssssssssssssss", getPostInfos.dataValues.post_id);
 
             Promise.all(getPostInfos.map(async el => {
                 const postInfos = await Posts.findOne({
