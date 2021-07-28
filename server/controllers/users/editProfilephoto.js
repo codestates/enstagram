@@ -17,8 +17,6 @@ module.exports = async (req, res) => {
         })
             .then(async result => {
 
-                console.log("resssssssssssssssss", result);
-
                 const afterUserInfo = await Users.findOne({
                     where: { username: req.body.username }
                 });
