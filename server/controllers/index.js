@@ -28,4 +28,6 @@ module.exports = {
 
     //! Follow
     follow: require("./follow/follow"),                     //* 팔로우
+    getFollower: require("./follow/getFollower"),           //* 팔로워 정보 가져오기
+    getFollowing: require("./follow/getFollowing"),         //* 팔로잉 정보 가져오기
 };

@@ -30,6 +30,8 @@ app.get('/getpost', controllers.getPosts);
 app.get('/getcomment', controllers.getComments);
 app.get('/getlike', controllers.getLike);
 app.get('/getuser', controllers.getUserInfo);
+app.get('/getfollower', controllers.getFollower);
+app.get('/getfollowing', controllers.getFollowing);
 
 //! POST 요청
 app.post('/login', controllers.login);
