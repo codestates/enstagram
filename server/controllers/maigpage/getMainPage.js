@@ -2,6 +2,8 @@ const { Users, Posts } = require('../../models');
 
 module.exports = async (req, res) => {
 
+    //push 용 데이터 추가
+
     const { headers: { authorization } } = req;
 
     if (!authorization) {
