@@ -36,6 +36,7 @@ app.get('/getmainpage', controllers.getMainPage);
 
 //! POST 요청
 app.post('/login', controllers.login);
+app.post('/logout', controllers.logout);
 app.post('/signup', controllers.signup);
 app.post('/createpost', controllers.createPosts);
 app.post('/createcomment', controllers.createComments);

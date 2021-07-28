@@ -40,8 +40,29 @@ module.exports = async (req, res) => {
                     where: { id: postNum[i] }
                 });
 
+                const userInfos = await Users.findOne({
+                    where: { id: postInfos.dataValues.user_id }
+                });
+
                 if (postInfos) {
-                    result.push(postInfos);
+
+                    const { id, user_id, username, content, pictures, comment_id, like_id,
+                        createdAt, updatedAt } = postInfos.dataValues;
+
+                    const infos = {
+                        id,
+                        user_id,
+                        username,
+                        userProfilePhoto: userInfos.dataValues.profilePhoto,
+                        content,
+                        pictures,
+                        comment_id,
+                        like_id,
+                        createdAt,
+                        updatedAt
+                    }
+
+                    result.push(infos);
                 }
             }
 

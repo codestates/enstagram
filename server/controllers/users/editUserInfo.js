@@ -26,16 +26,20 @@ module.exports = async (req, res) => {
 
             await Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            const afterUserInfo = await Users.findOne({
-                where: { username: req.body.username }
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
 
-            res.status(200).json({
-                data: afterUserInfo.dataValues,
-                message: "유저 데이터 변경 성공"
-            });
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                })
 
         } else if (userName) {
             res.status(200).json({
@@ -66,16 +70,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            const afterUserInfo = await Users.findOne({
-                where: { username: req.body.username }
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
 
-            res.status(200).json({
-                data: afterUserInfo.dataValues,
-                message: "유저 데이터 변경 성공"
-            });
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else if (userName) {
             res.status(200).json({
@@ -100,16 +108,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            const afterUserInfo = await Users.findOne({
-                where: { username: req.body.username }
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
 
-            res.status(200).json({
-                data: afterUserInfo.dataValues,
-                message: "유저 데이터 변경 성공"
-            });
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else if (userEmail) {
             res.status(200).json({
@@ -138,16 +150,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            const afterUserInfo = await Users.findOne({
-                where: { username: req.body.username }
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
 
-            res.status(200).json({
-                data: afterUserInfo.dataValues,
-                message: "유저 데이터 변경 성공"
-            });
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else if (userName) {
             res.status(200).json({
@@ -170,16 +186,20 @@ module.exports = async (req, res) => {
 
         Users.update(result, {
             where: { id: userInfo.dataValues.id }
-        });
+        })
+            .then(async result => {
 
-        const afterUserInfo = await Users.findOne({
-            where: { username: req.body.username }
-        });
+                const afterUserInfo = await Users.findOne({
+                    where: { id: userInfo.dataValues.id }
+                });
 
-        res.status(200).json({
-            data: afterUserInfo.dataValues,
-            message: "유저 데이터 변경 성공"
-        });
+                delete afterUserInfo.dataValues.password;
+
+                res.status(200).json({
+                    data: afterUserInfo.dataValues,
+                    message: "유저 데이터 변경 성공"
+                });
+            });
 
     } else if (!req.body.newname && req.body.newusername && !req.body.newemail) {
         const userName = await Users.findOne({
@@ -198,16 +218,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            const afterUserInfo = await Users.findOne({
-                where: { username: req.body.username }
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
 
-            res.status(200).json({
-                data: afterUserInfo.dataValues,
-                message: "유저 데이터 변경 성공"
-            });
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else {
             res.status(200).json({
@@ -231,16 +255,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            const afterUserInfo = await Users.findOne({
-                where: { username: req.body.username }
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
 
-            res.status(200).json({
-                data: afterUserInfo.dataValues,
-                message: "유저 데이터 변경 성공"
-            });
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else {
             res.status(200).json({

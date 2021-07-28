@@ -21,6 +21,8 @@ module.exports = async (req, res) => {
                     where: { username: req.body.username }
                 });
 
+                delete afterUserInfo.dataValues.password;
+
                 res.status(200).json({
                     data: afterUserInfo.dataValues,
                     message: "프로필 사진 변경 성공"
