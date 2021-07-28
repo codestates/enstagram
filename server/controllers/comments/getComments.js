@@ -17,9 +17,13 @@ module.exports = async (req, res) => {
                     where: { id: el }
                 });
 
+                const userInfos = await Users.findOne({
+                    where: { id: commentInfos.dataValues.user_id }
+                });
+
                 const data = {
                     id: commentInfos.dataValues.id,
-                    username: postInfo.dataValues.username,
+                    username: userInfos.dataValues.username,
                     content: commentInfos.dataValues.content,
                     createdAt: commentInfos.dataValues.createdAt,
                     updatedAt: commentInfos.dataValues.updatedAt
