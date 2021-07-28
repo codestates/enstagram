@@ -1,4 +1,5 @@
 const { Users, Posts } = require('../../models');
+const { verify, sign } = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
 
