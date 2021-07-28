@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
 
             console.log("otherUserssssssssssssssssssssss", otherUsers);
 
-            Promise.all(otherUsers.map(async el => {
+            Promise.all(otherUsers.dataValues.map(async el => {
                 const postInfos = await Posts.findOne({
                     where: { user_id: el.id }
                 });
