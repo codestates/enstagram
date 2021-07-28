@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
             console.log("userArrrrrrrrrrrrrrrrrrrrrrr", userArr);
 
             const otherUsers = userArr.filter(el => {
-                return el.id !== tokenUserInfo.id;
+                return el.dataValues.id !== tokenUserInfo.id;
             });
 
             console.log("otherUserssssssssssssssssssssss", otherUsers);
