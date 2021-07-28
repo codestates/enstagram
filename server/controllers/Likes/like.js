@@ -11,7 +11,11 @@ module.exports = async (req, res) => {
     });
 
     const likeInfos = await Likes.findOne({
-        where: { user_id: req.body.user_id, post_id: req.body.post_id }
+        where: { user_id: req.body.user_id }
+    });
+
+    const likePost = await Likes.findOne({
+        where: { post_id: req.body.post_id }
     });
 
     if (likeInfos) {
