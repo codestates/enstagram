@@ -1,27 +1,36 @@
-const { Users, Comments } = require("../../models");
+const { Users, Posts, Comments } = require("../../models");
 
 module.exports = async (req, res) => {
 
     if (req.query.post_id) {
-        const userInfo = await Users.findOne({
-            where: { post_id: req.query.post_id }
+        const postInfo = await Posts.findOne({
+            where: { id: req.query.post_id }
         });
 
-        if (userInfo) {
+        if (postInfo) {
 
-            const commentInfo = userInfo.dataValues.comment_id;
+            const commentInfo = postInfo.dataValues.comment_id;
 
-            Promise.all(commentInfo.map(el => {
+            Promise.all(commentInfo.map(async el => {
 
-                const commentInfos = Comments.findOne({
+                const commentInfos = await Comments.findOne({
                     where: { id: el }
                 });
 
+                const userInfos = await Users.findOne({
+                    where: { id: commentInfos.dataValues.user_id }
+                });
+
+                const data = {
+                    id: commentInfos.dataValues.id,
+                    username: userInfos.dataValues.username,
+                    content: commentInfos.dataValues.content,
+                    createdAt: commentInfos.dataValues.createdAt,
+                    updatedAt: commentInfos.dataValues.updatedAt
+                }
+
                 if (commentInfos) {
-                    return {
-                        commentInfos,
-                        username: userInfo.dataValues.username
-                    };
+                    return data;
                 } else {
                     res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
                 }
@@ -30,8 +39,8 @@ module.exports = async (req, res) => {
                     res.status(200).json({
                         data: result,
                         message: "코멘트 데이터 불러오기 성공"
-                    })
-                });
+                    });
+                })
         } else {
             res.status(200).json({ message: "존재하지 않는 포스트 아이디 입니다" });
         }
@@ -45,27 +54,33 @@ module.exports = async (req, res) => {
 
             const commentInfo = userInfo.dataValues.comment_id;
 
-            Promise.all(commentInfo.map(el => {
+            Promise.all(commentInfo.map(async el => {
 
-                const commentInfos = Comments.findOne({
+                const commentInfos = await Comments.findOne({
                     where: { id: el }
                 });
 
+                const data = {
+                    id: commentInfos.dataValues.id,
+                    username: userInfo.dataValues.username,
+                    content: commentInfos.dataValues.content,
+                    createdAt: commentInfos.dataValues.createdAt,
+                    updatedAt: commentInfos.dataValues.updatedAt
+                }
+
                 if (commentInfos) {
-                    return {
-                        commentInfos,
-                        username: userInfo.dataValues.username
-                    };
+                    return data;
                 } else {
                     res.status(200).json({ message: "일치하는 포스트 데이터가 없습니다" });
                 }
             }))
                 .then(result => {
+
                     res.status(200).json({
                         data: result,
                         message: "코멘트 데이터 불러오기 성공"
-                    })
-                });
+                    });
+                })
         } else {
             res.status(200).json({ message: "존재하지 않는 포스트 아이디 입니다" });
         }

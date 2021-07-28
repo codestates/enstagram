@@ -1,6 +1,4 @@
-const getRandomNumber = (min, max) => {
-  return parseInt(Math.random() * (Number(max) - Number(min)))
-};
+import axios from "axios";
 
 export const placeHolderImage = 'https://pbs.twimg.com/profile_images/970625933160857601/R8RSJs1w.jpg';
 
@@ -14,10 +12,12 @@ export const dummyPosts = [
         '모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를 가진다. 모든 국민은 종교의 자유를 가진다. 국가는 농·어민과 중소기업의 자조조직을 육성하여야 하며, 그 자율적 활동과 발전을 보장한다. 모든 국민은 양심의 자유를 가진다. 누구든지 체포 또는 구속을 당한 때에는 즉시 변호인의 조력을 받을 권리를 가진다.',
       like_id: [1,2,3],
       comments: [{
+        id: 1,
         username: 'parkcoding',
         content: 'this is a comment'
       },
-      {
+      { 
+        id: 2,
         username: 'choicoding',
         content: 'this is a comment2'
       }],
@@ -159,10 +159,12 @@ export const otherUserPosts = [
       'Hello world!',
     like_id: [3,4,5],
     comments: [{
+      id: 1,
       username: 'parkcoding',
       content: 'this is a comment'
     },
     {
+      id: 2,
       username: 'choicoding',
       content: 'this is a comment2'
     }],
@@ -175,23 +177,33 @@ export const dummyOtherUserInfo = {
   id: 124341248912, // PK,
   username: 'JSmith', // Handle string empty space in param userId: Ryan Park
   profilePhoto: 'http://image.kyobobook.co.kr/newimages/giftshop_new/goods/400/1459/S1584498253783.jpg',
-  posts: otherUserPosts,
-  postCount: otherUserPosts.length,
   followers: 1234,
   following: 23432,
   name: 'John Smith'
 }
 
-export const dummyMyUserInfo = {
-  id: 231342323, // PK,
-  username: 'Kakao-Ryan',
-  profilePhoto: placeHolderImage,
-  posts: dummyPosts,
-  postCount: dummyPosts.length,
-  followers: 123,
-  following: 300,
-  name: 'Ryan Kim',
-  // likedPostId: [...] // 이게 있어야 라이크 한 것들을 트랙할 수 있음
-  // introduction: 'Hello world! Nice to meet you'
-}
+// export const dummyMyUserInfo = {
+//   id: 231342323, // PK,
+//   username: 'Kakao-Ryan',
+//   profilePhoto: placeHolderImage,
+//   followers: 123, // [userId1, userId2, ...]
+//   following: 300,
+//   name: 'Ryan Kim',
+//   // introduction: 'Hello world! Nice to meet you'
+// }
 
+// export const dummyMyUserInfo = {
+//   id: 6, // PK,
+//   username: 'Kakao-Ryan',
+//   profilePhoto: placeHolderImage,
+//   email: 'kryan@gmail.com',
+//   name: 'Ryan Kim',
+// }
+
+export const dummyMyUserInfo = {
+  id: 7, // PK,
+  username: 'Kakao-Apeach',
+  profilePhoto: placeHolderImage,
+  email: 'apeach@gmail.com',
+  name: 'Peach Lee',
+}

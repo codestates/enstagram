@@ -86,6 +86,17 @@
     outline: none;
 }
 
+.comment-content {
+    position: relative;
+}
+
+span.comment-delete {
+    position: absolute;
+    right: 0;
+    font-size: 0.5em;
+    cursor: pointer;
+}
+
 .post-button {
     color: rgb(62, 148, 238);
     font-weight: bold;

@@ -18,14 +18,14 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
 
     // Initial Setup
     // useEffect(() => {
-    //     // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#otheruserspage
-    //     // API Route: users?username="accountName" 요청으로 유저 정보 뱓기
-    //     axios.get(`${serverUrl}/users`, { params: { username: userId } }).then((res) => {
-    //         setUserInfo(res);
+    //     // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#getuserinfo
+    //     axios.get(`${serverUrl}/getuser`, { params: { user_id: userId } }).then((res) => {
+    //         const userData = res.data.data
+    //         setUserInfo(userData);
     //     });
     //     // GET: getPost 요청으로 post information 받기
-    //     axios.get(`${serverUrl}`, { params: { username: userId } }).then((res) => {
-    //         setPosts(res);
+    //     axios.get(`${serverUrl}/getpost`, { params: { user_id: userId } }).then((res) => {
+    //         setPosts(res.data.data);
     //     })
     // }, [userId])
 
@@ -48,40 +48,51 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
         setActivePost(post)
     }
 
-    const commentHandler = (comment) => {
-        const newPosts = [...posts].map(post => {
-            if (post === activePost) {
-                if (post.comments) {
-                    post.comments.push(comment);
-                } else {
-                    post.comments = [comment];
-                }
-            }
-            return post;
-        })
+    // const commentHandler = (comment) => {
+    //     const newPosts = [...posts].map(post => {
+    //         if (post === activePost) {
+    //             if (post.comments) {
+    //                 post.comments.push(comment);
+    //             } else {
+    //                 post.comments = [comment];
+    //             }
+    //         }
+    //         return post;
+    //     })
 
-        setPosts(newPosts);
-    }
+    //     setPosts(newPosts);
+    // }
 
-    const likeHandler = (like) => {
-        if (like) { //  add user id to like_id array and return like count for active post using array.length
-            const newPosts = [...posts].map(post => {
-                if(post === activePost){
-                    post.like_id.push(loggedInUserInfo.id)
-                }
-                return post
-            })
-            setPosts(newPosts)
-        } else { // Decrease like count
-            const newPosts = [...posts].map(post => {
-                if(post === activePost){
-                    post.like_id = post.like_id.filter(el => el !== loggedInUserInfo.id )
-                }
-                return post
-            })
-            setPosts(newPosts)
-        }
-    }
+    // //TODO: when API is updated, change username to id
+    // const commentDeleteHandler = (comment) => {
+    //     const newPosts = [...posts].map(post => {
+    //         if(post === activePost){
+    //             post.comments = post.comments.filter(el => el.username !== comment.username)
+    //         }
+    //         return post
+    //     })
+    //     setPosts(newPosts)
+    // }
+
+    // const likeHandler = (like) => {
+    //     if (like) { //  add user id to like_id array and return like count for active post using array.length
+    //         const newPosts = [...posts].map(post => {
+    //             if(post === activePost){
+    //                 post.like_id.push(loggedInUserInfo.id)
+    //             }
+    //             return post
+    //         })
+    //         setPosts(newPosts)
+    //     } else { // Decrease like count
+    //         const newPosts = [...posts].map(post => {
+    //             if(post === activePost){
+    //                 post.like_id = post.like_id.filter(el => el !== loggedInUserInfo.id )
+    //             }
+    //             return post
+    //         })
+    //         setPosts(newPosts)
+    //     }
+    // }
     return (
         <div>
             <div className="my-profile-field">
@@ -99,7 +110,6 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                             >
                                 <div>프로필 편집</div>
                             </Link>
-                            
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
@@ -116,6 +126,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                 <div className="gallery-list-body">
                     {posts && posts.map((post, idx)=>
                         <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
+                            {/* 로그인 구현되고 나면 post.picture를 post.pictures로 바꾸기*/}
                             <img src={post.picture} alt={post.content} />
                         </div>
                     )}
@@ -123,10 +134,8 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
             </div>
 
             {isModalOpen &&
-                <Modal 
+                <Modal
                     post={activePost}
-                    commentHandler={commentHandler}
-                    likeHandler={likeHandler}
                     loggedInUserInfo={loggedInUserInfo}
                     onModalClose={setIsModalOpen}
                     userInfo={userInfo}
@@ -135,5 +144,5 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
         </div>
     )
 }
-export default Mypage
+export default MyPage
 

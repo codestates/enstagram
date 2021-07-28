@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
 
         const post = {
             user_id: req.body.user_id,
-            username: req.body.username,
+            username: userInfo.dataValues.username,
             content: req.body.content,
             pictures: req.body.pictures,
             comment_id: [],

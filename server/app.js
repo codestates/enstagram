@@ -28,14 +28,27 @@ app.get('/refreshToken', controllers.refreshToken);
 app.get('/oauth', controllers.OAuth);
 app.get('/getpost', controllers.getPosts);
 app.get('/getcomment', controllers.getComments);
+app.get('/getlike', controllers.getLike);
+app.get('/getuser', controllers.getUserInfo);
+app.get('/getfollower', controllers.getFollower);
+app.get('/getfollowing', controllers.getFollowing);
+app.get('/getmainpage', controllers.getMainPage);
 
 //! POST 요청
-app.post('/', controllers.login);
+app.post('/login', controllers.login);
 app.post('/signup', controllers.signup);
 app.post('/createpost', controllers.createPosts);
 app.post('/createcomment', controllers.createComments);
-app.post('/liketrue', controllers.onLike);
-app.post('/follow', controllers.followers);
+app.post('/like', controllers.like);
+app.post('/follow', controllers.follow);
+
+//! PUT 요청
+app.put('/edituserinfo', controllers.editUserInfo);
+app.put('/editpassword', controllers.editPassword);
+app.put('/editprofilephoto', controllers.editProfilephoto);
+
+//! DELETE 요청
+app.delete('/deletecomment', controllers.deleteComments);
 
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
