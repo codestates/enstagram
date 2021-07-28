@@ -24,12 +24,12 @@ module.exports = async (req, res) => {
                 return el.dataValues.id !== tokenUserInfo.id;
             });
 
-            console.log("otherUserssssssssssssssssssssss", otherUsers);
-
-            Promise.all(otherUsers.dataValues.map(async el => {
+            Promise.all(otherUsers.map(async el => {
                 const postInfos = await Posts.findOne({
-                    where: { user_id: el.id }
+                    where: { user_id: el.dataValues.id }
                 });
+
+                console.log("postInfossssssssssssssssss", postInfos);
 
                 if (postInfos) {
                     return postInfos.dataValues;
