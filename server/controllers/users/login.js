@@ -37,7 +37,11 @@ module.exports = async (req, res) => {
                     httpOnly: true,
                 });
 
-                res.status(200).json({ accessToken: accessToken, message: "로그인 성공 " });
+                res.status(200).json({
+                    accessToken: accessToken,
+                    userData: userName,
+                    message: "로그인 성공 "
+                });
             }
 
         } else {
@@ -76,7 +80,11 @@ module.exports = async (req, res) => {
                     httpOnly: true,
                 });
 
-                res.status(200).json({ accessToken: accessToken, message: "로그인 성공" });
+                res.status(200).json({
+                    accessToken: accessToken,
+                    userData: userEmail.dataValues,
+                    message: "로그인 성공"
+                });
             }
         }
     }
