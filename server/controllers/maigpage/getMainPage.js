@@ -18,22 +18,20 @@ module.exports = async (req, res) => {
                 token, process.env.ACCESS_SECRET
             );
 
-            console.log("tokenInfooooooooooooooooooooooooo", tokenUserInfo);
-
             const userArr = await Users.findAll();
 
-            console.log("userArrrrrrrrrrrrrrrrrrrrrrr", userArr);
-
             const otherUsers = userArr.filter(el => {
-                return el.id !== tokenUserInfo.id;
+                return el.dataValues.id !== tokenUserInfo.id;
             });
 
-            console.log("otherUserssssssssssssssssssssss", otherUsers);
+            console.log("otherUserssssssssssssssssssssss", otherUsers[0]);
 
             Promise.all(otherUsers.map(async el => {
                 const postInfos = await Posts.findOne({
-                    where: { user_id: el.id }
+                    where: { user_id: el.dataValues.id }
                 });
+
+                console.log("postInfossssssssssssssssss", postInfos);
 
                 if (postInfos) {
                     return postInfos.dataValues;
