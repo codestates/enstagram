@@ -45,7 +45,6 @@ app.put('/editpassword', controllers.editPassword);
 app.put('/editprofilephoto', controllers.editProfilephoto);
 
 //! DELETE 요청
-app.delete('/unfollow', controllers.unFollow);
 app.delete('/deletecomment', controllers.deleteComments);
 
 app.listen(port, () => {

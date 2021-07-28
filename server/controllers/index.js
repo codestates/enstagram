@@ -28,5 +28,4 @@ module.exports = {
 
     //! Follow
     follow: require("./follow/follow"),                     //* 팔로우
-    unFollow: require("./follow/unFollow"),                 //* 언팔로우
 };
