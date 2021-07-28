@@ -16,8 +16,12 @@ module.exports = async (req, res) => {
             where: { id: userInfo.dataValues.id }
         });
 
+        const afterUserInfo = await Users.findOne({
+            where: { username: req.body.username }
+        });
+
         res.status(200).json({
-            data: newPhoto,
+            data: afterUserInfo.dataValues,
             message: "프로필 사진 변경 성공"
         });
 

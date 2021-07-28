@@ -24,12 +24,16 @@ module.exports = async (req, res) => {
                 email: req.body.newemail
             }
 
-            Users.update(result, {
+            await Users.update(result, {
                 where: { id: userInfo.dataValues.id }
             });
 
+            const afterUserInfo = await Users.findOne({
+                where: { username: req.body.username }
+            });
+
             res.status(200).json({
-                data: result,
+                data: afterUserInfo.dataValues,
                 message: "유저 데이터 변경 성공"
             });
 
@@ -64,8 +68,12 @@ module.exports = async (req, res) => {
                 where: { id: userInfo.dataValues.id }
             });
 
+            const afterUserInfo = await Users.findOne({
+                where: { username: req.body.username }
+            });
+
             res.status(200).json({
-                data: result,
+                data: afterUserInfo.dataValues,
                 message: "유저 데이터 변경 성공"
             });
 
@@ -94,8 +102,12 @@ module.exports = async (req, res) => {
                 where: { id: userInfo.dataValues.id }
             });
 
+            const afterUserInfo = await Users.findOne({
+                where: { username: req.body.username }
+            });
+
             res.status(200).json({
-                data: result,
+                data: afterUserInfo.dataValues,
                 message: "유저 데이터 변경 성공"
             });
 
@@ -128,8 +140,12 @@ module.exports = async (req, res) => {
                 where: { id: userInfo.dataValues.id }
             });
 
+            const afterUserInfo = await Users.findOne({
+                where: { username: req.body.username }
+            });
+
             res.status(200).json({
-                data: result,
+                data: afterUserInfo.dataValues,
                 message: "유저 데이터 변경 성공"
             });
 
@@ -156,8 +172,12 @@ module.exports = async (req, res) => {
             where: { id: userInfo.dataValues.id }
         });
 
+        const afterUserInfo = await Users.findOne({
+            where: { username: req.body.username }
+        });
+
         res.status(200).json({
-            data: result,
+            data: afterUserInfo.dataValues,
             message: "유저 데이터 변경 성공"
         });
 
@@ -180,8 +200,12 @@ module.exports = async (req, res) => {
                 where: { id: userInfo.dataValues.id }
             });
 
+            const afterUserInfo = await Users.findOne({
+                where: { username: req.body.username }
+            });
+
             res.status(200).json({
-                data: result,
+                data: afterUserInfo.dataValues,
                 message: "유저 데이터 변경 성공"
             });
 
@@ -209,8 +233,12 @@ module.exports = async (req, res) => {
                 where: { id: userInfo.dataValues.id }
             });
 
+            const afterUserInfo = await Users.findOne({
+                where: { username: req.body.username }
+            });
+
             res.status(200).json({
-                data: result,
+                data: afterUserInfo.dataValues,
                 message: "유저 데이터 변경 성공"
             });
 
