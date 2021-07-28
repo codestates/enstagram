@@ -52,6 +52,8 @@ module.exports = async (req, res) => {
 
     } else if (!likeInfos) {
 
+        console.log("왜 자꾸 여기로 들어와????????????????");
+
         const like = {
             user_id: req.body.user_id,
             post_id: req.body.post_id,
