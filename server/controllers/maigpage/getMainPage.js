@@ -18,11 +18,7 @@ module.exports = async (req, res) => {
                 token, process.env.ACCESS_SECRET
             );
 
-            console.log("tokenInfooooooooooooooooooooooooo", tokenUserInfo);
-
             const userArr = await Users.findAll();
-
-            console.log("userArrrrrrrrrrrrrrrrrrrrrrr", userArr);
 
             const otherUsers = userArr.filter(el => {
                 return el.dataValues.id !== tokenUserInfo.id;
