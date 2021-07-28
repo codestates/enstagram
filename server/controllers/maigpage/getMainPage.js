@@ -27,17 +27,14 @@ module.exports = async (req, res) => {
                     where: { user_id: el.dataValues.id }
                 });
 
-                console.log("ellllllllllllllllllllllllllll", el.dataValues);
-
-                console.log("el.dataValues.idddddddddddddddd", el.dataValues.id);
-
                 if (postInfos) {
                     return postInfos.dataValues;
-                } else {
-                    res.status(200).json({ message: "일치하는 포스트 정보가 없습니다" });
                 }
             }))
                 .then(result => {
+
+                    console.log("resulttttttttttttttttttttttt", result);
+
                     res.status(200).json({
                         data: result,
                         message: "포스트 데이터 요청 성공"
