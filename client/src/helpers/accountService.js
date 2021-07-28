@@ -47,7 +47,7 @@ export async function checkEmail(email) {
   if (res.data.message === "로그인 성공") {
     // 이미 회원가입 했음을 확인
     console.log("You already signed up on Enstagram.");
-    return res.data;
+    return {userdata: res.data.data, };
   } 
   else {
     console.log("You have not signed up on Enstagram.");

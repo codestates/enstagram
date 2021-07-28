@@ -31,12 +31,11 @@ const App = () => {
   const [accessToken, setAccessToken] = useState('');
   const [userData, setUserData] = useState({});
 
-  console.log(localStorage);
   let history = useHistory();
 
   useEffect(() => {
-    localStorage.userdata = JSON.stringify(userData);
-    localStorage.accessToken = accessToken;
+    // localStorage.userdata = JSON.stringify(userData);
+    // localStorage.accessToken = accessToken;
   }, [userData, accessToken]);
 
   async function facebookLogin() {
@@ -45,23 +44,23 @@ const App = () => {
     );
     const { name } = await accountService.requestFacebookBasicProfile();
     const { email, id } = await accountService.requestFacebookEmail();
-    const userdata = await accountService.checkEmail(email);
+    const {accessToken, userdata} = await accountService.checkEmail(email);
     const url = await accountService.requestFacebookProfilePic(id);
     setFacebookData({ email, url, name });
-    if (userdata) {
+    if (userData) {
       setWelcomeFB(true)
       setUserData(userdata)
-      //setAccessToken()
+      setAccessToken(accessToken)
     }
     else {
-      setWelcomeFB(false);
+      setWelcomeFB(false);  
       setUserData(null)
       history.push("/facebooksignup");
     }
   }
 
   function renderDefaultPage() {
-    if (isLogin) return <Main />;
+    if (isLogin) return <Main userData={userData}/>;
     else {
       if (welcomeFB) {
         return (
@@ -99,10 +98,10 @@ const App = () => {
           <FacebookSignup />
         </Route>
         <Route path="/mypage/edit">
-          <ProfileEdit userData={userData} />
+          <ProfileEdit userData={userData} setUserData={setUserData}/>
         </Route>
         <Route path="/mypage">
-          <Mypage setIsLogin={setIsLogin} />
+          <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData}/>
         </Route>
         <Route exact path="/upload">
           <Upload />

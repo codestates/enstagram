@@ -6,11 +6,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const BasicProfileEdit = (userInfo) => {
-  const [name, setName] = useState(dummyUser.name);
-  const [username, setUsername] = useState(dummyUser.username);
-  const [email, setEmail] = useState(dummyUser.email);
-  const [picture, setPicture] = useState(dummyUser.profilepicture);
+const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
+  console.log("profileEdit: userData", userData)
+
+  const [name, setName] = useState(userData.name);
+  const [username, setUsername] = useState(userData.username);
+  const [email, setEmail] = useState(userData.email);
+  const [picture, setPicture] = useState(userData.profilePhoto);
   const [disabled, setDisabled] = useState(true);
 
   const [invalidUsername, setInvalidUsername] = useState(false);
@@ -40,9 +42,9 @@ const BasicProfileEdit = (userInfo) => {
       name &&
       username &&
       email &&
-      (name !== dummyUser.name ||
-        username !== dummyUser.username ||
-        email !== dummyUser.email)
+      (name !== userData.name ||
+        username !== userData.username ||
+        email !== userData.email)
     ) {
       setDisabled(false);
     } else setDisabled(true);
@@ -128,7 +130,7 @@ const BasicProfileEdit = (userInfo) => {
           <img src={picture} className="profile-edit-pic" alt="profile" />
         </label>
         <div className="profile-edit-input-wrapper edit-profile-pic">
-          <span>{dummyUser.username}</span>
+          <span>{userData.username}</span>
           <button
             className="login-signup-link edit-profile-pic-button"
             onClick={inputClick}
