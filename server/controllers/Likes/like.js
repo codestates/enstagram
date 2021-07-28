@@ -52,6 +52,12 @@ module.exports = async (req, res) => {
 
     } else {
 
+        const like = {
+            user_id: req.body.user_id,
+            post_id: req.body.post_id,
+            value: true
+        };
+
         await Likes.create(like)
             .then(async (value) => {
 
