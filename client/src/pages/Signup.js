@@ -3,13 +3,11 @@ import "./Signup.css";
 
 import Footer from "../components/Footer.js";
 import { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 import { validateEmail } from "../validator/validator";
 import axios from 'axios'
 
-const Signup = function({ facebookLogin }) {
+const Signup = function() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -20,8 +18,6 @@ const Signup = function({ facebookLogin }) {
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [invalidUsername, setInvalidUsername] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
-
-  let history = useHistory();
 
   useEffect(() => {
     if (email) {
@@ -79,11 +75,13 @@ const Signup = function({ facebookLogin }) {
 
       if (msg === "이미 존재하는 email 입니다") {
         console.log("Duplicate email.")
+        setSignupSuccess(false)
         setInvalidUsername(false);
         setInvalidEmail(true);
       } 
       else if (msg === "이미 존재하는 username 입니다") {
         console.log("Duplicate username.")
+        setSignupSuccess(false)
         setInvalidEmail(false);
         setInvalidUsername(true);
       }
@@ -91,25 +89,14 @@ const Signup = function({ facebookLogin }) {
   }
 
   return (
-    <div>
-      <div className="login-signup-container">
+    <div class="signup-page-container">
+      <div className="login-signup-container signup">
         <div className="login-signup-box box-1">
           <h1 className="logo">Enstagram</h1>
           <span className="signup-text">
             친구들의 사진과 동영상을 보려면 가입하세요.
           </span>
-          <button 
-            className="signup-facebook-login-button"
-            onClick={()=>facebookLogin(history)}
-          >
-            <FontAwesomeIcon
-              className="facebook-icon"
-              icon={faFacebookSquare}
-            />
-            Facebook으로 로그인
-          </button>
-          <div className="line"></div>
-          <span className="or-text">또는</span>
+
           <input
             className={`login-signup-input-box signup-input-1`}
             type="text"
@@ -176,7 +163,9 @@ const Signup = function({ facebookLogin }) {
           </span>
         </div>
       </div>
-      <Footer />
+      <div className="signup-footer-container">
+        <Footer />
+      </div>
     </div>
   );
 }

@@ -3,7 +3,18 @@
   /* border: 2px solid black; */
   display: flex;
   flex-direction: column;
-  /* height: 50vh; */
+  height: 80vh;
+}
+
+.login-signup-container.login {
+  flex-grow: 5;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+}
+
+.login-footer-container {
+  flex-grow:1;
 }
 
 .box-1 {

@@ -1,12 +1,15 @@
 import "./PasswordEdit.css";
 import { useState, useEffect } from "react";
 import dummyUser from "../../dummyData/dummyUser";
+import axios from "axios";
 
 const PasswordEdit = () => {
   const [oldPw, setOldPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [newPw1, setNewPw1] = useState("");
   const [disabled, setDisabled] = useState(true);
+  const [success, setSuccess] = useState(false);
+  const [pwNotMatch, setPwNotMatch] = useState(false);
 
   useEffect(() => {
     enable();
@@ -32,7 +35,24 @@ const PasswordEdit = () => {
   }
 
   function submit() {
-    
+    axios.put('https://fpserver.click/editpassword', {
+      username:'',
+      oldpw: oldPw,
+      newpw: newPw1
+    })
+    .then((res) => {
+      if (res.data.message === "비밀번호 변경 성공") {
+        setOldPw('')
+        setNewPw('')
+        setNewPw1('')
+        setPwNotMatch(false);
+        setSuccess(true);
+      }
+      else if (res.data.message === "비밀번호가 다릅니다") {
+        setSuccess(false);
+        setPwNotMatch(true);
+      }
+    })
   }
 
   return (
@@ -88,6 +108,30 @@ const PasswordEdit = () => {
           />
         </div>
       </div>
+      {pwNotMatch ? (
+        <div className="profile-element">
+          <label className="profile-edit-label">
+            <span></span>
+          </label>
+          <div className="profile-edit-input-wrapper">
+            <span className="profile-edit-invalid-msg">
+              기존 비밀번호가 틀립니다.
+            </span>
+          </div>
+        </div>
+      ) : null}
+      {success ? (
+        <div className="profile-element">
+          <label className="profile-edit-label">
+            <span></span>
+          </label>
+          <div className="profile-edit-input-wrapper">
+            <span className="profile-edit-valid-msg">
+              비밀번호를 변경했습니다.
+            </span>
+          </div>
+        </div>
+      ) : null}
       <div className="profile-element">
         <label className="profile-edit-label">
           <span></span>

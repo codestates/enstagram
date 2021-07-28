@@ -4,11 +4,12 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import initFacebookSdk from "./helpers/initFacebookSdk.js";
+import { BrowserRouter } from "react-router-dom";
 
 initFacebookSdk().then(() => {
   ReactDOM.render(
     <React.StrictMode>
-      <App />
+      <BrowserRouter><App /></BrowserRouter>
     </React.StrictMode>,
     document.getElementById("root")
   );
