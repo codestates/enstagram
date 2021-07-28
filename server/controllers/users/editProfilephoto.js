@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
         await Users.update(newPhoto, {
             where: { id: userInfo.dataValues.id }
         })
-            .then(res => {
+            .then(async res => {
 
                 const afterUserInfo = await Users.findOne({
                     where: { username: res.dataValues.username }
