@@ -26,6 +26,8 @@ module.exports = async (req, res) => {
                 return el.dataValues.post_id.length > 0;
             })
 
+            console.log("getPostInfossssssssssssssss", getPostInfos);
+
             Promise.all(getPostInfos.map(async el => {
                 const postInfos = await Posts.findOne({
                     where: { user_id: el.dataValues.id }
