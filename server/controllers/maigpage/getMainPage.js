@@ -3,8 +3,6 @@ const { verify, sign } = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
 
-    //push 용 데이터 추가
-
     const { headers: { authorization } } = req;
 
     if (!authorization) {
@@ -24,14 +22,14 @@ module.exports = async (req, res) => {
                 return el.dataValues.id !== tokenUserInfo.id;
             });
 
-            console.log("otherUserssssssssssssssssssssss", otherUsers[0]);
+            console.log("otherUserssssssssssssssssssssss", otherUsers[0].dataValues);
 
             Promise.all(otherUsers.map(async el => {
                 const postInfos = await Posts.findOne({
                     where: { user_id: el.dataValues.id }
                 });
 
-                console.log("postInfossssssssssssssssss", postInfos);
+                console.log("el.dataValues.idddddddddddddddd", el.dataValues.id);
 
                 if (postInfos) {
                     return postInfos.dataValues;

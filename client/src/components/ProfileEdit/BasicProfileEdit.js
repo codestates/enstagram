@@ -55,26 +55,26 @@ const BasicProfileEdit = (userInfo) => {
       newusername: username,
       newemail: email,
     })
-    .then((res) => {
-      if (res.data.message === "유저 데이터 변경 성공"){
-        setInvalidUsername(false)
-        setPicSuccess(false);
-        setInvalidEmail(false)
-        setSuccess(true);
-      }
-      else if (res.data.message === '이미 존재하는 email 입니다'){
-        setInvalidUsername(false)
-        setSuccess(false);
-        setPicSuccess(false);
-        setInvalidEmail(true)
-      }
-      else if (res.data.message === '이미 존재하는 username 입니다'){
-        setInvalidEmail(false)
-        setSuccess(false);
-        setPicSuccess(false);
-        setInvalidUsername(true)
-      }
-    })
+      .then((res) => {
+        if (res.data.message === "유저 데이터 변경 성공") {
+          setInvalidUsername(false)
+          setPicSuccess(false);
+          setInvalidEmail(false)
+          setSuccess(true);
+        }
+        else if (res.data.message === '이미 존재하는 email 입니다') {
+          setInvalidUsername(false)
+          setSuccess(false);
+          setPicSuccess(false);
+          setInvalidEmail(true)
+        }
+        else if (res.data.message === '이미 존재하는 username 입니다') {
+          setInvalidEmail(false)
+          setSuccess(false);
+          setPicSuccess(false);
+          setInvalidUsername(true)
+        }
+      })
   }
 
   function inputClick(e) {
@@ -86,7 +86,7 @@ const BasicProfileEdit = (userInfo) => {
     if (!fileUploaded) return;
     const result = await encodeBase64ImageFile(fileUploaded);
     if (localupload) {
-        setPicture(result);
+      setPicture(result);
       return;
     }
     axios

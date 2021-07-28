@@ -26,8 +26,8 @@ const PasswordEdit = () => {
   }
 
   function enable() {
-    if (oldPw && newPw && newPw1 && 
-      oldPw !== newPw && 
+    if (oldPw && newPw && newPw1 &&
+      oldPw !== newPw &&
       newPw === newPw1) {
       setDisabled(false);
     }
@@ -36,23 +36,23 @@ const PasswordEdit = () => {
 
   function submit() {
     axios.put('https://fpserver.click/editpassword', {
-      username:'',
+      username: '',
       oldpw: oldPw,
       newpw: newPw1
     })
-    .then((res) => {
-      if (res.data.message === "비밀번호 변경 성공") {
-        setOldPw('')
-        setNewPw('')
-        setNewPw1('')
-        setPwNotMatch(false);
-        setSuccess(true);
-      }
-      else if (res.data.message === "비밀번호가 다릅니다") {
-        setSuccess(false);
-        setPwNotMatch(true);
-      }
-    })
+      .then((res) => {
+        if (res.data.message === "비밀번호 변경 성공") {
+          setOldPw('')
+          setNewPw('')
+          setNewPw1('')
+          setPwNotMatch(false);
+          setSuccess(true);
+        }
+        else if (res.data.message === "비밀번호가 다릅니다") {
+          setSuccess(false);
+          setPwNotMatch(true);
+        }
+      })
   }
 
   return (
