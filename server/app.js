@@ -32,6 +32,7 @@ app.get('/getlike', controllers.getLike);
 app.get('/getuser', controllers.getUserInfo);
 app.get('/getfollower', controllers.getFollower);
 app.get('/getfollowing', controllers.getFollowing);
+app.get('/getmainpage', controllers.getMainPage);
 
 //! POST 요청
 app.post('/login', controllers.login);

@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
 
                 res.status(200).json(
                     {
-                        user_id: arr,
+                        data: arr,
                         message: "좋아요 데이터 불러오기 성공"
                     })
             })

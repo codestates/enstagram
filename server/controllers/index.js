@@ -30,4 +30,7 @@ module.exports = {
     follow: require("./follow/follow"),                     //* 팔로우
     getFollower: require("./follow/getFollower"),           //* 팔로워 정보 가져오기
     getFollowing: require("./follow/getFollowing"),         //* 팔로잉 정보 가져오기
+
+    //! MainPage
+    getMainPage: require("./maigpage/getMainPage"),         //* 메인 페이지에 들어갈 모든 포스트 가져오기
 };
