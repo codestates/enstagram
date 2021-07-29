@@ -36,14 +36,10 @@ a#logo:visited {
 
 :root{
     --header-icon-color:rgb(189, 189, 189);
-    --header-icon-hover:rgb(80, 80, 80);
+    --header-icon-hover:rgb(48, 48, 48);
 }
 
 .header-logo {
-    color: var(--header-icon-color);
-    font-size: 1.2em;
-}
-.header-logo:hover{
     color: var(--header-icon-hover);
     font-size: 1.2em;
 }
