@@ -8,7 +8,6 @@ import { dummyOtherUserInfo, dummyMyUserInfo, otherUserPosts } from '../dummyDat
 import { serverUrl } from '../utils/constants'
 
 const OtherUserPage = ({ loggedInUserInfo }) => {
-    console.log("loggedInUserInfo in outher user page: ", loggedInUserInfo);
     // Initial states
     const [userInfo, setUserInfo] = useState({});
     const [posts, setPosts] = useState([]);
@@ -20,7 +19,6 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
 
     // Get userid from route: in App.js <Route path="/:userId">
     const { userId } = useParams();
-    console.log("user Id: ", userId);
     // Initial Setup
     useEffect(() => {
         // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#getuserinfo
@@ -37,23 +35,27 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
         axios.get(`${serverUrl}/getfollower`, { params: { user_id: userId } }).then((res) => {
             setFollowing(res.data.data);
         });
-    }, [userId])
-
-    useEffect(() => {
-        //GET: follower list 받기
         axios.get(`${serverUrl}/getfollowing`, { params: { user_id: userId } }).then((res) => {
-            console.log("set follower get follwing: ", res.data.data)
             setFollower(res.data.data);
-        }).then(() => {
-            console.log("follower state: ", follower);
-            console.log("logged in user id: ", loggedInUserInfo.id)
-            if (follower.includes(loggedInUserInfo.id)) {
-                setFollow(true);
-            } else {
-                setFollow(false);
-            }
         });
     }, [userId])
+
+    // useEffect(() => {
+    //     //GET: follower list 받기
+    //     axios.get(`${serverUrl}/getfollowing`, { params: { user_id: userId } }).then((res) => {
+    //         console.log("set follower get follwing: ", res.data.data)
+    //         setFollower(res.data.data);
+    //         console.log("follower state before : ", follower);
+    //     }).then(() => {
+    //         console.log("follower state after: ", follower);
+    //         if (follower.includes(loggedInUserInfo.id)) {
+    //             setFollow(true);
+    //         } else {
+    //             setFollow(false);
+    //         }
+    //     });
+    // // }, [userId, follower])
+    // }, [userId])
 
     const clickPostHandler = (post) => {
         setIsModalOpen(true)
@@ -61,31 +63,23 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
     }
 
     const toggleFollowing = (value) => {
-        setFollowing(!value);
+        setFollow(!value);
     }
 
-    const handleFollow = () => {
-        console.log("handle follow =============================================")
+    const handleFollow = (follow) => {
         // Update DB
         axios.post(`${serverUrl}/follow`,
             { user_id: loggedInUserInfo.id, target_id: userId})
         .then((res) => {
-            console.log(follow)
-            toggleFollowing(follow);
+            if(follow) {
+                const newFollower = [...follower, loggedInUserInfo.id]
+                setFollower(newFollower);
+            } else {
+                const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
+                setFollower(newFollower);
+            }
         });
     }
-
-    // console.log("POSTs",posts)
-    //TODO: when API is updated, change username to id
-    // const commentDeleteHandler = (comment) => {
-    //     const newPosts = [...posts].map(post => {
-    //         if(post === activePost){
-    //             post.comments = post.comments.filter(el => el.id !== comment.id)
-    //         }
-    //         return post
-    //     })
-    //     setPosts(newPosts)
-    // }
 
     return (
         <div>
@@ -98,9 +92,9 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
-                            {follow
-                                ? <div className="btn-primary" onClick={() => handleFollow()}>Unfollow</div> 
-                                : <div className="btn-primary follow" onClick={() => handleFollow()}>Follow</div>
+                            {follower.includes(loggedInUserInfo.id)
+                                ? <div className="btn-primary" onClick={() => handleFollow(false)}>Unfollow</div> 
+                                : <div className="btn-primary follow" onClick={() => handleFollow(true)}>Follow</div>
                             }
                         </div>
                         <div className="page-details">
