@@ -8,11 +8,11 @@ import { useState } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router'
 
 
-const _userdata = localStorage.userdata || null;
-if (_userdata) {
-    console.log("Successfully fetched userdata from localStorage")
-    console.log(JSON.parse(localStorage.userdata));
-}
+// const _userdata = localStorage.userdata || null;
+// if (_userdata) {
+//     console.log("Successfully fetched userdata from localStorage")
+//     console.log(JSON.parse(localStorage.userdata));
+// }
 
 
 

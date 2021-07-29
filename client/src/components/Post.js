@@ -35,7 +35,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             }
         }).then( res => {
             // res.data.data is user id list
-            console.log("LIKE userid list line 38", res.data.data)
+            //console.log("LIKE userid list line 38", res.data.data)
             setLikeList(res.data.data)
         })
 
