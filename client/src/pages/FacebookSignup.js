@@ -90,7 +90,7 @@ const FacebookSignup = function() {
   return (
     <div className="login-signup-container fb-signup-container">
       <div className="login-signup-box box-1">
-        <h1 className="logo">Enstagram</h1>
+        <span className="logo">Enstagram</span>
         <img 
           src={fbdata.url} 
           className="fblogin-profile-pic" 
