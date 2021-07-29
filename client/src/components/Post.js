@@ -89,7 +89,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const commentDelete = (comment) => {
         // For database update:
-        console.log("COMMENT", comment)
         axios.delete(`${serverUrl}/deletecomment`, {
             data: {comment_id: parseInt(comment.id),}
         }).then((res) => {
