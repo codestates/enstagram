@@ -46,33 +46,17 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
 
     const handleFollow = async (bFollow) => {
         // Update DB
-        await axios.post(`${serverUrl}/follow`,
-            { user_id: loggedInUserInfo.id, target_id: Number(userId) })
-            .then(result => {
-
-                console.log("보내주는 user 의 ID", userId);
-                console.log("현재 로그인한 user 의 ID", loggedInUserInfo);
-                console.log("result 의 메세지:", result.data.message);
-
-                if (result.data.message === '팔로우 성공') {
-                    console.log("loggedInUserInfo:", loggedInUserInfo);
-                    console.log("follower:", follower);
-
-                    if (follower.indexOf(loggedInUserInfo.id) < 0) {
-                        if (follower.length === 0) {
-                            const newFollower = [loggedInUserInfo.id];
-                            setFollower(newFollower);
-                        } else {
-                            const newFollower = [...follower, loggedInUserInfo.id]
-                            setFollower(newFollower);
-                        }
-                    }
-                } else if (result.data.message === '언팔로우 성공') {
-                    console.log("Unfollower:", follower);
-                    const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
-                    setFollower(newFollower);
-                }
-            });
+        axios.post(`${serverUrl}/follow`,
+            { user_id: loggedInUserInfo.id, target_id: parseInt(userId)})
+        .then((res) => {
+            if(follow) {
+                const newFollower = [...follower, loggedInUserInfo.id]
+                setFollower(newFollower);
+            } else {
+                const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
+                setFollower(newFollower);
+            }
+        });
     }
 
     return (

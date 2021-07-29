@@ -28,33 +28,30 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         //post에 있는 like 정보 가져오기
         axios.get(`${serverUrl}/getlike`, {
             params: {
-                post_id: activePost.id,
+                post_id: parseInt(activePost.id),
             }
         }).then(res => {
             setLikeList(res.data.data)
         })
     }, [activePost.id, loggedInUserInfo.id])
 
-    const likeClickHandler = async (like) => {
-        await axios.post(`${serverUrl}/like`, {
-            user_id: Number(loggedInUserInfo.id), // loggedIn user
-            post_id: Number(activePost.id),
-        }).then(async (res) => {
 
-            if (res.data.message === '좋아요 정보 설정 완료') {
-                if (res.data.data.value === true) { //  add user id to like_id array and return like count using array.length
-                    if (likeList.indexOf(res.data.data.user_id) < 0) {
-                        const newLikeList = [...likeList, res.data.data.user_id]
-                        await setLikeList(newLikeList)
-                    }
-                } else if (res.data.data.value === false) { // Decrease like count
-                    const newLikeList = likeList.filter(el => {
-                        return el !== res.data.data.user_id
-                    });
-                    await setLikeList(newLikeList)
+    const likeClickHandler = (like) => {
+        axios.post(`${serverUrl}/like`, {
+            user_id: parseInt(loggedInUserInfo.id), // loggedIn user
+            post_id: parseInt(activePost.id),
+            value: like
+        }).then((res)=>{
+            // if(res.data.message === '좋아요 정보 설정 완료') {
+                if (like) { //  add user id to like_id array and return like count using array.length
+                    const newLikeList = [...likeList, loggedInUserInfo.id]
+                    setLikeList(newLikeList)
+                } else { // Decrease like count
+                    const newLikeList= [...likeList].filter(el => el !== loggedInUserInfo.id)
+                    setLikeList(newLikeList)
                 }
-            }
-        })
+            })
+        // })
     }
 
     const commentChangeHandler = (e) => {
@@ -103,7 +100,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         console.log("comments.id:", commentes);
 
         axios.delete(`${serverUrl}/deletecomment`, {
-            data: { comment_id: commentes.id, }
+            data: {comment_id: parseInt(comment.id),}
         }).then((res) => {
             if (res.data.message === '코멘트 삭제 완료') {
                 commentDeleteHandler(commentes);
@@ -172,7 +169,7 @@ export const Modal = ({ post, userInfo, loggedInUserInfo, likeHandler, commentHa
                 userInfo={userInfo}
                 // likeHandler={likeHandler}
                 loggedInUserInfo={loggedInUserInfo}
-            // commentDeleteHandler={commentDeleteHandler}
+
             />
         </div>
     )
