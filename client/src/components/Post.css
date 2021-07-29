@@ -108,3 +108,8 @@ span.comment-delete {
 .post-button:disabled {
     color: rgb(178, 222, 251)
 }
+
+.user-information-link {
+    text-decoration: none;
+    color: black;
+}
