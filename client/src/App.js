@@ -55,29 +55,73 @@ const App = () => {
   let history = useHistory();
 
   async function facebookLogin() {
+    async function inner() {
+      const {email, id} = await accountService.requestFacebookEmail();
+      const url = await accountService.requestFacebookProfilePic(id);
+      setFacebookData({email, url})
+
+      const userdata = await accountService.checkEmail(email);
+      if (userdata) {
+        // 페이스북회원 로그인 페이지로
+        setUserData(userdata.data);
+        setAccessToken(userdata.accessToken);
+        setWelcomeFB(true);
+        return;
+      }
+      else {
+        // 페이스북회원 회원가입 페이지로
+        history.push("/facebooksignup");
+        return;
+      }
+    }
+
     console.log(
       "You pressed Facebook login button. Starting Facebook OAuth login..."
     );
-    const { name } = await accountService.requestFacebookBasicProfile();
-    const { email, id } = await accountService.requestFacebookEmail();
-    const res = await accountService.checkEmail(email);
-    if (res === "fail") {
-      return;
+    const isLoggedintoFacebook = await accountService.checkFacebookLogin();
+    if (isLoggedintoFacebook){
+      await inner();
     }
-    else if (res === false) {
-      setWelcomeFB(false);
-      setUserData(null)
-      history.push("/facebooksignup");
-      return;
+    else {
+      const res = await accountService.requestFacebookLogin();
+      if (res) {
+        await inner();
+      } 
+      else {
+        console.log("Facebook login denied by user.")
+      }
     }
-    const { accessToken, userdata } = res;
-    const url = await accountService.requestFacebookProfilePic(id);
-    setFacebookData({ email, url, name });
-    if (userData) {
-      setWelcomeFB(true)
-      setUserData(userdata)
-      setAccessToken(accessToken)
-    }
+    // accountService.checkFacebookLogin()
+    // .then(res => {
+    //   // 로그인이 되어있다면
+    //   if (res === true){
+        
+    //   }
+    //   // 안되어있다면
+    //   else {
+
+    //   }
+    // })
+    // const { name } = await accountService.requestFacebookBasicProfile();
+    // const { email, id } = await accountService.requestFacebookEmail();
+    // const res = await accountService.checkEmail(email);
+    // if (res === "fail") {
+    //   return;
+    // }
+    // else if (res === false) {
+    //   setWelcomeFB(false);
+    //   setUserData(null)
+    //   history.push("/facebooksignup");
+    //   return;
+    // }
+    // const { accessToken, userdata } = res;
+    // const url = await accountService.requestFacebookProfilePic(id);
+    // setFacebookData({ email, url, name });
+    // if (userData) {
+    //   setWelcomeFB(true)
+    //   setUserData(userdata)
+    //   setAccessToken(accessToken)
+    // }
   }
 
   function renderDefaultPage() {
