@@ -24,6 +24,26 @@ import Upload from "./pages/UploadPage";
 import * as accountService from "./helpers/accountService";
 import axios from "axios";
 
+
+
+
+// USER INFO
+// comment_id: []
+// createdAt: "2021-07-28T10:21:11.000Z"
+// email: "jhoryong@gmail.com"
+// follower_id: []
+// following_id: []
+// id: 4
+// like_id: []
+// name: "test1"
+// post_id: (5) [7, 8, 10, 11, 12]
+// profilePhoto: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+// updatedAt: "2021-07-28T12:31:28.000Z"
+// username: "test1"
+
+
+
+
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [welcomeFB, setWelcomeFB] = useState(false);
@@ -31,12 +51,12 @@ const App = () => {
   const [accessToken, setAccessToken] = useState('');
   const [userData, setUserData] = useState({});
 
-  console.log(localStorage);
+  const [userWrittenPost, setUserWrittenPost] = useState(null)
   let history = useHistory();
 
   useEffect(() => {
-    localStorage.userdata = JSON.stringify(userData);
-    localStorage.accessToken = accessToken;
+    // localStorage.userdata = JSON.stringify(userData);
+    // localStorage.accessToken = accessToken;
   }, [userData, accessToken]);
 
   async function facebookLogin() {
@@ -45,23 +65,29 @@ const App = () => {
     );
     const { name } = await accountService.requestFacebookBasicProfile();
     const { email, id } = await accountService.requestFacebookEmail();
-    const userdata = await accountService.checkEmail(email);
-    const url = await accountService.requestFacebookProfilePic(id);
-    setFacebookData({ email, url, name });
-    if (userdata) {
-      setWelcomeFB(true)
-      setUserData(userdata)
-      //setAccessToken()
+    const res = await accountService.checkEmail(email);
+    if (res === "fail") {
+      return;
     }
-    else {
-      setWelcomeFB(false);
+    else if (res === false) {
+      setWelcomeFB(false);  
       setUserData(null)
       history.push("/facebooksignup");
+      return;
+    }
+    const {accessToken, userdata} = res;
+    const url = await accountService.requestFacebookProfilePic(id);
+    setFacebookData({ email, url, name });
+    if (userData) {
+      setWelcomeFB(true)
+      setUserData(userdata)
+      setAccessToken(accessToken)
     }
   }
 
   function renderDefaultPage() {
     if (isLogin) return <Main userData={userData} accessToken={accessToken} />;
+
     else {
       if (welcomeFB) {
         return (
@@ -87,7 +113,7 @@ const App = () => {
   return (
     <>
       {isLogin && <Header profilePhoto={userData.profilePhoto} />}
-      {/* <Header profilePhoto={userData.profilePhoto} /> */}
+
       <Switch>
         {/* TODO: delete before pushing the code. Below route is for UI testing. */}
         {/* <Route exact path="/main">
@@ -103,13 +129,15 @@ const App = () => {
           <FacebookSignup />
         </Route>
         <Route path="/mypage/edit">
-          <ProfileEdit userData={userData} />
+          <ProfileEdit userData={userData} setUserData={setUserData}/>
         </Route>
         <Route path="/mypage">
-          <Mypage loggedInUserInfo={userData} setIsLogin={setIsLogin} />
+
+        <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData}/>
+
         </Route>
         <Route exact path="/upload">
-          <Upload />
+          <Upload userData={userData} setUserWrittenPost={setUserWrittenPost}/>
         </Route>
         <Route path="/:userId">
           {/* <OtherUserPage /> */}

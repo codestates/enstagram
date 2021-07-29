@@ -1,4 +1,23 @@
+.facebook-login-page-container {
+  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .facebook-login-profile-picture{
   width: 100px;
   border-radius: 50%;
+}
+
+.facebook-login-footer-container {
+
+    flex-grow:1;
+
+}
+
+.login-signup-container.facebook-login {
+  flex-grow: 7;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
 }

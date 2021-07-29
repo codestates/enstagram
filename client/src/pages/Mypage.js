@@ -10,6 +10,7 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
     // Initial states
     const [userInfo, setUserInfo] = useState({});
     // const [userInfo, setUserInfo] = useState(loggedInUserInfo);
+
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
@@ -117,6 +118,11 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
                             <div><strong>{posts && posts.length}</strong> posts</div>
                             <div><strong>{userInfo.followers}</strong> followers</div>
                             <div><strong>{userInfo.following}</strong> following</div>
+
+//                             <div><strong>{userInfo.post_id && userInfo.post_id.length}</strong> posts</div>
+//                             <div><strong>{userInfo.follower_id.length}</strong> followers</div>
+//                             <div><strong>{userInfo.following_id.length}</strong> following</div>
+
                         </div>
                         <div className="name">{userInfo.username}</div>
                     </div>

@@ -35,6 +35,7 @@ export default function MainPage({ userData, accessToken }) {
           profilePhoto: post.userProfilePhoto,
           id: post.user_id
         }
+
         return (
           <div key={post.id} className="post-outer-wrapper">
             <div className="post-inner-wrapper">
@@ -50,3 +51,4 @@ export default function MainPage({ userData, accessToken }) {
     </div>
   )
 }
+
