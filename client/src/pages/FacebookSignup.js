@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import * as accountService from "../helpers/accountService"
 import axios from 'axios'
 
-const FacebookSignup = function() {
+const FacebookSignup = function () {
 
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -19,19 +19,19 @@ const FacebookSignup = function() {
 
   useEffect(() => {
     async function fetchData() {
-      const {email, id} = await accountService.requestFacebookEmail();
+      const { email, id } = await accountService.requestFacebookEmail();
       const url = await accountService.requestFacebookProfilePic(id);
-      setFbdata({email, url})
+      setFbdata({ email, url })
     }
     fetchData();
   }, [])
 
   useEffect(() => {
     enable();
-  }, [username,name,password])
+  }, [username, name, password])
 
   useEffect(() => {
-    if (success){
+    if (success) {
 
     }
   }, [success])
@@ -74,7 +74,7 @@ const FacebookSignup = function() {
       setTimeout(() => {
         history.push('/')
       }, 2000)
-    } 
+    }
     else {
       console.log("Signup failed.")
       const msg = res.data.message;
@@ -90,6 +90,7 @@ const FacebookSignup = function() {
   return (
     <div className="login-signup-container fb-signup-container">
       <div className="login-signup-box box-1">
+
         <span className="logo">Enstagram</span>
         <img 
           src={fbdata.url} 
@@ -128,9 +129,8 @@ const FacebookSignup = function() {
           </span>
         ) : null}
         <button
-          className={`login-signup-button fb-signup-button ${
-            disabled ? "login-signup-button-disabled" : null
-          }`}
+          className={`login-signup-button fb-signup-button ${disabled ? "login-signup-button-disabled" : null
+            }`}
           type="submit"
           onClick={requestSignup}
           disabled={disabled}

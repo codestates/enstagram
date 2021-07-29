@@ -21,11 +21,15 @@ module.exports = async (req, res) => {
         }))
             .then(result => {
 
-                const arr = result.map(el => el.user_id);
+                const arr = result.filter(el => {
+                    return el.value === true;
+                });
+
+                const rest = arr.map(el => el.user_id)
 
                 res.status(200).json(
                     {
-                        data: arr,
+                        data: rest,
                         message: "좋아요 데이터 불러오기 성공"
                     })
             })

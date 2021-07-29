@@ -44,7 +44,7 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
         setActivePost(post)
     }
 
-    const handleFollow = (follow) => {
+    const handleFollow = async (bFollow) => {
         // Update DB
         axios.post(`${serverUrl}/follow`,
             { user_id: loggedInUserInfo.id, target_id: parseInt(userId)})
@@ -71,7 +71,7 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
                             {follower.includes(loggedInUserInfo.id)
-                                ? <div className="btn-primary" onClick={() => handleFollow(false)}>Unfollow</div> 
+                                ? <div className="btn-primary" onClick={() => handleFollow(false)}>Unfollow</div>
                                 : <div className="btn-primary follow" onClick={() => handleFollow(true)}>Follow</div>
                             }
                         </div>
@@ -87,8 +87,8 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
 
             <div className="gallery-container">
                 <div className="gallery-list-body">
-                    {posts && posts.map((post, idx)=>
-                        <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
+                    {posts && posts.map((post, idx) =>
+                        <div key={idx} className="gallery-image-wrapper" onClick={() => { clickPostHandler(post) }}>
                             <img src={post.pictures} alt={post.content} />
                         </div>
                     )}

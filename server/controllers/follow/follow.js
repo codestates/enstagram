@@ -14,6 +14,12 @@ module.exports = async (req, res) => {
         res.status(400).json({ message: "user 와 target 의 ID 가 같습니다. 확인 후 재요청 하십시오" });
     }
 
+    console.log("user_id:::::::::", req.body.user_id);
+    console.log("target_id::::", req.body.target_id);
+
+    console.log("user_id 의 type::::::", typeof req.body.user_id);
+    console.log("target_id 의 type::::::", typeof req.body.target_id);
+
     if (myInfo) {
 
         if (myInfo.dataValues.follower_id.indexOf(req.body.target_id) > -1) {
@@ -34,7 +40,21 @@ module.exports = async (req, res) => {
                 where: { id: targetInfo.dataValues.id }
             });
 
-            res.status(200).json({ message: "언팔로우 성공" });
+            const changeUserInfo = await Users.findOne({
+                where: { id: myInfo.dataValues.id }
+            });
+
+            const changeTargetInfo = await Users.findOne({
+                where: { id: targetInfo.dataValues.id }
+            });
+
+            res.status(200).json({
+                data: {
+                    follower_id: changeUserInfo.dataValues.follower_id,
+                    following_id: changeTargetInfo.dataValues.following_id
+                },
+                message: "언팔로우 성공"
+            });
 
         } else {
             if (myInfo.dataValues.follower_id.length !== 0) {
@@ -65,7 +85,21 @@ module.exports = async (req, res) => {
                 });
             }
 
-            res.status(200).json({ message: "팔로우 성공" });
+            const changeUserInfo = await Users.findOne({
+                where: { id: myInfo.dataValues.id }
+            });
+
+            const changeTargetInfo = await Users.findOne({
+                where: { id: targetInfo.dataValues.id }
+            });
+
+            res.status(200).json({
+                data: {
+                    follower_id: changeUserInfo.dataValues.follower_id,
+                    following_id: changeTargetInfo.dataValues.following_id
+                },
+                message: "팔로우 성공"
+            });
         }
 
     } else {

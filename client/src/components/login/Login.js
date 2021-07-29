@@ -8,7 +8,7 @@ import Footer from "../Footer";
 import axios from 'axios'
 
 const Login = ({ setIsLogin, facebookLogin, setUserData, setAccessToken }) => {
-  
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
@@ -50,11 +50,11 @@ const Login = ({ setIsLogin, facebookLogin, setUserData, setAccessToken }) => {
       setUserData(res.data.userData)
       setAccessToken(res.data.accessToken)
     }
-    else if (res.data.message === "아이디 오류"){
+    else if (res.data.message === "아이디 오류") {
       setInvalidPw(false);
       setInvalidId(true);
     }
-    else if (res.data.message === "비밀번호 오류"){
+    else if (res.data.message === "비밀번호 오류") {
       setInvalidId(false);
       setInvalidPw(true)
     }
@@ -80,9 +80,8 @@ const Login = ({ setIsLogin, facebookLogin, setUserData, setAccessToken }) => {
             onChange={inputPassword}
           />
           <button
-            className={`login-signup-button login-button ${
-              disabled ? "login-signup-button-disabled" : null
-            }`}
+            className={`login-signup-button login-button ${disabled ? "login-signup-button-disabled" : null
+              }`}
             type="submit"
             onClick={requestLogin}
             disabled={disabled}
@@ -91,7 +90,7 @@ const Login = ({ setIsLogin, facebookLogin, setUserData, setAccessToken }) => {
           </button>
           <div className="line"></div>
           <span className="or-text">또는</span>
-            
+
           {/* ---FACEBOOK LOGIN BUTTON--- */}
           <button
             className="login-facebook-login-button"
