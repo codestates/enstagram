@@ -10,15 +10,23 @@ const controllers = require("./controllers");
 app.use(express.json());
 const port = process.env.PORT || 4000;
 
-const defaultCors = {
-  'access-control-allow-origin': '*',
-  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'access-control-allow-headers': 'content-type, accept',
-  'access-control-max-age': 10
+const defaultCorsHeader = {
+  origin: '*',
+  methods: 'GET, POST, PUT, DELETE, OPTIONS',
+  allowedHeaders: 'Content-Type, Accept',
+  maxAge: 86400,
 };
 
 //? CORS 설정
-app.use(defaultCors);
+
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS", "DELETE", "PUT"],
+  })
+);
+
 
 //? 쿠키 사용
 app.use(cookieParser());

@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
         }))
             .then(result => {
                 res.status(200).json({
-                    data: result,
+                    data: result.reverse(),
                     message: "post 데이터 불러오기 성공"
                 })
             });

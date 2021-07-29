@@ -18,7 +18,7 @@ const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
   const [invalidUsername, setInvalidUsername] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [success, setSuccess] = useState(false);
-  const localupload = false;
+  const localupload = true;
 
   const hiddenFileInput = React.useRef(null);
 
@@ -80,65 +80,61 @@ const BasicProfileEdit = ({userData = dummyUser, setUserData}) => {
   }
 
   async function fileChange(e) {
-    const fileUploaded = e.target.files[0];
+    let fileUploaded = e.target.files[0];
     console.log(fileUploaded)
     if (!fileUploaded) {console.log("no file selected"); return;}
-    const blob = URL.createObjectURL(fileUploaded)
-    console.log(blob);
-    // const result = await encodeBase64ImageFile(fileUploaded);
-    // console.log(result)
-    // if (localupload) {
-    //   setPicture(result);
-    // }
-    // fetch(fileUploaded)
-    // .then(function(response) {
-    //   return response.blob()
-    // })
-    // .then(function(blob) {
-    //   console.log("blob: ", blob)
-    //   const url = URL.createObjectURL(blob)
-    //   console.log("url", url)
-    //   setPicture(blob);
-    // });
-    
-    // const res = await axios.put('https://localhost:4000/profile', {
-    //   username: userData.username,
-    //   picture: result
-    // })
-    // console.log("localhost", res.data);
-    // setPicture(res.data)
-
-    // const res = await axios.put('https://fpserver.click/editprofilephoto', {
-    //   username: userData.username,
-    //   picture: result
-    // })
-    // console.log("response", res.data.data.profilePhoto);
-    // if (res.data.message === "프로필 사진 변경 성공") {
-    //   setInvalidEmail(false)
-    //   setInvalidUsername(false)
-    //   setSuccess(false);
-    //   console.log(res.data.data.profilePhoto)
-    //   setPicture(res.data.data.profilePhoto);
-    //   setUserData(res.data.data)
-    // }
+    console.log(fileUploaded)
+    const result = URL.createObjectURL(fileUploaded)
+    const res = await axios.put('https://fpserver.click/editprofilephoto', {
+      username: userData.username,
+      picture: result
+    })
+    console.log(res);
+    if (res.data.message === "프로필 사진 변경 성공")
+      setPicture(res.data.data.profilePhoto);
+      setUserData(res.data.data);
   }
 
-  function encodeBase64ImageFile(image) {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      // convert the file to base64 text
-      reader.readAsDataURL(image);
-      // on reader load somthing...
-      reader.onload = (event) => {
-        console.log("Conversion to base64 success")
-        //console.log(event.target.result);
-        resolve(event.target.result);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  }
+  // function b64toBlob(b64Data, contentType, sliceSize) {
+  //   contentType = contentType || '';
+  //   sliceSize = sliceSize || 512;
+
+  //   var byteCharacters = atob(b64Data);
+  //   var byteArrays = [];
+
+  //   for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+  //     var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+  //     var byteNumbers = new Array(slice.length);
+  //     for (var i = 0; i < slice.length; i++) {
+  //         byteNumbers[i] = slice.charCodeAt(i);
+  //     }
+
+  //     var byteArray = new Uint8Array(byteNumbers);
+
+  //     byteArrays.push(byteArray);
+  //   }
+
+  //   var blob = new Blob(byteArrays, {type: contentType});
+  //   return blob;
+  // }
+
+  // function encodeBase64ImageFile(image) {
+  //   return new Promise((resolve, reject) => {
+  //     let reader = new FileReader();
+  //     // convert the file to base64 text
+  //     reader.readAsDataURL(image);
+  //     // on reader load somthing...
+  //     reader.onload = (event) => {
+  //       console.log("Conversion to base64 success")
+  //       //console.log(event.target.result);
+  //       resolve(event.target.result);
+  //     };
+  //     reader.onerror = (error) => {
+  //       reject(error);
+  //     };
+  //   });
+  // }
 
   return (
     <div className="basic-profile-container">

@@ -12,7 +12,14 @@ module.exports = async (req, res) => {
 
         delete userInfo.dataValues.password;
 
+        const accessToken = await sign(
+            userInfo.dataValues,
+            process.env.ACCESS_SECRET, {
+            expiresIn: process.env.ACCESS_TIME,
+        });
+
         res.status(200).json({
+            accessToken: accessToken,
             data: userInfo,
             message: "로그인 성공"
         });

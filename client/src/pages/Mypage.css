@@ -85,16 +85,17 @@
 
 .gallery-image-wrapper > img {
     width: 100%;
-    height: auto;;
+    height: auto;
 }
 
 .btn-primary {
     padding: 4px 8px;
     font-size: 14px;
-    margin-right: 30px;
-    border: 1px solid gray;
+    margin-right: 20px;
+    border: 1px solid rgb(219, 219, 219);
     border-radius: 3px;
     cursor: pointer;
+    font-weight: 600;
 }
 
 a.btn-primary:link {

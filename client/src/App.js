@@ -54,11 +54,6 @@ const App = () => {
   const [userWrittenPost, setUserWrittenPost] = useState(null)
   let history = useHistory();
 
-  useEffect(() => {
-    // localStorage.userdata = JSON.stringify(userData);
-    // localStorage.accessToken = accessToken;
-  }, [userData, accessToken]);
-
   async function facebookLogin() {
     console.log(
       "You pressed Facebook login button. Starting Facebook OAuth login..."
@@ -70,12 +65,12 @@ const App = () => {
       return;
     }
     else if (res === false) {
-      setWelcomeFB(false);  
+      setWelcomeFB(false);
       setUserData(null)
       history.push("/facebooksignup");
       return;
     }
-    const {accessToken, userdata} = res;
+    const { accessToken, userdata } = res;
     const url = await accountService.requestFacebookProfilePic(id);
     setFacebookData({ email, url, name });
     if (userData) {
@@ -86,7 +81,7 @@ const App = () => {
   }
 
   function renderDefaultPage() {
-    if (isLogin) return <Main userData={userData} accessToken={accessToken} />;
+    if (isLogin) return <Main userData={userData} accessToken={accessToken} userWrittenPost={userWrittenPost} />;
 
     else {
       if (welcomeFB) {
@@ -129,15 +124,15 @@ const App = () => {
           <FacebookSignup />
         </Route>
         <Route path="/mypage/edit">
-          <ProfileEdit userData={userData} setUserData={setUserData}/>
+          <ProfileEdit userData={userData} setUserData={setUserData} />
         </Route>
         <Route path="/mypage">
 
-        <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData}/>
+          <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData} />
 
         </Route>
         <Route exact path="/upload">
-          <Upload userData={userData} setUserWrittenPost={setUserWrittenPost}/>
+          <Upload userData={userData} setUserWrittenPost={setUserWrittenPost} />
         </Route>
         <Route path="/:userId">
           {/* <OtherUserPage /> */}
