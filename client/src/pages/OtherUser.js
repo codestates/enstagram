@@ -13,7 +13,6 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
-    const [follow, setFollow] = useState(false);
     const [follower, setFollower] = useState([]);
     const [following, setFollowing] = useState([]);
 
@@ -40,30 +39,9 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
         });
     }, [userId])
 
-    // useEffect(() => {
-    //     //GET: follower list 받기
-    //     axios.get(`${serverUrl}/getfollowing`, { params: { user_id: userId } }).then((res) => {
-    //         console.log("set follower get follwing: ", res.data.data)
-    //         setFollower(res.data.data);
-    //         console.log("follower state before : ", follower);
-    //     }).then(() => {
-    //         console.log("follower state after: ", follower);
-    //         if (follower.includes(loggedInUserInfo.id)) {
-    //             setFollow(true);
-    //         } else {
-    //             setFollow(false);
-    //         }
-    //     });
-    // // }, [userId, follower])
-    // }, [userId])
-
     const clickPostHandler = (post) => {
         setIsModalOpen(true)
         setActivePost(post)
-    }
-
-    const toggleFollowing = (value) => {
-        setFollow(!value);
     }
 
     const handleFollow = (follow) => {
