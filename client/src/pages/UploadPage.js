@@ -18,7 +18,8 @@ const Upload = ({ userData, setUserWrittenPost }) => {
     const loadFileHandler = async (e) => {
         const fileUploaded = e.target.files[0];
         if (!fileUploaded) return;
-        const url = await encodeBase64ImageFile(fileUploaded);
+        const url = URL.createObjectURL(fileUploaded)
+        //const url = await encodeBase64ImageFile(fileUploaded);
         setPicture(url);
     }
 

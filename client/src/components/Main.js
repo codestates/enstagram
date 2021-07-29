@@ -12,7 +12,7 @@ import './Main.css';
 
 // TODO: remove dummyMyUserInfo for userData
 // export default function MainPage({ userData=dummyMyUserInfo, accessToken }) {
-export default function MainPage({ userData, accessToken }) {
+export default function MainPage({ userData, accessToken, userWrittenPost }) {
   const [allPosts, setAllPosts] = useState([]);
 
   // TODO: Uncomment below to fetch all posts
@@ -27,9 +27,28 @@ export default function MainPage({ userData, accessToken }) {
         setAllPosts(res.data.data)
     })
   }, [accessToken]);
+
+  function postJustWritten() {
+    if (userWrittenPost) {
+      let userInfo = {
+        profilePhoto: userData.profilePhoto,
+        id: userWrittenPost.user_id
+      }
+      return (<div key={userWrittenPost.id} className="post-outer-wrapper">
+      <div className="post-inner-wrapper">
+        <Post
+          activePost={userWrittenPost}
+          loggedInUserInfo={userData}
+          userInfo={userInfo}
+        />
+      </div>
+    </div>)
+    }
+  }
   
   return (
     <div>
+      {postJustWritten()}
       {allPosts && allPosts.map(post => {
         let userInfo = {
           profilePhoto: post.userProfilePhoto,
