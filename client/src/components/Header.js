@@ -9,9 +9,9 @@ const Header = ({ profilePhoto = placeHolderImage }) => {
     return (
         <div id="header-body">
             <Link id="logo" to="/">
-                <span>Enstagram</span>
+                <span className="logo header-logo">Enstagram</span>
             </Link>
-            <input className="search" type="search" placeholder="Search"/>
+            <input className="search" type="search" placeholder="Search..."/>
             <div id="nav">
                 <div id="upload">
                     <Link to="/upload">

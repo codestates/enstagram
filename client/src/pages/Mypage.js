@@ -6,34 +6,36 @@ import Post, { Modal } from '../components/Post'
 import { dummyMyUserInfo, dummyPosts, placeHolderImage } from '../dummyData';
 import { serverUrl } from '../utils/constants'
 
-const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
+const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
     // Initial states
     const [userInfo, setUserInfo] = useState({});
+    // const [userInfo, setUserInfo] = useState(loggedInUserInfo);
+
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
     //let { path, url } = useRouteMatch();
 
     const userId = loggedInUserInfo.id;
-
+    // console.log("LOGINUSER", loggedInUserInfo)
     // Initial Setup
-    // useEffect(() => {
-    //     // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#getuserinfo
-    //     axios.get(`${serverUrl}/getuser`, { params: { user_id: userId } }).then((res) => {
-    //         const userData = res.data.data
-    //         setUserInfo(userData);
-    //     });
-    //     // GET: getPost 요청으로 post information 받기
-    //     axios.get(`${serverUrl}/getpost`, { params: { user_id: userId } }).then((res) => {
-    //         setPosts(res.data.data);
-    //     })
-    // }, [userId])
+    useEffect(() => {
+        // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#getuserinfo
+        axios.get(`${serverUrl}/getuser`, { params: { user_id: userId } }).then((res) => {
+            const userData = res.data.data
+            setUserInfo(userData);
+        });
+        // GET: getPost 요청으로 post information 받기
+        axios.get(`${serverUrl}/getpost`, { params: { user_id: userId } }).then((res) => {
+            setPosts(res.data.data);
+        })
+    }, [userId])
 
     // Initial Setup: before API is ready
-    useEffect(() => {
-        setUserInfo(loggedInUserInfo)
-        setPosts(dummyPosts)
-    }, [loggedInUserInfo])
+    // useEffect(() => {
+    //     setUserInfo(loggedInUserInfo)
+    //     setPosts(dummyPosts)
+    // }, [loggedInUserInfo])
 
     const history = useHistory();
     const handleLogout = () => {
@@ -113,9 +115,14 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
-                            <div><strong>{userInfo.posts && userInfo.posts.length}</strong> posts</div>
+                            <div><strong>{posts && posts.length}</strong> posts</div>
                             <div><strong>{userInfo.followers}</strong> followers</div>
                             <div><strong>{userInfo.following}</strong> following</div>
+
+//                             <div><strong>{userInfo.post_id && userInfo.post_id.length}</strong> posts</div>
+//                             <div><strong>{userInfo.follower_id.length}</strong> followers</div>
+//                             <div><strong>{userInfo.following_id.length}</strong> following</div>
+
                         </div>
                         <div className="name">{userInfo.username}</div>
                     </div>
@@ -126,8 +133,7 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                 <div className="gallery-list-body">
                     {posts && posts.map((post, idx)=>
                         <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
-                            {/* 로그인 구현되고 나면 post.picture를 post.pictures로 바꾸기*/}
-                            <img src={post.picture} alt={post.content} />
+                            <img src={post.pictures} alt={post.content} />
                         </div>
                     )}
                 </div>

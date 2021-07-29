@@ -10,10 +10,10 @@ function FacebookLogin({ setIsLogin, facebookData, setWelcomeFB }) {
   }
 
   return (
-    <div>
-      <div className="login-signup-container">
+    <div className="login-page-container ">
+      <div className="login-signup-container facebook-login">
         <div className="login-signup-box box-1">
-          <h1 className="logo">Enstagram</h1>
+          <span className="logo">Enstagram</span>
           <img 
             src={facebookData.url}
             className="fblogin-profile-pic"
@@ -37,7 +37,9 @@ function FacebookLogin({ setIsLogin, facebookData, setWelcomeFB }) {
         </span>
         </div>
       </div>
-      <Footer />
+      <div className="facebook-login-footer-container">
+        <Footer />
+      </div>
     </div>
   )
 }
