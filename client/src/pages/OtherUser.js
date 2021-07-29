@@ -44,19 +44,30 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
         setActivePost(post)
     }
 
-    const handleFollow = (follow) => {
+    const handleFollow = async (bFollow) => {
         // Update DB
-        axios.post(`${serverUrl}/follow`,
-            { user_id: loggedInUserInfo.id, target_id: userId})
-        .then((res) => {
-            if(follow) {
-                const newFollower = [...follower, loggedInUserInfo.id]
-                setFollower(newFollower);
-            } else {
-                const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
-                setFollower(newFollower);
-            }
-        });
+        await axios.post(`${serverUrl}/follow`,
+            { user_id: loggedInUserInfo.id, target_id: userId })
+            .then((res) => {
+                if (bFollow === true) {
+                    console.log("loggedInUserInfo:", loggedInUserInfo);
+                    console.log("follower:", follower);
+
+                    if (follower.indexOf(loggedInUserInfo.id) === -1) {
+                        if (follower.length === 0) {
+                            const newFollower = [loggedInUserInfo.id];
+                            setFollower(newFollower);
+                        } else {
+                            const newFollower = [...follower, loggedInUserInfo.id]
+                            setFollower(newFollower);
+                        }
+                    }
+                } else if (bFollow === false) {
+                    console.log("follower:", follower);
+                    const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
+                    setFollower(newFollower);
+                }
+            });
     }
 
     return (
@@ -71,7 +82,7 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
                             {follower.includes(loggedInUserInfo.id)
-                                ? <div className="btn-primary" onClick={() => handleFollow(false)}>Unfollow</div> 
+                                ? <div className="btn-primary" onClick={() => handleFollow(false)}>Unfollow</div>
                                 : <div className="btn-primary follow" onClick={() => handleFollow(true)}>Follow</div>
                             }
                         </div>
@@ -87,8 +98,8 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
 
             <div className="gallery-container">
                 <div className="gallery-list-body">
-                    {posts && posts.map((post, idx)=>
-                        <div key={idx} className="gallery-image-wrapper" onClick={()=> {clickPostHandler(post)}}>
+                    {posts && posts.map((post, idx) =>
+                        <div key={idx} className="gallery-image-wrapper" onClick={() => { clickPostHandler(post) }}>
                             <img src={post.pictures} alt={post.content} />
                         </div>
                     )}
