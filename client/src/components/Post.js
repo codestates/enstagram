@@ -35,45 +35,41 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             }
         }).then( res => {
             // res.data.data is user id list
+            console.log("LIKE userid list line 38", res.data.data)
             setLikeList(res.data.data)
         })
-        //로그인 한 유저가 포스트를 좋아했는지 activePost.liked_id에 포함 되어있는지 확인
-        //포함 되어있으면 이미 좋아요 누른 상태
-        //없으면 좋아요 안 한 상태
+
         if(likeList && likeList.includes(loggedInUserInfo.id)){
             setLike(true)
         } else {
             setLike(false)
         }
-    }, [])
+    }, [likeList])
 
     const likeClickHandler = () => {
-        console.log("like value in handler: ", like);
+        console.log("in likeclickhandler", like)
         axios.post(`${serverUrl}/like`, {
             user_id: loggedInUserInfo.id, // loggedIn user
             post_id: activePost.id,
             value: !like
         }).then((res)=>{
-            console.log("LIKE", res)
             if(res.data.message === '좋아요 정보 설정 완료') {
-                likeHandler(!like, loggedInUserInfo.id)
+                likeHandler(res.data.value, loggedInUserInfo.id)
                 setLike(!like);
             }
         })
-
-        // Uncomment above when API is ready
-        // Set like + Update post info: activePost.like
-        // setLike(!like);
-        // likeHandler(!like);
     }
 
+    //To update the list of liked user id
     const likeHandler = (like, id) => {
         if (like) { //  add user id to like_id array and return like count using array.length
             const newLikeList = [...likeList, id]
             setLikeList(newLikeList)
+            console.log("WHEN True", newLikeList)
         } else { // Decrease like count
-            const newLikeList= [...likeList].filter(el => el.user_id !== id)
+            const newLikeList= [...likeList].filter(el => el !== id)
             setLikeList(newLikeList)
+            console.log("WHEN false", newLikeList)
         }
     }
 
@@ -116,10 +112,8 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         // For database update:
         console.log("comment Delete")
         axios.delete(`${serverUrl}/deletecomment`, {
-            params: {
-                // CORS error
-                comment_id: comment.id,
-            }
+            // CORS error
+            data: {comment_id: comment.id,}
         }).then((res) => {
             console.log("Res delete : ", res)
             if(res.data.message === '코멘트 삭제 완료') {
@@ -133,7 +127,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     return (
         <div className="post-wrapper">
-            <Link to={`/${userInfo.id}`}>
+            <Link className="user-information-link" to={`/${userInfo.id}`}>
                 <div className="post-user-container">
                     <div className="post-user-profile">
                         <img alt="user-profile-pic" src={userInfo.profilePhoto} />
@@ -144,7 +138,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             <div className="post-image-container">
                 <img src={activePost.pictures} alt={activePost.content} />
             </div>
-            <div className="like-btn-container" onClick={likeClickHandler}>
+            <div className="like-btn-container" onClick={() => likeClickHandler()}>
                 {like
                 ? <FontAwesomeIcon className="like-icon icon-filled" icon={filledHeart} />
                 : <FontAwesomeIcon className="like-icon" icon={faHeart} />}
