@@ -135,10 +135,8 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         // For database update:
         console.log("comment Delete")
         axios.delete(`${serverUrl}/deletecomment`, {
-            params: {
-                // CORS error
-                comment_id: comment.id,
-            }
+            // CORS error
+            data: {comment_id: comment.id,}
         }).then((res) => {
             console.log("Res delete : ", res)
             if(res.data.message === '코멘트 삭제 완료') {

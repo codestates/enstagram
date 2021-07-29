@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import "./Mypage.css";
 import Post, { Modal } from '../components/Post'
-import { dummyMyUserInfo, dummyPosts, placeHolderImage } from '../dummyData';
+// import { dummyMyUserInfo, dummyPosts, placeHolderImage } from '../dummyData';
 import { serverUrl } from '../utils/constants'
 
 const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
@@ -44,9 +44,9 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
     const history = useHistory();
     const handleLogout = () => {
         console.log("LOGOUT")
-        axios.post(`${serverUrl}/logout`).then((res)=> {
+        axios.post(`${serverUrl}/logout`, { user_id: loggedInUserInfo.id}).then((res)=> {
             setIsLogin(false);
-            history.push('');
+            history.push('/');
         })
     }
 
@@ -111,7 +111,7 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
                     <div className="my-profile-body-container" >
                         <div className="user-actions">
                             <p id="username">{userInfo.username}</p>
-                            <Link 
+                            <Link
                                 className="btn-primary edit-profile" 
                                 to={`/mypage/edit`}
                             >
