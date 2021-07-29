@@ -21,7 +21,7 @@ const defaultCorsHeader = {
 
 app.use(
   cors({
-    origin: ["*"],
+    origin: "*",
     credentials: true,
     methods: ["GET", "POST", "OPTIONS", "DELETE"],
   })
