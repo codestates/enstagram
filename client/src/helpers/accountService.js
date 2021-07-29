@@ -3,12 +3,12 @@ import axios from "axios";
 export function requestFacebookLogin() {
   return new Promise((resolve, reject) => {
     window.FB.login(function (response) {
-      console.log(response)
+      console.log("안뇽하세요오오오오오", response)
       if (response.authResponse) {
         console.log("You are logged into Facebook.");
         requestFacebookBasicProfile()
-        .then(res => resolve(res))
-      } 
+          .then(res => resolve(res))
+      }
       else {
         console.log("User cancelled login or did not fully authorize.");
         resolve(false);
@@ -44,7 +44,7 @@ function requestFacebookBasicProfile() {
 }
 
 export function requestFacebookEmail() {
-  return new Promise((resolve)=>{
+  return new Promise((resolve) => {
     window.FB.api("/me", "GET", { fields: "email" }, function (res) {
       console.log("Requesting email from Facebook...");
       console.log(res);
@@ -73,15 +73,16 @@ export async function checkEmail(email) {
 }
 
 export function requestFacebookProfilePic(id) {
-  return new Promise((resolve)=>{
+  return new Promise((resolve) => {
     window.FB.api(
-    `/${id}/picture`,
-    "GET",
-    { redirect: "false", type: "large" },
-    function (res) {
-      console.log("Requesting profile picture from Facebook...");
-      console.log(res);
-      resolve(res.data.url);
-    }
-  );})
+      `/${id}/picture`,
+      "GET",
+      { redirect: "false", type: "large" },
+      function (res) {
+        console.log("Requesting profile picture from Facebook...");
+        console.log(res);
+        resolve(res.data.url);
+      }
+    );
+  })
 }
