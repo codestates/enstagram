@@ -65,12 +65,12 @@ const App = () => {
       return;
     }
     else if (res === false) {
-      setWelcomeFB(false);  
+      setWelcomeFB(false);
       setUserData(null)
       history.push("/facebooksignup");
       return;
     }
-    const {accessToken, userdata} = res;
+    const { accessToken, userdata } = res;
     const url = await accountService.requestFacebookProfilePic(id);
     setFacebookData({ email, url, name });
     if (userData) {
@@ -124,15 +124,15 @@ const App = () => {
           <FacebookSignup />
         </Route>
         <Route path="/mypage/edit">
-          <ProfileEdit userData={userData} setUserData={setUserData}/>
+          <ProfileEdit userData={userData} setUserData={setUserData} />
         </Route>
         <Route path="/mypage">
 
-        <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData}/>
+          <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData} />
 
         </Route>
         <Route exact path="/upload">
-          <Upload userData={userData} setUserWrittenPost={setUserWrittenPost}/>
+          <Upload userData={userData} setUserWrittenPost={setUserWrittenPost} />
         </Route>
         <Route path="/:userId">
           {/* <OtherUserPage /> */}

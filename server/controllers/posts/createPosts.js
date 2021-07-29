@@ -16,6 +16,8 @@ module.exports = async (req, res) => {
             pictures: req.body.pictures,
             comment_id: [],
             like_id: [],
+            createdAt: 0,
+            updatedAt: 0
         }
 
         await Posts.create(post)
@@ -30,6 +32,9 @@ module.exports = async (req, res) => {
                         where: { id: post.user_id }
                     });
                 }
+
+                post.createdAt = value.dataValues.createdAt;
+                post.updatedAt = value.dataValues.updatedAt;
 
                 res.status(200).json({
                     data: post,
