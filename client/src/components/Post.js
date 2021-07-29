@@ -91,13 +91,15 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         setCommentList(newCommentList)
     }
 
-    const commentDelete = (comment) => {
+    const commentDelete = (commentes) => {
         // For database update:
         axios.delete(`${serverUrl}/deletecomment`, {
-            data: { comment_id: comment.id, }
+            data: { comment_id: Number(commentes.id), }
         }).then((res) => {
             if (res.data.message === '코멘트 삭제 완료') {
-                commentDeleteHandler(comment);
+                commentDeleteHandler(commentes);
+            } else if (res.data.message === '해당하는 정보의 comment 가 없습니다') {
+                console.log("문제를 찾아라");
             }
         })
     }

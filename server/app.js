@@ -18,7 +18,15 @@ const defaultCorsHeader = {
 };
 
 //? CORS 설정
-app.use(cors());
+
+app.use(
+  cors({
+    origin: ["*"],
+    credentials: true,
+    methods: ["GET", "POST", "OPTIONS", "DELETE"],
+  })
+);
+
 
 //? 쿠키 사용
 app.use(cookieParser());
