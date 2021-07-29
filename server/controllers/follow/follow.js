@@ -85,7 +85,21 @@ module.exports = async (req, res) => {
                 });
             }
 
-            res.status(200).json({ message: "팔로우 성공" });
+            const changeUserInfo = await Users.findOne({
+                where: { id: myInfo.dataValues.id }
+            });
+
+            const changeTargetInfo = await Users.findOne({
+                where: { id: targetInfo.dataValues.id }
+            });
+
+            res.status(200).json({
+                data: {
+                    follower_id: changeUserInfo.dataValues.follower_id,
+                    following_id: changeTargetInfo.dataValues.following_id
+                },
+                message: "팔로우 성공"
+            });
         }
 
     } else {
