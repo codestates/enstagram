@@ -10,13 +10,15 @@ const controllers = require("./controllers");
 app.use(express.json());
 const port = process.env.PORT || 4000;
 
+const defaultCors = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'access-control-allow-headers': 'content-type, accept',
+  'access-control-max-age': 10
+};
+
 //? CORS 설정
-app.use(
-  cors({
-    origin: true,
-    credentials: true
-  })
-);
+app.use(defaultCors);
 
 //? 쿠키 사용
 app.use(cookieParser());
@@ -36,6 +38,7 @@ app.get('/getmainpage', controllers.getMainPage);
 
 //! POST 요청
 app.post('/login', controllers.login);
+app.post('/logout', controllers.logout);
 app.post('/signup', controllers.signup);
 app.post('/createpost', controllers.createPosts);
 app.post('/createcomment', controllers.createComments);

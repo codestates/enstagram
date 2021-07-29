@@ -24,14 +24,22 @@ module.exports = async (req, res) => {
                 email: req.body.newemail
             }
 
-            Users.update(result, {
+            await Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            res.status(200).json({
-                data: result,
-                message: "유저 데이터 변경 성공"
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
+
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                })
 
         } else if (userName) {
             res.status(200).json({
@@ -62,12 +70,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            res.status(200).json({
-                data: result,
-                message: "유저 데이터 변경 성공"
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
+
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else if (userName) {
             res.status(200).json({
@@ -92,12 +108,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            res.status(200).json({
-                data: result,
-                message: "유저 데이터 변경 성공"
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
+
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else if (userEmail) {
             res.status(200).json({
@@ -126,12 +150,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            res.status(200).json({
-                data: result,
-                message: "유저 데이터 변경 성공"
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
+
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else if (userName) {
             res.status(200).json({
@@ -154,12 +186,20 @@ module.exports = async (req, res) => {
 
         Users.update(result, {
             where: { id: userInfo.dataValues.id }
-        });
+        })
+            .then(async result => {
 
-        res.status(200).json({
-            data: result,
-            message: "유저 데이터 변경 성공"
-        });
+                const afterUserInfo = await Users.findOne({
+                    where: { id: userInfo.dataValues.id }
+                });
+
+                delete afterUserInfo.dataValues.password;
+
+                res.status(200).json({
+                    data: afterUserInfo.dataValues,
+                    message: "유저 데이터 변경 성공"
+                });
+            });
 
     } else if (!req.body.newname && req.body.newusername && !req.body.newemail) {
         const userName = await Users.findOne({
@@ -178,12 +218,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            res.status(200).json({
-                data: result,
-                message: "유저 데이터 변경 성공"
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
+
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else {
             res.status(200).json({
@@ -207,12 +255,20 @@ module.exports = async (req, res) => {
 
             Users.update(result, {
                 where: { id: userInfo.dataValues.id }
-            });
+            })
+                .then(async result => {
 
-            res.status(200).json({
-                data: result,
-                message: "유저 데이터 변경 성공"
-            });
+                    const afterUserInfo = await Users.findOne({
+                        where: { id: userInfo.dataValues.id }
+                    });
+
+                    delete afterUserInfo.dataValues.password;
+
+                    res.status(200).json({
+                        data: afterUserInfo.dataValues,
+                        message: "유저 데이터 변경 성공"
+                    });
+                });
 
         } else {
             res.status(200).json({
