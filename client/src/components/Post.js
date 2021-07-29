@@ -13,7 +13,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
     const [comment, setComment] = useState('');
     //Below is the actual list of comments
     const [commentList, setCommentList] = useState([]);
-    const [like, setLike] = useState(false);
     const [likeList, setLikeList] = useState([]);
 
     useEffect(() => {
@@ -25,52 +24,33 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         }).then( res => {
             setCommentList(res.data.data)
         })
-    }, [activePost.id, loggedInUserInfo.id])
 
-    useEffect(() => {
         //post에 있는 like 정보 가져오기
         axios.get(`${serverUrl}/getlike`, {
             params: {
                 post_id: activePost.id,
             }
         }).then( res => {
-            // res.data.data is user id list
-            //console.log("LIKE userid list line 38", res.data.data)
             setLikeList(res.data.data)
         })
+    }, [activePost.id, loggedInUserInfo.id])
 
-        if(likeList && likeList.includes(loggedInUserInfo.id)){
-            setLike(true)
-        } else {
-            setLike(false)
-        }
-    }, [likeList])
-
-    const likeClickHandler = () => {
-        console.log("in likeclickhandler", like)
+    const likeClickHandler = (like) => {
         axios.post(`${serverUrl}/like`, {
             user_id: loggedInUserInfo.id, // loggedIn user
             post_id: activePost.id,
-            value: !like
+            value: like
         }).then((res)=>{
             if(res.data.message === '좋아요 정보 설정 완료') {
-                likeHandler(res.data.value, loggedInUserInfo.id)
-                setLike(!like);
+                if (like) { //  add user id to like_id array and return like count using array.length
+                    const newLikeList = [...likeList, loggedInUserInfo.id]
+                    setLikeList(newLikeList)
+                } else { // Decrease like count
+                    const newLikeList= [...likeList].filter(el => el !== loggedInUserInfo.id)
+                    setLikeList(newLikeList)
+                }
             }
         })
-    }
-
-    //To update the list of liked user id
-    const likeHandler = (like, id) => {
-        if (like) { //  add user id to like_id array and return like count using array.length
-            const newLikeList = [...likeList, id]
-            setLikeList(newLikeList)
-            console.log("WHEN True", newLikeList)
-        } else { // Decrease like count
-            const newLikeList= [...likeList].filter(el => el !== id)
-            setLikeList(newLikeList)
-            console.log("WHEN false", newLikeList)
-        }
     }
 
     const commentChangeHandler = (e) => {
@@ -79,7 +59,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
     }
 
     const commentSubmitHandler = () => {
-        // TODO: Uncomment Below when API is ready & when login feature is complete
         axios.post(`${serverUrl}/createcomment`, {
             user_id: loggedInUserInfo && loggedInUserInfo.id,
             post_id: activePost.id,
@@ -110,19 +89,13 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const commentDelete = (comment) => {
         // For database update:
-        console.log("comment Delete")
         axios.delete(`${serverUrl}/deletecomment`, {
-            // CORS error
             data: {comment_id: comment.id,}
         }).then((res) => {
-            console.log("Res delete : ", res)
             if(res.data.message === '코멘트 삭제 완료') {
-                console.log("COMMENT", res)
                 commentDeleteHandler(comment);
             }
         })
-        // For local state update, we need to call commentDeleteHandler
-        // commentDeleteHandler(comment);
     }
 
     return (
@@ -138,10 +111,10 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             <div className="post-image-container">
                 <img src={activePost.pictures} alt={activePost.content} />
             </div>
-            <div className="like-btn-container" onClick={() => likeClickHandler()}>
-                {like
-                ? <FontAwesomeIcon className="like-icon icon-filled" icon={filledHeart} />
-                : <FontAwesomeIcon className="like-icon" icon={faHeart} />}
+            <div className="like-btn-container">
+                {likeList && likeList.includes(loggedInUserInfo.id)
+                ? <FontAwesomeIcon onClick={() => likeClickHandler(false)} className="like-icon icon-filled" icon={filledHeart} />
+                : <FontAwesomeIcon onClick={() => likeClickHandler(true)} className="like-icon" icon={faHeart} />}
             </div>
             <div className="liked-by-container">
                 {likeList && likeList.length}명이 좋아합니다
