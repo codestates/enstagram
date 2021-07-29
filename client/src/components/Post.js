@@ -37,8 +37,8 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const likeClickHandler = (like) => {
         axios.post(`${serverUrl}/like`, {
-            user_id: loggedInUserInfo.id, // loggedIn user
-            post_id: activePost.id,
+            user_id: parseInt(loggedInUserInfo.id), // loggedIn user
+            post_id: parseInt(activePost.id),
             value: like
         }).then((res)=>{
             if(res.data.message === '좋아요 정보 설정 완료') {
