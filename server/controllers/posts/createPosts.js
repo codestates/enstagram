@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
         where: { id: req.body.user_id }
     });
 
+
     if (userInfo) {
 
         const post = {
