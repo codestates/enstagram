@@ -47,7 +47,7 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
     const handleFollow = async (bFollow) => {
         // Update DB
         await axios.post(`${serverUrl}/follow`,
-            { user_id: loggedInUserInfo.id, target_id: userId })
+            { user_id: loggedInUserInfo.id, target_id: Number(userId) })
             .then(result => {
 
                 console.log("보내주는 user 의 ID", userId);

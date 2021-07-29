@@ -21,7 +21,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             params: {
                 post_id: activePost.id,
             }
-        }).then( res => {
+        }).then(res => {
             setCommentList(res.data.data)
         })
 
@@ -30,24 +30,37 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             params: {
                 post_id: activePost.id,
             }
-        }).then( res => {
+        }).then(res => {
+
+            console.log("data:", res.data.data);
+
             setLikeList(res.data.data)
         })
     }, [activePost.id, loggedInUserInfo.id])
 
-    const likeClickHandler = (like) => {
-        axios.post(`${serverUrl}/like`, {
-            user_id: loggedInUserInfo.id, // loggedIn user
-            post_id: activePost.id,
-            value: like
-        }).then((res)=>{
-            if(res.data.message === '좋아요 정보 설정 완료') {
-                if (like) { //  add user id to like_id array and return like count using array.length
-                    const newLikeList = [...likeList, loggedInUserInfo.id]
-                    setLikeList(newLikeList)
-                } else { // Decrease like count
-                    const newLikeList= [...likeList].filter(el => el !== loggedInUserInfo.id)
-                    setLikeList(newLikeList)
+    const likeClickHandler = async (like) => {
+        await axios.post(`${serverUrl}/like`, {
+            user_id: Number(loggedInUserInfo.id), // loggedIn user
+            post_id: Number(activePost.id),
+        }).then(async (res) => {
+
+            if (res.data.message === '좋아요 정보 설정 완료') {
+                if (res.data.data.value === true) { //  add user id to like_id array and return like count using array.length
+                    console.log("true 로 들어왔습니다");
+
+                    if (likeList.indexOf(res.data.data.user_id) < 0) {
+                        const newLikeList = [...likeList, res.data.data.user_id]
+                        await setLikeList(newLikeList)
+                    }
+
+                    console.log("True likeList:", likeList);
+                } else if (res.data.data.value === false) { // Decrease like count
+                    const newLikeList = likeList.filter(el => {
+                        return el !== res.data.data.user_id
+                    });
+                    await setLikeList(newLikeList)
+
+                    console.log("False likeList:", likeList);
                 }
             }
         })
@@ -90,9 +103,9 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
     const commentDelete = (comment) => {
         // For database update:
         axios.delete(`${serverUrl}/deletecomment`, {
-            data: {comment_id: comment.id,}
+            data: { comment_id: comment.id, }
         }).then((res) => {
-            if(res.data.message === '코멘트 삭제 완료') {
+            if (res.data.message === '코멘트 삭제 완료') {
                 commentDeleteHandler(comment);
             }
         })
@@ -104,7 +117,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
                 <div className="post-user-container">
                     <div className="post-user-profile">
                         <img alt="user-profile-pic" src={userInfo.profilePhoto} />
-                        </div>
+                    </div>
                     <div className="post-username">{activePost.username}</div>
                 </div>
             </Link>
@@ -113,15 +126,15 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             </div>
             <div className="like-btn-container">
                 {likeList && likeList.includes(loggedInUserInfo.id)
-                ? <FontAwesomeIcon onClick={() => likeClickHandler(false)} className="like-icon icon-filled" icon={filledHeart} />
-                : <FontAwesomeIcon onClick={() => likeClickHandler(true)} className="like-icon" icon={faHeart} />}
+                    ? <FontAwesomeIcon onClick={() => likeClickHandler(false)} className="like-icon icon-filled" icon={filledHeart} />
+                    : <FontAwesomeIcon onClick={() => likeClickHandler(true)} className="like-icon" icon={faHeart} />}
             </div>
             <div className="liked-by-container">
                 {likeList && likeList.length}명이 좋아합니다
             </div>
             <div className="post-content-container">
                 <p><span className="post-username">{activePost.username}</span>
-                {activePost.content}</p>
+                    {activePost.content}</p>
             </div>
             <div className="comments-container">
                 {commentList && commentList.map((comment, idx) => {
@@ -138,7 +151,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             </div>
             <div className="time-container">{timeSince(activePost.updatedAt)}</div>
             <div className="comment-input-container">
-                <input className="comment-input" type="text" placeholder="Add a comment..." value={comment} onChange={commentChangeHandler}/>
+                <input className="comment-input" type="text" placeholder="Add a comment..." value={comment} onChange={commentChangeHandler} />
                 <button className="post-button" type="submit" onClick={commentSubmitHandler} disabled={comment.length === 0}>Post</button>
             </div>
         </div>
@@ -149,7 +162,7 @@ export const Modal = ({ post, userInfo, loggedInUserInfo, likeHandler, commentHa
     return (
         <div id='post' className="modal"
             onClick={(e) => {
-                if(e.target.id === 'post'){onModalClose(false)}
+                if (e.target.id === 'post') { onModalClose(false) }
             }}>
             <Post
                 activePost={post}
@@ -157,7 +170,7 @@ export const Modal = ({ post, userInfo, loggedInUserInfo, likeHandler, commentHa
                 userInfo={userInfo}
                 // likeHandler={likeHandler}
                 loggedInUserInfo={loggedInUserInfo}
-                // commentDeleteHandler={commentDeleteHandler}
+            // commentDeleteHandler={commentDeleteHandler}
             />
         </div>
     )
