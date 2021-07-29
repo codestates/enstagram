@@ -31,9 +31,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
                 post_id: activePost.id,
             }
         }).then(res => {
-
-            console.log("data:", res.data.data);
-
             setLikeList(res.data.data)
         })
     }, [activePost.id, loggedInUserInfo.id])
@@ -46,21 +43,15 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
             if (res.data.message === '좋아요 정보 설정 완료') {
                 if (res.data.data.value === true) { //  add user id to like_id array and return like count using array.length
-                    console.log("true 로 들어왔습니다");
-
                     if (likeList.indexOf(res.data.data.user_id) < 0) {
                         const newLikeList = [...likeList, res.data.data.user_id]
                         await setLikeList(newLikeList)
                     }
-
-                    console.log("True likeList:", likeList);
                 } else if (res.data.data.value === false) { // Decrease like count
                     const newLikeList = likeList.filter(el => {
                         return el !== res.data.data.user_id
                     });
                     await setLikeList(newLikeList)
-
-                    console.log("False likeList:", likeList);
                 }
             }
         })
