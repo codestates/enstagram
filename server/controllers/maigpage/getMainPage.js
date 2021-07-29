@@ -67,7 +67,7 @@ module.exports = async (req, res) => {
             }
 
             res.status(200).json({
-                data: result,
+                data: result.reverse(),
                 message: "테스트"
             });
 
