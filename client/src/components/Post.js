@@ -68,8 +68,11 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             post_id: activePost.id,
             content: comment,
         }).then((res) => {
+
+            // console.log("으아아아아아아아", res);
+
             if (res.data.message === '코멘트 생성 성공') {
-                const commentId = res.data.id;
+                const commentId = res.data.data.id;
                 const commentForStateUpdate = {
                     content: comment,
                     id: commentId,
@@ -82,6 +85,9 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
     }
 
     const commentHandler = (comment) => {
+
+        console.log("commentssssssssss", comment);
+
         const newCommentList = [...commentList, comment]
         setCommentList(newCommentList);
     }
@@ -93,8 +99,11 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const commentDelete = (commentes) => {
         // For database update:
+
+        console.log("comments.id:", commentes);
+
         axios.delete(`${serverUrl}/deletecomment`, {
-            data: { comment_id: Number(commentes.id), }
+            data: { comment_id: commentes.id, }
         }).then((res) => {
             if (res.data.message === '코멘트 삭제 완료') {
                 commentDeleteHandler(commentes);

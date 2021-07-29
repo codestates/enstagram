@@ -81,7 +81,7 @@ const App = () => {
   }
 
   function renderDefaultPage() {
-    if (isLogin) return <Main userData={userData} accessToken={accessToken} userWrittenPost={userWrittenPost}/>;
+    if (isLogin) return <Main userData={userData} accessToken={accessToken} userWrittenPost={userWrittenPost} />;
 
     else {
       if (welcomeFB) {
