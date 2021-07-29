@@ -6,9 +6,25 @@ import Post, { Modal } from '../components/Post'
 import { dummyMyUserInfo, dummyPosts, placeHolderImage } from '../dummyData';
 import { serverUrl } from '../utils/constants'
 
+// USER INFO
+// comment_id: []
+// createdAt: "2021-07-28T10:21:11.000Z"
+// email: "jhoryong@gmail.com"
+// follower_id: []
+// following_id: []
+// id: 4
+// like_id: []
+// name: "test1"
+// post_id: (5) [7, 8, 10, 11, 12]
+// profilePhoto: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+// updatedAt: "2021-07-28T12:31:28.000Z"
+// username: "test1"
+
 const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
+    console.log("You are on MYPAGE. Here is user info:", loggedInUserInfo);
+
     // Initial states
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState(loggedInUserInfo);
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
@@ -113,9 +129,9 @@ const MyPage = ({ loggedInUserInfo = dummyMyUserInfo, setIsLogin }) => {
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
-                            <div><strong>{userInfo.posts && userInfo.posts.length}</strong> posts</div>
-                            <div><strong>{userInfo.followers}</strong> followers</div>
-                            <div><strong>{userInfo.following}</strong> following</div>
+                            <div><strong>{userInfo.post_id && userInfo.post_id.length}</strong> posts</div>
+                            <div><strong>{userInfo.follower_id.length}</strong> followers</div>
+                            <div><strong>{userInfo.following_id.length}</strong> following</div>
                         </div>
                         <div className="name">{userInfo.username}</div>
                     </div>

@@ -24,6 +24,26 @@ import Upload from "./pages/UploadPage";
 import * as accountService from "./helpers/accountService";
 import axios from "axios";
 
+
+
+
+// USER INFO
+// comment_id: []
+// createdAt: "2021-07-28T10:21:11.000Z"
+// email: "jhoryong@gmail.com"
+// follower_id: []
+// following_id: []
+// id: 4
+// like_id: []
+// name: "test1"
+// post_id: (5) [7, 8, 10, 11, 12]
+// profilePhoto: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+// updatedAt: "2021-07-28T12:31:28.000Z"
+// username: "test1"
+
+
+
+
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [welcomeFB, setWelcomeFB] = useState(false);
@@ -31,6 +51,7 @@ const App = () => {
   const [accessToken, setAccessToken] = useState('');
   const [userData, setUserData] = useState({});
 
+  const [userWrittenPost, setUserWrittenPost] = useState(null)
   let history = useHistory();
 
   useEffect(() => {
@@ -44,7 +65,17 @@ const App = () => {
     );
     const { name } = await accountService.requestFacebookBasicProfile();
     const { email, id } = await accountService.requestFacebookEmail();
-    const {accessToken, userdata} = await accountService.checkEmail(email);
+    const res = await accountService.checkEmail(email);
+    if (res === "fail") {
+      return;
+    }
+    else if (res === false) {
+      setWelcomeFB(false);  
+      setUserData(null)
+      history.push("/facebooksignup");
+      return;
+    }
+    const {accessToken, userdata} = res;
     const url = await accountService.requestFacebookProfilePic(id);
     setFacebookData({ email, url, name });
     if (userData) {
@@ -52,15 +83,10 @@ const App = () => {
       setUserData(userdata)
       setAccessToken(accessToken)
     }
-    else {
-      setWelcomeFB(false);  
-      setUserData(null)
-      history.push("/facebooksignup");
-    }
   }
 
   function renderDefaultPage() {
-    if (isLogin) return <Main userData={userData}/>;
+    if (isLogin) return <Main userData={userData} userWrittenPost={userWrittenPost}/>;
     else {
       if (welcomeFB) {
         return (
@@ -86,7 +112,7 @@ const App = () => {
   return (
     <>
       {/* {isLogin && <Header />} */}
-      <Header />
+      {isLogin ? <Header /> : null}
       <Switch>
         <Route exact path="/">
           {renderDefaultPage()}
@@ -104,7 +130,7 @@ const App = () => {
           <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData}/>
         </Route>
         <Route exact path="/upload">
-          <Upload />
+          <Upload userData={userData} setUserWrittenPost={setUserWrittenPost}/>
         </Route>
         <Route path="/:userId">
           <OtherUserPage />

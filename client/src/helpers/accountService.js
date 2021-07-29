@@ -43,7 +43,10 @@ export async function checkEmail(email) {
     `https://www.fpserver.click/oauth?email=${email}`
   );
   console.log("Result from the database: ", res);
-  if (!res) console.log('이메일 체크 서버 요청 실패');
+  if (!res) {
+    console.log('이메일 체크 서버 요청 실패')
+    return "fail";
+  };
   if (res.data.message === "로그인 성공") {
     // 이미 회원가입 했음을 확인
     console.log("You already signed up on Enstagram.");

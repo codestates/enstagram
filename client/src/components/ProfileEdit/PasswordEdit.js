@@ -1,6 +1,6 @@
 import "./PasswordEdit.css";
 import { useState, useEffect } from "react";
-import dummyUser from "../../dummyData/dummyUser";
+//import dummyUser from "../../dummyData/dummyUser";
 import axios from "axios";
 
 const PasswordEdit = ({userData}) => {
