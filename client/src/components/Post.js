@@ -65,7 +65,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             content: comment,
         }).then((res) => {
             if (res.data.message === '코멘트 생성 성공') {
-                const commentId = res.data.id;
+                const commentId = res.data.data.id;
                 const commentForStateUpdate = {
                     content: comment,
                     id: commentId,
@@ -89,8 +89,9 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const commentDelete = (comment) => {
         // For database update:
+        console.log("COMMENT", comment)
         axios.delete(`${serverUrl}/deletecomment`, {
-            data: {comment_id: comment.id,}
+            data: {comment_id: parseInt(comment.id),}
         }).then((res) => {
             if(res.data.message === '코멘트 삭제 완료') {
                 commentDeleteHandler(comment);

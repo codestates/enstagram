@@ -19,7 +19,6 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
     //let { path, url } = useRouteMatch();
 
     const userId = loggedInUserInfo.id;
-    // console.log("LOGINUSER", loggedInUserInfo)
     // Initial Setup
     useEffect(() => {
         // Fetch user information from the API: https://app.gitbook.com/@wjswlgh96/s/enstagram/#getuserinfo
@@ -43,7 +42,6 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
 
     const history = useHistory();
     const handleLogout = () => {
-        console.log("LOGOUT")
         axios.post(`${serverUrl}/logout`, { user_id: loggedInUserInfo.id}).then((res)=> {
             setIsLogin(false);
             history.push('/');

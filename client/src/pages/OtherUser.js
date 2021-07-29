@@ -44,23 +44,11 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
         setActivePost(post)
     }
 
-    console.log("FOLLOWER", follower)
-
     const handleFollow = (follow) => {
         // Update DB
         axios.post(`${serverUrl}/follow`,
             { user_id: loggedInUserInfo.id, target_id: parseInt(userId)})
         .then((res) => {
-            // console.log("RESPONSE", res)
-            // if(res.data.message === "팔로우 성공"){
-            //     if(follow) {
-            //     const newFollower = [...follower, loggedInUserInfo.id]
-            //     setFollower(newFollower);
-            // } else {
-            //     const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
-            //     setFollower(newFollower);
-            // }
-            // }
             if(follow) {
                 const newFollower = [...follower, loggedInUserInfo.id]
                 setFollower(newFollower);
