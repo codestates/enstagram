@@ -54,11 +54,6 @@ const App = () => {
   const [userWrittenPost, setUserWrittenPost] = useState(null)
   let history = useHistory();
 
-  useEffect(() => {
-    // localStorage.userdata = JSON.stringify(userData);
-    // localStorage.accessToken = accessToken;
-  }, [userData, accessToken]);
-
   async function facebookLogin() {
     console.log(
       "You pressed Facebook login button. Starting Facebook OAuth login..."
