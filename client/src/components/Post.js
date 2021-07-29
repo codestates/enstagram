@@ -28,7 +28,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         //post에 있는 like 정보 가져오기
         axios.get(`${serverUrl}/getlike`, {
             params: {
-                post_id: activePost.id,
+                post_id: parseInt(activePost.id),
             }
         }).then( res => {
             setLikeList(res.data.data)
@@ -37,11 +37,11 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const likeClickHandler = (like) => {
         axios.post(`${serverUrl}/like`, {
-            user_id: loggedInUserInfo.id, // loggedIn user
-            post_id: activePost.id,
+            user_id: parseInt(loggedInUserInfo.id), // loggedIn user
+            post_id: parseInt(activePost.id),
             value: like
         }).then((res)=>{
-            if(res.data.message === '좋아요 정보 설정 완료') {
+            // if(res.data.message === '좋아요 정보 설정 완료') {
                 if (like) { //  add user id to like_id array and return like count using array.length
                     const newLikeList = [...likeList, loggedInUserInfo.id]
                     setLikeList(newLikeList)
@@ -49,8 +49,8 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
                     const newLikeList= [...likeList].filter(el => el !== loggedInUserInfo.id)
                     setLikeList(newLikeList)
                 }
-            }
-        })
+            })
+        // })
     }
 
     const commentChangeHandler = (e) => {
@@ -65,7 +65,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             content: comment,
         }).then((res) => {
             if (res.data.message === '코멘트 생성 성공') {
-                const commentId = res.data.id;
+                const commentId = res.data.data.id;
                 const commentForStateUpdate = {
                     content: comment,
                     id: commentId,
@@ -90,7 +90,7 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
     const commentDelete = (comment) => {
         // For database update:
         axios.delete(`${serverUrl}/deletecomment`, {
-            data: {comment_id: comment.id,}
+            data: {comment_id: parseInt(comment.id),}
         }).then((res) => {
             if(res.data.message === '코멘트 삭제 완료') {
                 commentDeleteHandler(comment);
@@ -157,7 +157,6 @@ export const Modal = ({ post, userInfo, loggedInUserInfo, likeHandler, commentHa
                 userInfo={userInfo}
                 // likeHandler={likeHandler}
                 loggedInUserInfo={loggedInUserInfo}
-                // commentDeleteHandler={commentDeleteHandler}
             />
         </div>
     )
