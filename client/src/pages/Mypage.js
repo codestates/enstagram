@@ -55,51 +55,6 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
         setActivePost(post)
     }
 
-    // const commentHandler = (comment) => {
-    //     const newPosts = [...posts].map(post => {
-    //         if (post === activePost) {
-    //             if (post.comments) {
-    //                 post.comments.push(comment);
-    //             } else {
-    //                 post.comments = [comment];
-    //             }
-    //         }
-    //         return post;
-    //     })
-
-    //     setPosts(newPosts);
-    // }
-
-    // //TODO: when API is updated, change username to id
-    // const commentDeleteHandler = (comment) => {
-    //     const newPosts = [...posts].map(post => {
-    //         if(post === activePost){
-    //             post.comments = post.comments.filter(el => el.username !== comment.username)
-    //         }
-    //         return post
-    //     })
-    //     setPosts(newPosts)
-    // }
-
-    // const likeHandler = (like) => {
-    //     if (like) { //  add user id to like_id array and return like count for active post using array.length
-    //         const newPosts = [...posts].map(post => {
-    //             if(post === activePost){
-    //                 post.like_id.push(loggedInUserInfo.id)
-    //             }
-    //             return post
-    //         })
-    //         setPosts(newPosts)
-    //     } else { // Decrease like count
-    //         const newPosts = [...posts].map(post => {
-    //             if(post === activePost){
-    //                 post.like_id = post.like_id.filter(el => el !== loggedInUserInfo.id )
-    //             }
-    //             return post
-    //         })
-    //         setPosts(newPosts)
-    //     }
-    // }
     return (
         <div>
             <div className="my-profile-field">

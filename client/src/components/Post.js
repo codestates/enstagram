@@ -38,31 +38,14 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             console.log("LIKE userid list line 38", res.data.data)
             setLikeList(res.data.data)
         })
-        //로그인 한 유저가 포스트를 좋아했는지 activePost.liked_id에 포함 되어있는지 확인
-        //포함 되어있으면 이미 좋아요 누른 상태
-        //없으면 좋아요 안 한 상태
 
-        // .then((res)=>{
-        //     
-        //     console.log("INCLUDES",likeList)
-        //     console.log("INCLUDES ID",loggedInUserInfo.id)
-        //     console.log("TRUE/FALSE",likeList.includes(loggedInUserInfo.id))
-        //     if(likeList && likeList.includes(loggedInUserInfo.id)){
-        //     setLike(true)
-        // } else {
-        //     setLike(false)
-        // }})
-        //포스트가 켜진 상태에서 refresh하면 true인데 나갔다가 들어오면 false and likelist가 빈 배열
-        console.log("INCLUDES",likeList)
-        console.log("INCLUDES ID",loggedInUserInfo.id)
-        console.log("TRUE/FALSE",likeList.includes(loggedInUserInfo.id))
         if(likeList && likeList.includes(loggedInUserInfo.id)){
             setLike(true)
         } else {
             setLike(false)
         }
-    }, [])
-    
+    }, [likeList])
+
     const likeClickHandler = () => {
         console.log("in likeclickhandler", like)
         axios.post(`${serverUrl}/like`, {
@@ -75,11 +58,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
                 setLike(!like);
             }
         })
-
-        // Uncomment above when API is ready
-        // Set like + Update post info: activePost.like
-        // setLike(!like);
-        // likeHandler(!like);
     }
 
     //To update the list of liked user id
@@ -94,7 +72,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             console.log("WHEN false", newLikeList)
         }
     }
-    
 
     const commentChangeHandler = (e) => {
         const str = e.target.value;
