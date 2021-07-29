@@ -11,16 +11,17 @@ export default function initFacebookSdk() {
           xfbml: true,
           version: "v11.0",
         });
-      window.FB.getLoginStatus((res) => {
-        console.log(res)
-        if (res.authResponse) {
-          accountService.requestFacebookBasicProfile()
-          .then(()=>resolve())
-          //accountService.apiAuthenticate(authResponse.accessToken).then(resolve);
-        } else {
-          resolve()
-        }
-      });
+        resolve();
+      // window.FB.getLoginStatus((res) => {
+      //   console.log(res)
+      //   if (res.status === "connected") {
+      //     accountService.requestFacebookBasicProfile()
+      //     .then(resolve())
+      //     //accountService.apiAuthenticate(authResponse.accessToken).then(resolve);
+      //   } else {
+      //     resolve()
+      //   }
+      // });
     };
 
     // load facebook sdk script
