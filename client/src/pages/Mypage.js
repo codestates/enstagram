@@ -14,6 +14,8 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activePost, setActivePost] = useState(null);
+    const [follower, setFollower] = useState([]);
+    const [following, setFollowing] = useState([]);
     //let { path, url } = useRouteMatch();
 
     const userId = loggedInUserInfo.id;
@@ -29,19 +31,22 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
         axios.get(`${serverUrl}/getpost`, { params: { user_id: userId } }).then((res) => {
             setPosts(res.data.data);
         })
+        //GET: following list 받기
+        axios.get(`${serverUrl}/getfollower`, { params: { user_id: userId } }).then((res) => {
+            setFollowing(res.data.data);
+        })
+        //GET: follower list 받기
+        axios.get(`${serverUrl}/getfollowing`, { params: { user_id: userId } }).then((res) => {
+            setFollower(res.data.data);
+        })
     }, [userId])
-
-    // Initial Setup: before API is ready
-    // useEffect(() => {
-    //     setUserInfo(loggedInUserInfo)
-    //     setPosts(dummyPosts)
-    // }, [loggedInUserInfo])
 
     const history = useHistory();
     const handleLogout = () => {
+        console.log("LOGOUT")
         axios.post(`${serverUrl}/logout`).then((res)=> {
             setIsLogin(false);
-            history.push('/');
+            history.push('');
         })
     }
 
@@ -115,14 +120,9 @@ const MyPage = ({ loggedInUserInfo, setIsLogin }) => {
                             <div className="btn-primary logout" onClick={handleLogout}>로그아웃</div>
                         </div>
                         <div className="page-details">
-                            <div><strong>{posts && posts.length}</strong> posts</div>
-                            <div><strong>{userInfo.followers}</strong> followers</div>
-                            <div><strong>{userInfo.following}</strong> following</div>
-
-//                             <div><strong>{userInfo.post_id && userInfo.post_id.length}</strong> posts</div>
-//                             <div><strong>{userInfo.follower_id.length}</strong> followers</div>
-//                             <div><strong>{userInfo.following_id.length}</strong> following</div>
-
+                            <div><strong>{posts && posts.length}</strong> 게시물</div>
+                            <div><strong>{follower.length}</strong> 팔로워</div>
+                            <div><strong>{following.length}</strong> 팔로잉</div>
                         </div>
                         <div className="name">{userInfo.username}</div>
                     </div>
