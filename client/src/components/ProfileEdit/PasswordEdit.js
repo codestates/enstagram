@@ -1,9 +1,9 @@
 import "./PasswordEdit.css";
 import { useState, useEffect } from "react";
-import dummyUser from "../../dummyData/dummyUser";
+//import dummyUser from "../../dummyData/dummyUser";
 import axios from "axios";
 
-const PasswordEdit = () => {
+const PasswordEdit = ({userData}) => {
   const [oldPw, setOldPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [newPw1, setNewPw1] = useState("");
@@ -60,13 +60,13 @@ const PasswordEdit = () => {
       <div className="profile-element">
         <label className="profile-edit-label">
           <img
-            src={dummyUser.profilepicture}
+            src={userData.profilePhoto}
             className="profile-edit-pic"
             alt="profile"
           />
         </label>
         <div className="profile-edit-input-wrapper edit-profile-pic">
-          <span>{dummyUser.username}</span>
+          <span>{userData.username}</span>
         </div>
       </div>
       <div className="profile-element">

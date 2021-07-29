@@ -64,7 +64,7 @@ const Login = ({ setIsLogin, facebookLogin, setUserData, setAccessToken }) => {
     <div className="login-page-container">
       <div className="login-signup-container login">
         <div className="login-signup-box box-1">
-          <h1 className="logo">Enstagram</h1>
+          <span className="logo">Enstagram</span>
           <input
             className="login-signup-input-box  login-input-1"
             type="text"

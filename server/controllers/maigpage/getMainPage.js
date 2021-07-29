@@ -22,27 +22,55 @@ module.exports = async (req, res) => {
                 return el.dataValues.id !== tokenUserInfo.id;
             });
 
-            console.log("otherUserssssssssssssssssssssss", otherUsers[0].dataValues);
+            const getPostInfos = otherUsers.filter(el => {
+                return el.dataValues.post_id.length > 0;
+            });
 
-            Promise.all(otherUsers.map(async el => {
+            let postNum = [];
+            let result = [];
+
+            getPostInfos.map(el => {
+                el.dataValues.post_id.map(ell => {
+                    postNum.push(ell);
+                })
+            });
+
+            for (let i = 0; i < postNum.length; i++) {
                 const postInfos = await Posts.findOne({
-                    where: { user_id: el.dataValues.id }
+                    where: { id: postNum[i] }
                 });
 
-                console.log("el.dataValues.idddddddddddddddd", el.dataValues.id);
+                const userInfos = await Users.findOne({
+                    where: { id: postInfos.dataValues.user_id }
+                });
 
                 if (postInfos) {
-                    return postInfos.dataValues;
-                } else {
-                    res.status(200).json({ message: "일치하는 포스트 정보가 없습니다" });
+
+                    const { id, user_id, username, content, pictures, comment_id, like_id,
+                        createdAt, updatedAt } = postInfos.dataValues;
+
+                    const infos = {
+                        id,
+                        user_id,
+                        username,
+                        userProfilePhoto: userInfos.dataValues.profilePhoto,
+                        content,
+                        pictures,
+                        comment_id,
+                        like_id,
+                        createdAt,
+                        updatedAt
+                    }
+
+                    result.push(infos);
                 }
-            }))
-                .then(result => {
-                    res.status(200).json({
-                        data: result,
-                        message: "포스트 데이터 요청 성공"
-                    });
-                });
+            }
+
+            res.status(200).json({
+                data: result,
+                message: "테스트"
+            });
+
         } catch {
             res.status(200).json({ message: "만료된 토큰" });
         }
