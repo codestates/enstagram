@@ -86,7 +86,8 @@ const App = () => {
   }
 
   function renderDefaultPage() {
-    if (isLogin) return <Main userData={userData} userWrittenPost={userWrittenPost}/>;
+    if (isLogin) return <Main userData={userData} accessToken={accessToken} />;
+
     else {
       if (welcomeFB) {
         return (
@@ -111,9 +112,13 @@ const App = () => {
 
   return (
     <>
-      {/* {isLogin && <Header />} */}
-      {isLogin ? <Header /> : null}
+      {isLogin && <Header profilePhoto={userData.profilePhoto} />}
+
       <Switch>
+        {/* TODO: delete before pushing the code. Below route is for UI testing. */}
+        {/* <Route exact path="/main">
+          <Main />
+        </Route> */}
         <Route exact path="/">
           {renderDefaultPage()}
         </Route>
@@ -127,15 +132,17 @@ const App = () => {
           <ProfileEdit userData={userData} setUserData={setUserData}/>
         </Route>
         <Route path="/mypage">
-          <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData}/>
+
+        <Mypage setIsLogin={setIsLogin} loggedInUserInfo={userData} setUserData={setUserData}/>
+
         </Route>
         <Route exact path="/upload">
           <Upload userData={userData} setUserWrittenPost={setUserWrittenPost}/>
         </Route>
         <Route path="/:userId">
-          <OtherUserPage />
+          {/* <OtherUserPage /> */}
           {/* TODO: Uncomment belwo when loggedInUser is ready */}
-          {/* <OtherUserPage loggedInUserInfo={userData} /> */}
+          <OtherUserPage loggedInUserInfo={userData} />
         </Route>
       </Switch>
     </>

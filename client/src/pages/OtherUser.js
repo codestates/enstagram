@@ -7,7 +7,8 @@ import { Modal } from '../components/Post'
 import { dummyOtherUserInfo, dummyMyUserInfo, otherUserPosts } from '../dummyData';
 import { serverUrl } from '../utils/constants'
 
-const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
+const OtherUserPage = ({ loggedInUserInfo }) => {
+    console.log("loggedInUserInfo in outher user page: ", loggedInUserInfo);
     // Initial states
     const [userInfo, setUserInfo] = useState({});
     const [posts, setPosts] = useState([]);
@@ -31,12 +32,6 @@ const OtherUserPage = ({ loggedInUserInfo = dummyMyUserInfo }) => {
             setPosts(res.data.data);
         })
     }, [userId])
-
-    // Initial Setup: before API is ready
-    // useEffect(() => {
-    //     setUserInfo(dummyOtherUserInfo)
-    //     setPosts(otherUserPosts)
-    // }, [])
 
     const clickPostHandler = (post) => {
         setIsModalOpen(true)

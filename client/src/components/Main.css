@@ -1,8 +1,9 @@
 .post-outer-wrapper {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .post-inner-wrapper {
-  margin: 10px 0;
+    margin: 10px 0;
+
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import './Post.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -22,7 +23,6 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
                 post_id: activePost.id,
             }
         }).then( res => {
-            console.log(res.data)
             setCommentList(res.data.data)
         })
     }, [activePost.id, loggedInUserInfo.id])
@@ -34,7 +34,8 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
                 post_id: activePost.id,
             }
         }).then( res => {
-            setLikeList(res.data.user_id)
+            // res.data.data is user id list
+            setLikeList(res.data.data)
         })
         //로그인 한 유저가 포스트를 좋아했는지 activePost.liked_id에 포함 되어있는지 확인
         //포함 되어있으면 이미 좋아요 누른 상태
@@ -44,20 +45,19 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         } else {
             setLike(false)
         }
-    }, [likeList])
+    }, [])
 
     const likeClickHandler = () => {
         console.log("like value in handler: ", like);
         axios.post(`${serverUrl}/like`, {
             user_id: loggedInUserInfo.id, // loggedIn user
             post_id: activePost.id,
-            value: like
+            value: !like
         }).then((res)=>{
-            // setLike(true)
             console.log("LIKE", res)
-            if(res.message === 'success') {
+            if(res.data.message === '좋아요 정보 설정 완료') {
+                likeHandler(!like, loggedInUserInfo.id)
                 setLike(!like);
-                likeHandler(like)
             }
         })
 
@@ -65,6 +65,16 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         // Set like + Update post info: activePost.like
         // setLike(!like);
         // likeHandler(!like);
+    }
+
+    const likeHandler = (like, id) => {
+        if (like) { //  add user id to like_id array and return like count using array.length
+            const newLikeList = [...likeList, id]
+            setLikeList(newLikeList)
+        } else { // Decrease like count
+            const newLikeList= [...likeList].filter(el => el.user_id !== id)
+            setLikeList(newLikeList)
+        }
     }
 
     const commentChangeHandler = (e) => {
@@ -79,20 +89,22 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
             post_id: activePost.id,
             content: comment,
         }).then((res) => {
-            // console.log("comment", res)
-            if (res.message === '코멘트 생성 성공') {
-                const comment = res.data.content
-                commentHandler(comment)
+            if (res.data.message === '코멘트 생성 성공') {
+                const commentId = res.data.id;
+                const commentForStateUpdate = {
+                    content: comment,
+                    id: commentId,
+                    username: loggedInUserInfo.username
+                }
+                commentHandler(commentForStateUpdate)
                 setComment('');
             }
         })
-        //Use when API and login feature are incomplete
-        // const newComment = {
-        //     content: comment,
-        //     username: loggedInUserInfo && loggedInUserInfo.username
-        // }
-        // commentHandler(newComment)
-        // setComment('');
+    }
+
+    const commentHandler = (comment) => {
+        const newCommentList = [...commentList, comment]
+        setCommentList(newCommentList);
     }
 
     const commentDeleteHandler = (comment) => {
@@ -102,11 +114,15 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
 
     const commentDelete = (comment) => {
         // For database update:
+        console.log("comment Delete")
         axios.delete(`${serverUrl}/deletecomment`, {
-            // CORS error
-            comment_id: comment.id,
+            params: {
+                // CORS error
+                comment_id: comment.id,
+            }
         }).then((res) => {
-            if(res.message === '코멘트 삭제 완료') {
+            console.log("Res delete : ", res)
+            if(res.data.message === '코멘트 삭제 완료') {
                 console.log("COMMENT", res)
                 commentDeleteHandler(comment);
             }
@@ -115,31 +131,16 @@ const Post = ({ activePost, loggedInUserInfo, userInfo }) => {
         // commentDeleteHandler(comment);
     }
 
-
-    const commentHandler = (comment) => {
-        const newCommentList = [...commentList, comment]
-        setCommentList(newCommentList);
-    }
-
-    const likeHandler = (like) => {
-        if (like) { //  add user id to like_id array and return like count using array.length
-            const newLikeList = [...likeList, like]
-            setLikeList(newLikeList)
-        } else { // Decrease like count
-            const newLikeList= [...likeList].filter(el => el.user_id !== loggedInUserInfo.id)
-            setLikeList(newLikeList)
-        }
-    }
-
-
     return (
         <div className="post-wrapper">
-            <div className="post-user-container">
-                <div className="post-user-profile">
-                    <img alt="user-profile-pic" src={userInfo.profilePhoto} />
-                    </div>
-                <div className="post-username">{activePost.username}</div>
-            </div>
+            <Link to={`/${userInfo.id}`}>
+                <div className="post-user-container">
+                    <div className="post-user-profile">
+                        <img alt="user-profile-pic" src={userInfo.profilePhoto} />
+                        </div>
+                    <div className="post-username">{activePost.username}</div>
+                </div>
+            </Link>
             <div className="post-image-container">
                 <img src={activePost.pictures} alt={activePost.content} />
             </div>
