@@ -18,7 +18,7 @@ const defaultCorsHeader = {
 };
 
 //? CORS 설정
-app.use(cors(defaultCorsHeader));
+app.use(cors());
 
 //? 쿠키 사용
 app.use(cookieParser());
