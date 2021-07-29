@@ -47,27 +47,26 @@ const OtherUserPage = ({ loggedInUserInfo }) => {
     const handleFollow = async (bFollow) => {
         // Update DB
         await axios.post(`${serverUrl}/follow`,
-            { user_id: loggedInUserInfo.id, target_id: userId })
-            .then((res) => {
-                if (bFollow === true) {
-                    console.log("loggedInUserInfo:", loggedInUserInfo);
-                    console.log("follower:", follower);
+            { user_id: loggedInUserInfo.id, target_id: userId });
 
-                    if (follower.indexOf(loggedInUserInfo.id) === -1) {
-                        if (follower.length === 0) {
-                            const newFollower = [loggedInUserInfo.id];
-                            setFollower(newFollower);
-                        } else {
-                            const newFollower = [...follower, loggedInUserInfo.id]
-                            setFollower(newFollower);
-                        }
-                    }
-                } else if (bFollow === false) {
-                    console.log("follower:", follower);
-                    const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
-                    setFollower(newFollower);
+        if (bFollow === true) {
+            console.log("loggedInUserInfo:", loggedInUserInfo);
+            console.log("follower:", follower);
+
+            if (follower.indexOf(loggedInUserInfo.id) < 0) {
+                if (follower.length === 0) {
+                    const newFollower = [loggedInUserInfo.id];
+                    await setFollower(newFollower);
+                } else {
+                    const newFollower = [...follower, loggedInUserInfo.id]
+                    await setFollower(newFollower);
                 }
-            });
+            }
+        } else if (bFollow === false) {
+            console.log("Unfollower:", follower);
+            const newFollower = follower.filter(el => el !== loggedInUserInfo.id)
+            await setFollower(newFollower);
+        }
     }
 
     return (
