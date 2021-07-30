@@ -5,7 +5,7 @@ import { useHistory } from 'react-router'
 
 const Upload = ({ userData, setUserWrittenPost }) => {
 
-    const [picture, setPicture] = useState("https://lh3.googleusercontent.com/proxy/k30F7mIBg5cVvGVmWwrFJHcjDdZocysk8Pc3U_oASyeP2a4Fa65S3cIDjTAFUJIX5jO_dqGwZvFeP9Ye-7AjDNdd58G2ByFWtjykJL9ZS7y1ojo8poJOQzvOFbOgk8M");
+    const [picture, setPicture] = useState("https://martialartsplusinc.com/wp-content/uploads/2017/04/default-image.jpg");
     const [text, setText] = useState("");
 
     const hiddenFileInput = useRef(null);
